@@ -9,12 +9,12 @@ WHERE NOT EXISTS(SELECT FROM pg_database WHERE datname = 'debatr')
 CREATE TABLE IF NOT EXISTS Usuario
 (
     id_usuario     SERIAL UNIQUE,
-    nome           VARCHAR(50) NOT NULL,
-    email          VARCHAR(255) UNIQUE,
-    senha          VARCHAR(60) NOT NULL,
+    nome           VARCHAR(50)  NOT NULL,
+    email          VARCHAR(255) NOT NULL UNIQUE,
+    senha          VARCHAR(60)  NOT NULL,
     imagem_perfil  VARCHAR(255),
     descricao      VARCHAR(255),
-    reputacao      integer,
+    reputacao      float     default 0.0,
     ra             INTEGER UNIQUE,
     data_criacao   TIMESTAMP DEFAULT current_timestamp,
     data_alteracao TIMESTAMP DEFAULT current_timestamp,
@@ -52,11 +52,11 @@ CREATE TABLE IF NOT EXISTS Topico
 CREATE TABLE IF NOT EXISTS Postagem
 (
     id_postagem    SERIAL UNIQUE,
-    id_forum       INTEGER         NOT NULL,
-    id_autor       INTEGER         NOT NULL,
+    id_forum       INTEGER      NOT NULL,
+    id_autor       INTEGER      NOT NULL,
     id_topico      INTEGER,
-    titulo         VARCHAR(255)    NOT NULL,
-    conteudo       VARCHAR(100000) NOT NULL,
+    titulo         VARCHAR(255) NOT NULL,
+    conteudo       TEXT         NOT NULL,
     data_criacao   TIMESTAMP DEFAULT current_timestamp,
     data_alteracao TIMESTAMP DEFAULT current_timestamp,
     CONSTRAINT PK_Postagem PRIMARY KEY (id_postagem),
@@ -65,15 +65,15 @@ CREATE TABLE IF NOT EXISTS Postagem
     CONSTRAINT FK_Usuario FOREIGN KEY (id_autor)
         REFERENCES Usuario (id_usuario) ON DELETE CASCADE,
     CONSTRAINT FK_Topico FOREIGN KEY (id_topico)
-        REFERENCES Topico (id_topico)
+        REFERENCES Topico (id_topico) ON DELETE SET NULL
 );
 
 CREATE TABLE IF NOT EXISTS Comentario
 (
     id_comentario  SERIAL UNIQUE,
-    id_postagem    INTEGER         NOT NULL,
-    id_autor       INTEGER         NOT NULL,
-    conteudo       VARCHAR(100000) NOT NULL,
+    id_postagem    INTEGER NOT NULL,
+    id_autor       INTEGER NOT NULL,
+    conteudo       TEXT    NOT NULL,
     data_criacao   TIMESTAMP DEFAULT current_timestamp,
     data_alteracao TIMESTAMP DEFAULT current_timestamp,
     CONSTRAINT PK_Comentario PRIMARY KEY (id_comentario),
