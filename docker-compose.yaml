@@ -1,0 +1,19 @@
+version: "3.9"
+services:
+  database:
+    image: postgres:latest
+    environment:
+      - POSTGRES_PASSWORD=password
+    ports:
+      - "5432:5432"
+
+  tomcat:
+    image: tomcat:9.0
+    environment:
+      - DEBATR_DATABASE_USER=postgres
+      - DEBATR_DATABASE_PASSWORD=password
+      - DEBATR_DATABASE_PORT=5432
+    volumes:
+      - "./target/Debatr-1.0-SNAPSHOT:/usr/local/tomcat/webapps/Debatr"
+    ports:
+      - "8080:8080"
