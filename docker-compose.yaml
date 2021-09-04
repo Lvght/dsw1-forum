@@ -12,8 +12,8 @@ services:
     environment:
       - DEBATR_DATABASE_USER=postgres
       - DEBATR_DATABASE_PASSWORD=password
-      - DEBATR_DATABASE_PORT=5432
+      - DEBATR_DATABASE_URI=postgresql://database:5432/debatr
     volumes:
-      - "./target/Debatr-1.0-SNAPSHOT:/usr/local/tomcat/webapps/Debatr"
+      - "./target/Debatr-1.0-SNAPSHOT:/usr/local/tomcat/webapps/debatr"
     ports:
       - "8080:8080"

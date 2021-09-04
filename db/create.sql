@@ -9,12 +9,14 @@ WHERE NOT EXISTS(SELECT FROM pg_database WHERE datname = 'debatr')
 CREATE TABLE IF NOT EXISTS Usuario
 (
     id_usuario     SERIAL UNIQUE,
+    username       varchar(15)  not null unique,
     nome           VARCHAR(50)  NOT NULL,
     email          VARCHAR(255) NOT NULL UNIQUE,
-    senha          VARCHAR(60)  NOT NULL,
+    senha          VARCHAR(128) NOT NULL,
+    salt           VARCHAR(128) NOT NULL,
     imagem_perfil  VARCHAR(255),
     descricao      VARCHAR(255),
-    reputacao      float     default 0.0,
+    reputacao      float     DEFAULT 0.0,
     ra             INTEGER UNIQUE,
     data_criacao   TIMESTAMP DEFAULT current_timestamp,
     data_alteracao TIMESTAMP DEFAULT current_timestamp,
