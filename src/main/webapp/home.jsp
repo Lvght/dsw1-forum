@@ -6,7 +6,7 @@
 
     <body>
         <div class="home">
-                <p>É isso aí!</p>
+                <p>Eh isso ai!</p>
                 <p>${sessionScope.user.name}</p>
         </div>
 </body>

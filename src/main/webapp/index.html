@@ -19,26 +19,93 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+
+    <style>
+        body {
+            background-color: #DCDCDC;
+        }
+
+        input {
+            width: 100%;
+            border-radius: 30px;
+            height: 50px;
+            border-color: transparent;
+            margin-top: 10px;
+            background-color: #C4C4C4;
+            padding: 10px;
+        }
+
+        .vertical-center {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .jumbotron {
+            margin-bottom: 0 !important;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 530px;
+        }
+
+        hr {
+            border-top: 2px solid #6c6c6c;
+        }
+
+        .buttom {
+            background-color: #404040;
+            border-radius: 30px;
+            height: 50px;
+            justify-content: center;
+            display: grid;
+        }
+
+        .buttom span {
+            vertical-align: middle;
+            height: fit-content;
+            margin: auto;
+        }
+
+        a,
+        a:hover {
+            text-decoration: none;
+            color: white;
+        }
+    </style>
 </head>
 
 <body>
-    <div class="container">
-        <div class="col">
-            <img src="resources/logo.png" alt="Logotipo do Debatr" height="40px">
-            <h1>Bem vindo(a)</h1>
+    <div class="jumbotron vertical-center">
+        <div class="container">
+            <div class="col p-4">
+                <img src="resources/logo.png" alt="Logotipo do Debatr" height="40px">
 
-            <p>Entre em sua conta para acessar o sistema</p>
-
-            <form>
-                <div class="col">
-                    <div>
-                        <input type="email">
-                    </div>
-                    <input type="password">
+                <br />
+                <div class="py-4">
+                    <h2 class="fw-bold">Bem vindo(a)</h2>
                 </div>
-            </form>
 
-            <a href="register.html">Criar conta</a>
+                <span>Entre em sua conta para acessar o sistema</span>
+
+                <form>
+                    <div>
+                        <input type="email" placeholder="Email">
+                    </div>
+                    <input type="password" placeholder="Senha">
+                </form>
+
+                <br />
+                <hr />
+                <a href="register.html">
+                    <div class="buttom">
+                        <span>
+                            Criar conta
+                        </span>
+                    </div>
+                </a>
+            </div>
         </div>
     </div>
 
