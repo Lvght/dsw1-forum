@@ -17,10 +17,13 @@ import java.util.List;
 public class RegisterServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {}
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+    }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         final String name = request.getParameter("name");
         final String email = request.getParameter("email");
         final String plaintextPassword = request.getParameter("password");
@@ -32,7 +35,7 @@ public class RegisterServlet extends HttpServlet {
 
         if (UserDAO.insert(user, plaintextPassword)) {
             request.getSession().setAttribute("user", user);
-            response.sendRedirect(request.getContextPath() + "/home.jsp");
+            response.sendRedirect(request.getContextPath() + "/dashboard.jsp");
         } else {
             response.getWriter().println("Deu errado :(");
         }
