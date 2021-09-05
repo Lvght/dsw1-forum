@@ -18,11 +18,8 @@ public class ForumController extends HttpServlet {
 
         List<Forum> listaForuns = ForumDAO.getAll();
         request.setAttribute("listaForuns", listaForuns);
-        for (Forum forum : listaForuns) {
-            response.getWriter().println("Titulo: " + forum.getTitulo());
-            response.getWriter().println("Descricao: " + forum.getDescricao());
-            response.getWriter().println();
-        }
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/listaForuns.jsp");
+        dispatcher.forward(request, response);
     }
 
     @Override
