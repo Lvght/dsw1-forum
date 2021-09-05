@@ -44,9 +44,9 @@ public class UserDAO extends GenericDAO {
 
 
     /**
-     * @param user O usuário que será criado. Deve conter os dados que serão inseridos no banco de dados. Ao final da
-     *             operação, o ID do [user] será atualizado para corresponder ao do banco de dados.
-     * @param pureTextPassword - A senha em texto puro.
+     * @param user             O usuário que será criado. Deve conter os dados que serão inseridos no banco de dados. Ao final da
+     *                         operação, o ID do [user] será atualizado para corresponder ao do banco de dados.
+     * @param pureTextPassword A senha em texto puro.
      * @return Um boolean indicando se a operação foi bem-sucedida ou não.
      */
     public static boolean insert(User user, String pureTextPassword) {
@@ -87,22 +87,95 @@ public class UserDAO extends GenericDAO {
                 connection.close();
 
                 return true;
-            }
-
-            catch (SQLException e) {
+            } catch (SQLException e) {
                 return false;
             }
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
         return false;
     }
 
+    /**
+     * @param username          O nome de usuário em texto puro.
+     * @param plaintextPassword A senha em texto puro.
+     * @return [true], se a senha está correta. [false], caso contrário.
+     */
+    public static boolean verifyPassword(String username, String plaintextPassword) {
+
+        final String query = "SELECT salt, senha FROM usuario WHERE username=? LIMIT 1";
+
+        // Tenta efetuar a consulta.
+        try {
+            Connection connection = UserDAO.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            statement.setString(1, username);
+
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+            final String base64EncodedPassword = resultSet.getString("senha");
+            final String base64EncodedSalt = resultSet.getString("salt");
+
+            statement.close();
+            connection.close();
+
+            byte[] decodedSalt = Base64.getDecoder().decode(base64EncodedSalt);
+            byte[] verificationHash = UserDAO.getHashedPassword(plaintextPassword, decodedSalt);
+
+            if (Base64.getEncoder().encodeToString(verificationHash).equals(base64EncodedPassword)) {
+                return true;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    /**
+     * @param username Username do usuário que se deseja buscar.
+     * @return Um objeto User se bem sucedido. [null], caso contrário.
+     */
+    public static User getByUsername(String username) {
+        final String query = "SELECT nome, id_usuario, email, imagem_perfil, descricao, reputacao, ra " +
+                "FROM usuario WHERE username=?;";
+
+        try {
+            Connection connection = UserDAO.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, username);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            statement.close();
+            connection.close();
+
+            long id = resultSet.getLong("id_usuario");
+            String name = resultSet.getString("nome");
+            String email = resultSet.getString("email");
+            String profileImageUrl = resultSet.getString("imagem_perfil");
+            String description = resultSet.getString("descricao");
+            double reputation = resultSet.getDouble("reputacao");
+            int academicRecord = resultSet.getInt("ra");
+
+
+            return new User(id, name, email, username, profileImageUrl, description, reputation,
+                    academicRecord != 0, academicRecord);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     public static void main(String[] args) {
-        final String password = "1234567";
-        final String hashedPassword = "N3uLTBbhRaGJymbpvqxmqg==";
-        final String salt = "gBtvn8aKkmNVKD3YVDXIEw==";
+        final String password = "123456";
+        final String hashedPassword = "osB4L18WYxPo5/jzQ+a6qg==";
+        final String salt = "zlgX5MnDKutZzeqQe0vuHw==";
 
         final byte[] decodedPassword = Base64.getDecoder().decode(hashedPassword);
         final byte[] decodedSalt = Base64.getDecoder().decode(salt);

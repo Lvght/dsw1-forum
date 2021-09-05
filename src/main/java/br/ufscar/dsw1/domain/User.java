@@ -5,11 +5,11 @@ public class User {
     private String name;
     private String email;
     private String username;
-    private String pureTextPassword;
     private String profileImageUrl;
     private String description;
     private double reputation;
     private boolean isVerified;
+    private int academicRecord;
 
     public User(String name, String email, String username) {
         this.name = name;
@@ -17,16 +17,21 @@ public class User {
         this.username = username;
     }
 
+    public User(long id, String name, String email, String username, String profileImageUrl, String description,
+                double reputation, boolean isVerified, int academicRecord) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.username = username;
+        this.profileImageUrl = profileImageUrl;
+        this.description = description;
+        this.reputation = reputation;
+        this.isVerified = isVerified;
+        this.academicRecord = academicRecord;
+    }
+
     public long getId() {
         return id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public void setId(long id) {
@@ -47,6 +52,14 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getProfileImageUrl() {
@@ -79,5 +92,13 @@ public class User {
 
     public void setVerified(boolean verified) {
         isVerified = verified;
+    }
+
+    public int getAcademicRecord() {
+        return academicRecord;
+    }
+
+    public void setAcademicRecord(int academicRecord) {
+        this.academicRecord = academicRecord;
     }
 }
