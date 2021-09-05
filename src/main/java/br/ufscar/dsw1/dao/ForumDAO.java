@@ -17,7 +17,7 @@ public class ForumDAO extends GenericDAO {
         // Tenta salvar no banco de dados.
         try {
             Connection connection = ForumDAO.getConnection();
-            PreparedStatement statement = connection.prepareStatement(query, new String[] { "id_forum" });
+            PreparedStatement statement = connection.prepareStatement(query, new String[]{"id_forum"});
 
             statement.setLong(1, forum.getId_dono());
             statement.setInt(2, forum.getEscopo_postagem());
@@ -43,12 +43,10 @@ public class ForumDAO extends GenericDAO {
                 connection.close();
 
                 return true;
-            }
-
-            catch (SQLException e) {
+            } catch (SQLException e) {
                 return false;
             }
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
@@ -83,7 +81,7 @@ public class ForumDAO extends GenericDAO {
             resultSet.close();
             statement.close();
             connection.close();
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return listaForuns;
