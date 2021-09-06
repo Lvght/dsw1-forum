@@ -17,7 +17,7 @@ public class ForumDAO extends GenericDAO {
         // Tenta salvar no banco de dados.
         try {
             Connection connection = ForumDAO.getConnection();
-            PreparedStatement statement = connection.prepareStatement(query, new String[]{"id_forum"});
+            PreparedStatement statement = connection.prepareStatement(query, new String[] { "id_forum" });
 
             statement.setLong(1, forum.getId_dono());
             statement.setInt(2, forum.getEscopo_postagem());
@@ -51,6 +51,7 @@ public class ForumDAO extends GenericDAO {
         }
 
         return false;
+
     }
 
     public static List<Forum> getAll() {
@@ -85,5 +86,42 @@ public class ForumDAO extends GenericDAO {
             e.printStackTrace();
         }
         return listaForuns;
+    }
+
+    public static Forum getForum(Long id) {
+
+        Forum forum = null;
+
+        String query = "SELECT * from Forum WHERE id_forum = ?";
+
+        try {
+            Connection connection = ForumDAO.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            statement.setLong(1, id);
+
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                Long id_dono = resultSet.getLong("id_dono");
+                int escopo_postagem = resultSet.getInt("escopo_postagem");
+                int escopo_acesso = resultSet.getInt("escopo_acesso");
+                String titulo = resultSet.getString("titulo");
+                String descricao = resultSet.getString("descricao");
+                String icone = resultSet.getString("icone");
+
+                forum = new Forum(id_dono, escopo_postagem, escopo_acesso, titulo, descricao, icone);
+
+                forum.setId(id);
+            }
+
+            resultSet.close();
+            statement.close();
+            connection.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return forum;
     }
 }

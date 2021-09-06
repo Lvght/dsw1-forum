@@ -9,17 +9,33 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "ForumServlet", value = "/forum")
+@WebServlet(name = "ForumServlet", value = "/forum/*")
 public class ForumController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        List<Forum> listaForuns = ForumDAO.getAll();
-        request.setAttribute("listaForuns", listaForuns);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/listaForuns.jsp");
-        dispatcher.forward(request, response);
+        String action = request.getPathInfo();
+        if (action == null) {
+            action = "";
+        }
+
+        try {
+            switch (action) {
+                case "":
+                    listar(request, response);
+                    break;
+                case "/especifico":
+                    getForum(request, response);
+                    break;
+                default:
+                    listar(request, response);
+                    break;
+            }
+        } catch (RuntimeException | IOException | ServletException e) {
+            throw new ServletException(e);
+        }
     }
 
     @Override
@@ -41,5 +57,21 @@ public class ForumController extends HttpServlet {
         } else {
             response.getWriter().println("Deu errado :(");
         }
+    }
+
+    private void listar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        List<Forum> listaForuns = ForumDAO.getAll();
+        request.setAttribute("listaForuns", listaForuns);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/listaForuns.jsp");
+        dispatcher.forward(request, response);
+    }
+
+    private void getForum(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        final Long id = Long.parseLong(request.getParameter("id"));
+        final Forum forum = ForumDAO.getForum(id);
+        request.setAttribute("forum", forum);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/forum.jsp");
+        dispatcher.forward(request, response);
     }
 }

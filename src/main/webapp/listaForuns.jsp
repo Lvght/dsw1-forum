@@ -10,12 +10,8 @@
     <body>
         <div class="listaForum">
             <c:forEach var="forum" items="${requestScope.listaForuns}">
-                    <h2>Titulo: ${forum.titulo}</h2>
+                    <h2>Titulo: <a href="./forum/especifico?id=${forum.id}">${forum.titulo}</a></h2>
                     <h3>Descricao: ${forum.descricao}</h3>
-                    <h3>Icone: ${forum.icone}</h3>
-                    <h3>Id dono: ${forum.id_dono}</h3>
-                    <h3>Escopo de Postagem: ${forum.escopo_postagem}</h3>
-                    <h3>Escopo de acesso: ${forum.escopo_acesso}</h3>
                     <hr/>
             </c:forEach>  
         </div>

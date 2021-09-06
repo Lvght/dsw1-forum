@@ -29,7 +29,7 @@
         <div class="forumForm">
             <h1>Criar um forum</h1>
             <form action="./forum" method="POST">
-                <input name="id_dono" value=${sessionScope.user.id} hidden required/>
+                <input name="id_dono" value="${sessionScope.user.id}" hidden required/>
 
                 <label for="escopoAcesso">Quem pode visualizar</label>
                 <select id="escopoAcesso" name="escopo_acesso" required>
