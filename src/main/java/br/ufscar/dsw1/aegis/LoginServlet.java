@@ -11,17 +11,19 @@ import java.io.IOException;
 @WebServlet(name = "LoginServlet", value = "/login")
 public class LoginServlet extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         String username = request.getParameter("username");
         String plaintextPassword = request.getParameter("password");
 
         if (UserDAO.verifyPassword(username, plaintextPassword)) {
-            response.getWriter().println("Você acertou a senha");
+            response.sendRedirect(request.getContextPath() + "/dashboard.jsp");
         } else {
             response.getWriter().println("Você errou a senha");
         }

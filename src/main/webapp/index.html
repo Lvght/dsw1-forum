@@ -55,17 +55,19 @@
         }
 
         .buttom {
-            background-color: #404040;
+            background-color: #404040 !important;
             border-radius: 30px;
             height: 50px;
             justify-content: center;
             display: grid;
+            color: white;
         }
 
         .buttom span {
             vertical-align: middle;
             height: fit-content;
             margin: auto;
+            color: white;
         }
 
         a,
@@ -89,14 +91,12 @@
 
                 <span>Entre em sua conta para acessar o sistema</span>
 
-                <form>
-                    <div>
-                        <input type="email" placeholder="Email">
-                    </div>
-                    <input type="password" placeholder="Senha">
-                </form>
+                <form action="./login" method="post">
+                    <input type="text" placeholder="Nome de usuário" name="username" required>
+                    <input type="password" placeholder="Senha" name="password" required>
 
-                <br />
+                    <input class="buttom" type="submit" value="Entrar">
+                </form>
                 <hr />
                 <a href="register.html">
                     <div class="buttom">
