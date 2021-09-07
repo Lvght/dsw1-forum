@@ -42,10 +42,11 @@ public class UserDAO extends GenericDAO {
         return false;
     }
 
-
     /**
-     * @param user             O usuário que será criado. Deve conter os dados que serão inseridos no banco de dados. Ao final da
-     *                         operação, o ID do [user] será atualizado para corresponder ao do banco de dados.
+     * @param user             O usuário que será criado. Deve conter os dados que
+     *                         serão inseridos no banco de dados. Ao final da
+     *                         operação, o ID do [user] será atualizado para
+     *                         corresponder ao do banco de dados.
      * @param pureTextPassword A senha em texto puro.
      * @return Um boolean indicando se a operação foi bem-sucedida ou não.
      */
@@ -62,7 +63,7 @@ public class UserDAO extends GenericDAO {
         // Tenta salvar no banco de dados.
         try {
             Connection connection = UserDAO.getConnection();
-            PreparedStatement statement = connection.prepareStatement(query, new String[]{"id_usuario"});
+            PreparedStatement statement = connection.prepareStatement(query, new String[] { "id_usuario" });
 
             statement.setString(1, user.getName());
             statement.setString(2, user.getUsername());
@@ -140,8 +141,9 @@ public class UserDAO extends GenericDAO {
      * @return Um objeto User se bem sucedido. [null], caso contrário.
      */
     public static User getByUsername(String username) {
-        final String query = "SELECT nome, id_usuario, email, imagem_perfil, descricao, reputacao, ra " +
-                "FROM usuario WHERE username=?;";
+        final String query = "SELECT nome, id_usuario, email, imagem_perfil, descricao, reputacao, ra FROM usuario WHERE username=?;";
+
+        User user = null;
 
         try {
             Connection connection = UserDAO.getConnection();
@@ -150,26 +152,27 @@ public class UserDAO extends GenericDAO {
 
             ResultSet resultSet = statement.executeQuery();
 
-            statement.close();
-            connection.close();
+            if (resultSet.next()) {
+                long id = resultSet.getLong("id_usuario");
+                String name = resultSet.getString("nome");
+                String email = resultSet.getString("email");
+                String profileImageUrl = resultSet.getString("imagem_perfil");
+                String description = resultSet.getString("descricao");
+                double reputation = resultSet.getDouble("reputacao");
+                int academicRecord = resultSet.getInt("ra");
 
-            long id = resultSet.getLong("id_usuario");
-            String name = resultSet.getString("nome");
-            String email = resultSet.getString("email");
-            String profileImageUrl = resultSet.getString("imagem_perfil");
-            String description = resultSet.getString("descricao");
-            double reputation = resultSet.getDouble("reputacao");
-            int academicRecord = resultSet.getInt("ra");
+                statement.close();
+                connection.close();
 
-
-            return new User(id, name, email, username, profileImageUrl, description, reputation,
-                    academicRecord != 0, academicRecord);
+                user = new User(id, name, email, username, profileImageUrl, description, reputation,
+                        academicRecord != 0, academicRecord);
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return null;
+        return user;
     }
 
     public static void main(String[] args) {

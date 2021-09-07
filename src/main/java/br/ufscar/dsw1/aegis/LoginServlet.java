@@ -23,6 +23,9 @@ public class LoginServlet extends HttpServlet {
         String plaintextPassword = request.getParameter("password");
 
         if (UserDAO.verifyPassword(username, plaintextPassword)) {
+            User user = UserDAO.getByUsername(username);
+
+            request.getSession().setAttribute("user", user);
             response.sendRedirect(request.getContextPath() + "/dashboard.jsp");
         } else {
             response.getWriter().println("Você errou a senha");
