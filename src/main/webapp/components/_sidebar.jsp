@@ -20,11 +20,16 @@
               margin: 0;
             }
 
+            .sidebarPadding{
+              height: 100vh;
+              width: 250px;
+            }
+
         </style>
   </head>
 
     <body>
-      <div class="sidebar sidebar-show">
+      <div class="sidebar sidebar-show sidebar-fixed">
         <ul class="sidebar-nav">
           <li class="nav-title">
             <img src="${pageContext.request.contextPath}/resources/logoReduzido.png" alt="Logotipo do Debatr" height="40px">
@@ -52,6 +57,8 @@
           </li>
         </ul>
         <button class="sidebar-toggler" type="button"></button>
+      </div>
+      <div class="sidebarPadding">
       </div>
     </body>
 </html>

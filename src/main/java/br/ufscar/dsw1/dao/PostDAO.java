@@ -2,6 +2,14 @@ package br.ufscar.dsw1.dao;
 
 import br.ufscar.dsw1.domain.Post;
 
+import br.ufscar.dsw1.domain.User;
+
+import br.ufscar.dsw1.domain.Forum;
+
+import br.ufscar.dsw1.dao.UserDAO;
+
+import br.ufscar.dsw1.dao.ForumDAO;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -79,6 +87,47 @@ public class PostDAO extends GenericDAO {
                 String conteudo = resultSet.getString("conteudo");
 
                 Post post = new Post(id_autor, id_forum, id_topico, titulo, conteudo);
+                User user = UserDAO.getById(id_autor);
+                post.setAutor(user);
+                post.setId(id);
+                listPosts.add(post);
+            }
+
+            resultSet.close();
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listPosts;
+    }
+
+    public static List<Post> getForumPosts(Long id_forum) {
+
+        List<Post> listPosts = new ArrayList<>();
+
+        String query = "SELECT * from Postagem WHERE id_forum = ?";
+
+        try {
+            Connection connection = ForumDAO.getConnection();
+
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            statement.setLong(1, id_forum);
+
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Long id = resultSet.getLong("id_postagem");
+                Long id_autor = resultSet.getLong("id_autor");
+                Long id_topico = resultSet.getLong("id_topico");
+                String titulo = resultSet.getString("titulo");
+                String conteudo = resultSet.getString("conteudo");
+
+                Post post = new Post(id_autor, id_forum, id_topico, titulo, conteudo);
+                User user = UserDAO.getById(id_autor);
+                Forum forum = ForumDAO.getForum(id_forum);
+                post.setAutor(user);
+                post.setForum(forum);
                 post.setId(id);
                 listPosts.add(post);
             }
@@ -113,6 +162,10 @@ public class PostDAO extends GenericDAO {
                 String conteudo = resultSet.getString("conteudo");
 
                 post = new Post(id_autor, id_forum, id_topico, titulo, conteudo);
+                User user = UserDAO.getById(id_autor);
+                Forum forum = ForumDAO.getForum(id_forum);
+                post.setAutor(user);
+                post.setForum(forum);
                 post.setId(id);
             }
 

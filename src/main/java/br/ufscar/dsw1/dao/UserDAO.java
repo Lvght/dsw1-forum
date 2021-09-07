@@ -175,6 +175,41 @@ public class UserDAO extends GenericDAO {
         return user;
     }
 
+    public static User getById(Long id) {
+        final String query = "SELECT nome, username, id_usuario, email, imagem_perfil, descricao, reputacao, ra FROM usuario WHERE id_usuario=?;";
+
+        User user = null;
+
+        try {
+            Connection connection = UserDAO.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setLong(1, id);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                String name = resultSet.getString("nome");
+                String email = resultSet.getString("email");
+                String username = resultSet.getString("username");
+                String profileImageUrl = resultSet.getString("imagem_perfil");
+                String description = resultSet.getString("descricao");
+                double reputation = resultSet.getDouble("reputacao");
+                int academicRecord = resultSet.getInt("ra");
+
+                statement.close();
+                connection.close();
+
+                user = new User(id, name, email, username, profileImageUrl, description, reputation,
+                        academicRecord != 0, academicRecord);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return user;
+    }
+
     public static void main(String[] args) {
         final String password = "123456";
         final String hashedPassword = "osB4L18WYxPo5/jzQ+a6qg==";

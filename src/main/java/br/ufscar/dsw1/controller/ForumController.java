@@ -3,6 +3,9 @@ package br.ufscar.dsw1.controller;
 import br.ufscar.dsw1.dao.ForumDAO;
 import br.ufscar.dsw1.domain.Forum;
 
+import br.ufscar.dsw1.dao.PostDAO;
+import br.ufscar.dsw1.domain.Post;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
@@ -70,7 +73,9 @@ public class ForumController extends HttpServlet {
             throws ServletException, IOException {
         final Long id = Long.parseLong(request.getParameter("id"));
         final Forum forum = ForumDAO.getForum(id);
+        List<Post> posts = PostDAO.getForumPosts(id);
         request.setAttribute("forum", forum);
+        request.setAttribute("posts", posts);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/forum.jsp");
         dispatcher.forward(request, response);
     }
