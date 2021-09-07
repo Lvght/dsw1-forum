@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -58,7 +59,7 @@
                 height: 50px;
             }
 
-            input[type="submit"]{
+            input[type="submit"], .discard{
                 width: fit-content;
                 height: 40px;
                 padding: 0 15px;
@@ -73,10 +74,17 @@
                 display: flex;
             }
 
+            .actionButtons{
+                display: flex;
+                line-height: 35px;
+            }
+
             .discard{
                 background-color: white;
                 border: 2px solid #142931!important;
                 color: #142931;
+                margin-right: 10px;
+                cursor: pointer;
             }
 
         </style>
@@ -86,21 +94,19 @@
         <div class="criarPost">
             <h1>Criar um novo post</h1>
             <hr />
-            <form action="./forum" method="POST">
-                <input name="id_dono" value="${sessionScope.user.id}" hidden required/>
+            <form action="./post" method="POST">
+                <input name="id_autor" value="${sessionScope.user.id}" hidden required/>
 
                 <select class="forumSelect" name="id_forum" required>
-                    <option value=0 selected disabled hidden>
+                    <option value="" selected disabled hidden>
                         Escolha um forum
                     </option>
 
-                    <option value=1>
-                        UFSCar
-                    </option>
-
-                    <option value=2>
-                        DC
-                    </option>
+                    <c:forEach var="forum" items="${requestScope.listaForuns}">
+                        <option value="${forum.id}">
+                            ${forum.titulo}
+                        </option>
+                    </c:forEach>  
 
                 </select>
 
@@ -111,24 +117,17 @@
 
                 <textarea name="conteudo" placeholder="Conteudo (suporta markdown)" required></textarea>
 
-                <select class="selectTopic" name="id_topico" required>
-                    <option value=0 selected disabled hidden>
+                <select class="selectTopic" name="id_topico">
+                    <option value="" selected>
                         Geral
                     </option>
-
-                    <option value=1>
-                        CAP
-                    </option>
-
-                    <option value=2>
-                        DSW1
-                    </option>
-
                 </select>
                 <br />
                 <hr />
                 <div class="actionButtons">
-                    <input class="discard" type="submit" value="Descartar">
+                    <div class="discard" onclick="window.history.back();">
+                        <span>Descartar</span>
+                    </div>
                     <input type="submit" value="Postar">
                 </div> 
             </form>

@@ -46,7 +46,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="./criarPost.jsp">
+            <a class="nav-link" href="./post">
               <i class="nav-icon cil-speedometer"></i>Criar Post
             </a>
           </li>
