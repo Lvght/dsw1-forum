@@ -5,8 +5,15 @@
     <head>
         <meta charset="UTF-8">
         <title>Title</title>
+
+        <style>
+            body{
+                display: flex;
+            }
+        </style>
     </head>
     <body>
+        <%@include file="./layout.jsp" %>
         <div class="forum">
             <h2>Titulo: ${requestScope.forum.titulo}</h2>
             <h3>Descricao: ${requestScope.forum.descricao}</h3>

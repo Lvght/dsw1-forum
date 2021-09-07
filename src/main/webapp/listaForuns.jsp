@@ -6,8 +6,14 @@
     <head>
         <meta charset="UTF-8">
         <title>Title</title>
+        <style>
+            body{
+                display: flex;
+            }
+        </style>
     </head>
     <body>
+        <%@include file="layout.jsp" %>
         <div class="listaForum">
             <c:forEach var="forum" items="${requestScope.listaForuns}">
                     <h2>Titulo: <a href="./forum/especifico?id=${forum.id}">${forum.titulo}</a></h2>

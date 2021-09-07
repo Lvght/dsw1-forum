@@ -27,7 +27,7 @@
       <div class="sidebar sidebar-show">
         <ul class="sidebar-nav">
           <li class="nav-title">
-            <img src="resources/logoReduzido.png" alt="Logotipo do Debatr" height="40px">
+            <img src="/debatr/resources/logoReduzido.png" alt="Logotipo do Debatr" height="40px">
             <h1>Debatr</h1>
           </li>
           <li class="nav-item">
@@ -43,6 +43,11 @@
           <li class="nav-item">
             <a class="nav-link" href="./forum">
               <i class="nav-icon cil-speedometer"></i>Listar Foruns
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./criarPost.jsp">
+              <i class="nav-icon cil-speedometer"></i>Criar Post
             </a>
           </li>
         </ul>

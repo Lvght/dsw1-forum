@@ -23,9 +23,14 @@
             .forumForm{
                 width: 60%;
             }
+
+            body{
+                display: flex;
+            }
         </style>
     </head>
     <body>
+        <%@include file="layout.jsp" %>
         <div class="forumForm">
             <h1>Criar um forum</h1>
             <form action="./forum" method="POST">
