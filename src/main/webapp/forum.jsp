@@ -86,6 +86,34 @@
                 padding: 0 10px;
             }
 
+            @media only screen and (max-width: 700px){
+                .forum{
+                    width: 100%;
+                }
+
+                .forum .details{
+                    flex-wrap: wrap;
+                }
+
+                .forum .action{
+                    margin-top: 20px;
+                }
+
+                .forum .details > * {
+                    margin-top: auto;
+                    margin-bottom: auto;
+                    margin: auto;
+                }
+
+                .forum .forumIcon{
+                    margin-bottom: 10px;
+                }
+
+                .forum .forumInformation h2{
+                    text-align: center;
+                }
+            }
+
 
         </style>
     </head>

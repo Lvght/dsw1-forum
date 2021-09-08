@@ -70,7 +70,7 @@ public class PostDAO extends GenericDAO {
 
         List<Post> listPosts = new ArrayList<>();
 
-        String query = "SELECT * from Postagem";
+        String query = "SELECT * from Postagem ORDER BY data_criacao DESC";
 
         try {
             Connection connection = ForumDAO.getConnection();
@@ -106,7 +106,7 @@ public class PostDAO extends GenericDAO {
 
         List<Post> listPosts = new ArrayList<>();
 
-        String query = "SELECT * from Postagem WHERE id_forum = ?";
+        String query = "SELECT * from Postagem WHERE id_forum = ? ORDER BY data_criacao DESC";
 
         try {
             Connection connection = ForumDAO.getConnection();

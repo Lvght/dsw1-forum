@@ -103,6 +103,11 @@
             .post .discussao span{
                 font-size: 16px;
             }
+            @media only screen and (max-width: 700px){
+                .informations, .userInformation, .postForumInformation {
+                    flex-wrap: wrap;
+                }
+            }
 
         </style>
   </head>

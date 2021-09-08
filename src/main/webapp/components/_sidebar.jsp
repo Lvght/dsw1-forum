@@ -22,7 +22,7 @@
 
             .sidebarPadding{
               height: 100vh;
-              width: 250px;
+              width: 255px;
             }
 
         </style>

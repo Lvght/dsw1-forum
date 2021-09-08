@@ -86,6 +86,11 @@
                 margin-right: 10px;
                 cursor: pointer;
             }
+            @media only screen and (max-width: 700px){
+                .criarPost {
+                    width: 100%;
+                }
+            }
 
         </style>
     </head>
