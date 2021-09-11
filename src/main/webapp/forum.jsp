@@ -17,7 +17,7 @@
             }
 
             .forum{
-                width: 60%;
+                width: 80%;
                 padding: 30px;
             }
 
@@ -31,7 +31,8 @@
             }
 
             .forum .forumIcon{
-                width: 75px;
+                min-width: 75px;
+                max-width: 75px;
                 height: 75px;
                 border-radius: 100%;
                 overflow: hidden;

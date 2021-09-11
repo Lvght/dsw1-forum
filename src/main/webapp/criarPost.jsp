@@ -68,7 +68,7 @@
             }
 
             .criarPost{
-                width: 60%;
+                width: 80%;
             }
             .criar .post{
                 display: flex;
