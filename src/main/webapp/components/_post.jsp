@@ -4,7 +4,8 @@
         <meta charset="utf-8">      
         <style>
             .post .forumIcon, .post .userPicture{
-                width: 40px;
+                min-width: 40px;
+                max-width: 40px;
                 height: 40px;
                 border-radius: 100%;
                 overflow: hidden;
@@ -37,12 +38,12 @@
                 margin: auto;
             }
 
-            .post .header{
+            .post .postHeader{
                 border: 0;
                 padding: 20px 0;
             }
 
-            .post .header h2{
+            .post .postHeader h2{
                 font-size: 16px;
                 margin-left: 10px;
                 margin-top: auto;
@@ -79,6 +80,7 @@
             .post .topico h4{
                 color: black;
                 font-size: 16px;
+                font-weight: bold;
             }
 
             .post .discussao{
@@ -96,7 +98,8 @@
 
             .post .discussao .userPicture{
                 height: 30px;
-                width: 30px;
+                min-width: 30px;
+                max-width: 30px;
                 margin-right: 10px;
             }
 
@@ -114,7 +117,7 @@
 
     <body>
         <div class="post">
-            <div class="header">
+            <div class="postHeader">
                 <div class="informations">
                     <div class="postForumInformation">
                         <div class="forumIcon">

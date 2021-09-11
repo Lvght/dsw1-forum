@@ -46,6 +46,12 @@
                 margin: auto;
             }
 
+            .forum .forumIcon img{
+                position: relative;
+                width: 100%;
+                margin: auto;
+            }
+
             .forum .forumInformation{
                 margin-left: 10px;
             }
