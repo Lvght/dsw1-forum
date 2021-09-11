@@ -112,7 +112,7 @@
                 </div>
                 <div class="forumInformation">
                     <h1>${requestScope.forum.titulo}</h1>
-                    <h2>129 membros • ${requestScope.forum.escopo_acesso == 1 ? "livre" : "restrito"}</h2>
+                    <h2>${requestScope.forum.membros} membro${requestScope.forum.membros == 1 ? "" : "s"} • ${requestScope.forum.escopo_acesso == 1 ? "livre" : "restrito"}</h2>
                 </div>
                 <%@include file="../components/_button.jsp" %>
             </div>
