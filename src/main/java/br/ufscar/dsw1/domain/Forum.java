@@ -8,6 +8,7 @@ public class Forum {
     private String titulo;
     private String descricao;
     private String icone;
+    private long membros;
 
     public Forum(long id_dono, int escopo_postagem, int escopo_acesso, String titulo, String descricao, String icone) {
         this.id_dono = id_dono;
@@ -72,6 +73,14 @@ public class Forum {
 
     public void setIcone(String icone) {
         this.icone = icone;
+    }
+
+    public long getMembros() {
+        return membros;
+    }
+
+    public void setMembros(long membros) {
+        this.membros = membros;
     }
 
 }

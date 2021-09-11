@@ -1,5 +1,8 @@
 -- Cria o banco de dados (caso ele não exista).
-SELECT 'CREATE DATABASE debatr'
+SELECT 'CREATE DATABASE debatr WITH ENCODING = "UTF8"     
+    ENCODING = "UTF8"
+    LC_COLLATE = "en_US.utf8"
+    LC_CTYPE = "en_US.utf8";'
 WHERE NOT EXISTS(SELECT FROM pg_database WHERE datname = 'debatr')
 \gexec
 

@@ -1,64 +1,42 @@
 <!DOCTYPE html>
 <html lang="br">
     <head>
-        <meta charset="utf-8">      
-        <style>
-            .sidebar{
-                height: 100vh;
-                background-color: #00171F;
-            }
+        <meta charset="utf-8">     
+               <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
+               <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+               <link rel="stylesheet" href="${pageContext.request.contextPath}/css/sidebar.css">
+               <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script> 
+               <script src="${pageContext.request.contextPath}/js/sidebar.js"></script> 
+ </head>
 
-            .nav-title{
-              display: flex;    
-              justify-content: center;   
-              align-items: center;
-            }
-
-            .nav-title h1{
-              padding: 10px;
-              font-size: 30px;
-              margin: 0;
-            }
-
-            .sidebarPadding{
-              height: 100vh;
-              width: 255px;
-            }
-
-        </style>
-  </head>
-
-    <body>
-      <div class="sidebar sidebar-show sidebar-fixed">
-        <ul class="sidebar-nav">
-          <li class="nav-title">
-            <img src="${pageContext.request.contextPath}/resources/logoReduzido.png" alt="Logotipo do Debatr" height="40px">
-            <h1>Debatr</h1>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="${pageContext.request.contextPath}/home.jsp">
-              <i class="nav-icon cil-speedometer"></i>Inicio
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="${pageContext.request.contextPath}/forumForm.jsp">
-              <i class="nav-icon cil-speedometer"></i>Criar Forum
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="${pageContext.request.contextPath}/forum">
-              <i class="nav-icon cil-speedometer"></i>Listar Foruns
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="${pageContext.request.contextPath}/post">
-              <i class="nav-icon cil-speedometer"></i>Criar Post
-            </a>
-          </li>
-        </ul>
-        <button class="sidebar-toggler" type="button"></button>
-      </div>
-      <div class="sidebarPadding">
-      </div>
-    </body>
+<body id="body-pd" class="body-pd">
+    <header class="header body-pd" id="header">
+        <div class="header_toggle "> <i class='bx bx-menu bx-x' id="header-toggle"></i> </div>
+        <div class="header_img"> <img src="https://i.imgur.com/hczKIze.jpg" alt=""> </div>
+    </header>
+    <div class="l-navbar show" id="nav-bar">
+        <nav class="nav">
+            <div> <a href="${pageContext.request.contextPath}/home.jsp" class="nav_logo"> <img src="${pageContext.request.contextPath}/resources/logoReduzido.png" alt=""> <span class="nav_logo-name">Debatr</span> </a>
+              <div class="nav_list"> 
+                <a href="${pageContext.request.contextPath}/home.jsp" class="nav_link active"> 
+                  <i class='bx bx-grid-alt nav_icon'></i> 
+                  <span class="nav_name">Início</span> 
+                </a> 
+                <a href="${pageContext.request.contextPath}/forumForm.jsp" class="nav_link"> 
+                  <i class='bx bx-user nav_icon'></i> 
+                  <span class="nav_name">Criar Forum</span> 
+                </a> 
+                <a href="${pageContext.request.contextPath}/forum" class="nav_link">
+                  <i class='bx bx-message-square-detail nav_icon'></i> 
+                  <span class="nav_name">Listar Foruns</span>
+                </a> 
+                <a href="${pageContext.request.contextPath}/post" class="nav_link"> 
+                  <i class='bx bx-bookmark nav_icon'></i> 
+                  <span class="nav_name">Criar Post</span>
+                </a>  
+            </div> <a href="${pageContext.request.contextPath}/index.html" class="nav_link"> <i class='bx bx-log-out nav_icon'></i> <span class="nav_name">SignOut</span> </a>
+        </nav>
+    </div>
+    <!--Container Main start-->
+  </body>
 </html>

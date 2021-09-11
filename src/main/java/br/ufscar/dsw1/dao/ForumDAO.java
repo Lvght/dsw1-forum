@@ -44,6 +44,8 @@ public class ForumDAO extends GenericDAO {
 
                 return true;
             } catch (SQLException e) {
+                statement.close();
+                connection.close();
                 return false;
             }
         } catch (SQLException e) {
@@ -108,9 +110,10 @@ public class ForumDAO extends GenericDAO {
                 String titulo = resultSet.getString("titulo");
                 String descricao = resultSet.getString("descricao");
                 String icone = resultSet.getString("icone");
-
+                Long membros = ForumDAO.contarMembros(id);
                 forum = new Forum(id_dono, escopo_postagem, escopo_acesso, titulo, descricao, icone);
 
+                forum.setMembros(membros);
                 forum.setId(id);
             }
 
@@ -123,5 +126,128 @@ public class ForumDAO extends GenericDAO {
         }
 
         return forum;
+    }
+
+    public static boolean usuarioIngressa(Long id_usuario, Long id_forum) {
+
+        String query = "SELECT * from usuario_ingressa_forum WHERE id_usuario = ? AND id_forum = ?";
+
+        try {
+            Connection connection = ForumDAO.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            statement.setLong(1, id_usuario);
+            statement.setLong(2, id_forum);
+
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                resultSet.close();
+                statement.close();
+                connection.close();
+                return true;
+            } else {
+                resultSet.close();
+                statement.close();
+                connection.close();
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean ingressar(Long id_usuario, Long id_forum) {
+
+        String query = "INSERT INTO usuario_ingressa_forum (id_usuario, id_forum) VALUES (?, ?)";
+
+        if (usuarioIngressa(id_usuario, id_forum))
+            return true;
+        try {
+            Connection connection = ForumDAO.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            statement.setLong(1, id_usuario);
+            statement.setLong(2, id_forum);
+
+            final int affectedRows = statement.executeUpdate();
+
+            // Nenhuma linha afetada, erro ao fazer a inserção.
+            if (affectedRows == 0) {
+                statement.close();
+                connection.close();
+                return false;
+            } else {
+                statement.close();
+                connection.close();
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean sair(Long id_usuario, Long id_forum) {
+
+        String query = "DELETE FROM usuario_ingressa_forum WHERE id_usuario = ? AND id_forum = ?";
+
+        if (!usuarioIngressa(id_usuario, id_forum))
+            return true;
+        try {
+            Connection connection = ForumDAO.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            statement.setLong(1, id_usuario);
+            statement.setLong(2, id_forum);
+
+            final int affectedRows = statement.executeUpdate();
+
+            // Nenhuma linha afetada, erro ao fazer a inserção.
+            if (affectedRows == 0) {
+                statement.close();
+                connection.close();
+                return false;
+            } else {
+                statement.close();
+                connection.close();
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static long contarMembros(Long id_forum) {
+
+        String query = "SELECT COUNT(*) AS rowcount FROM usuario_ingressa_forum WHERE id_forum = ?";
+
+        try {
+            Connection connection = ForumDAO.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            statement.setLong(1, id_forum);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            // Nenhuma linha afetada, erro ao fazer a inserção.
+            if (resultSet.next()) {
+                int count = resultSet.getInt("rowcount");
+                resultSet.close();
+                statement.close();
+                connection.close();
+                return count;
+            } else {
+                resultSet.close();
+                statement.close();
+                connection.close();
+                return 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
 }

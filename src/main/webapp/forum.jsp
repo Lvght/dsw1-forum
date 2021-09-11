@@ -5,7 +5,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Title</title>
-
+        <script src="../js/ajax.js" type="text/javascript"></script>
         <style>
             body{
                 display: flex;
@@ -17,7 +17,7 @@
             }
 
             .forum{
-                width: 60%;
+                width: 80%;
                 padding: 30px;
             }
 
@@ -31,12 +31,19 @@
             }
 
             .forum .forumIcon{
-                width: 75px;
+                min-width: 75px;
+                max-width: 75px;
                 height: 75px;
                 border-radius: 100%;
                 overflow: hidden;
                 display: grid;
                 background-color: #f5f5f5;
+            }
+
+            .forum .forumIcon img{
+                position: relative;
+                width: 100%;
+                margin: auto;
             }
 
             .forum .forumIcon img{
@@ -62,20 +69,6 @@
             .forum .description h2{
                 font-size: 16px;
                 font-weight: 400;
-            }
-
-            .forum .action{
-                margin-left: auto;
-            }
-
-            .forum .action input{
-                width: fit-content;
-                height: 40px;
-                padding: 0 15px;
-                border-radius: 10px;
-                border: 0;
-                background-color: #142931;
-                color: white;
             }
 
             .forum .description{
@@ -126,11 +119,9 @@
                 </div>
                 <div class="forumInformation">
                     <h1>${requestScope.forum.titulo}</h1>
-                    <h2>129 membros • ${requestScope.forum.escopo_acesso == 1 ? "livre" : "restrito"}</h2>
+                    <h2>${requestScope.forum.membros} membro${requestScope.forum.membros == 1 ? "" : "s"} • ${requestScope.forum.escopo_acesso == 1 ? "livre" : "restrito"}</h2>
                 </div>
-                <div class="action">
-                    <input type="submit" value="Ingressar">
-                </div>
+                <%@include file="../components/_button.jsp" %>
             </div>
             <div class="description">
                 <h2>${requestScope.forum.descricao}</h2>
