@@ -5,7 +5,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Title</title>
-
+        <script src="../js/ajax.js" type="text/javascript"></script>
         <style>
             body{
                 display: flex;
@@ -64,20 +64,6 @@
                 font-weight: 400;
             }
 
-            .forum .action{
-                margin-left: auto;
-            }
-
-            .forum .action input{
-                width: fit-content;
-                height: 40px;
-                padding: 0 15px;
-                border-radius: 10px;
-                border: 0;
-                background-color: #142931;
-                color: white;
-            }
-
             .forum .description{
                 padding: 20px 0 0 0;
             }
@@ -128,9 +114,7 @@
                     <h1>${requestScope.forum.titulo}</h1>
                     <h2>129 membros • ${requestScope.forum.escopo_acesso == 1 ? "livre" : "restrito"}</h2>
                 </div>
-                <div class="action">
-                    <input type="submit" value="Ingressar">
-                </div>
+                <%@include file="../components/_button.jsp" %>
             </div>
             <div class="description">
                 <h2>${requestScope.forum.descricao}</h2>

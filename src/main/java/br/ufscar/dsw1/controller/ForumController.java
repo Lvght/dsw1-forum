@@ -6,6 +6,8 @@ import br.ufscar.dsw1.domain.Forum;
 import br.ufscar.dsw1.dao.PostDAO;
 import br.ufscar.dsw1.domain.Post;
 
+import br.ufscar.dsw1.domain.User;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
@@ -32,6 +34,12 @@ public class ForumController extends HttpServlet {
                 case "/especifico":
                     getForum(request, response);
                     break;
+                case "/ingressarForum":
+                    ingressarForum(request, response);
+                    break;
+                case "/sairForum":
+                    sairForum(request, response);
+                    break;
                 default:
                     listar(request, response);
                     break;
@@ -44,6 +52,23 @@ public class ForumController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String action = request.getPathInfo();
+        if (action == null) {
+            action = "";
+        }
+
+        try {
+            switch (action) {
+                case "":
+                    criar(request, response);
+                    break;
+            }
+        } catch (RuntimeException | IOException | ServletException e) {
+            throw new ServletException(e);
+        }
+    }
+
+    private void criar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         final long id_dono = Long.parseLong(request.getParameter("id_dono"));
         final int escopo_postagem = Integer.parseInt(request.getParameter("escopo_postagem"));
         final int escopo_acesso = Integer.parseInt(request.getParameter("escopo_acesso"));
@@ -74,9 +99,47 @@ public class ForumController extends HttpServlet {
         final Long id = Long.parseLong(request.getParameter("id"));
         final Forum forum = ForumDAO.getForum(id);
         List<Post> posts = PostDAO.getForumPosts(id);
+
         request.setAttribute("forum", forum);
+        final User user = (User) request.getSession().getAttribute("user");
+
+        if (ForumDAO.usuarioIngressa(user.getId(), id))
+            request.setAttribute("status", "sair");
+        else
+            request.setAttribute("status", "ingressar");
+
         request.setAttribute("posts", posts);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/forum.jsp");
+        dispatcher.forward(request, response);
+    }
+
+    private void ingressarForum(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        final Long id = Long.parseLong(request.getParameter("id_forum"));
+        final Forum forum = ForumDAO.getForum(id);
+        final User user = (User) request.getSession().getAttribute("user");
+        request.setAttribute("forum", forum);
+        if (ForumDAO.ingressar(user.getId(), Long.parseLong(request.getParameter("id_forum")))) {
+            request.setAttribute("status", "sair");
+        } else {
+            request.setAttribute("status", "ingressar");
+        }
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/components/_button.jsp");
+        dispatcher.forward(request, response);
+    }
+
+    private void sairForum(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        final Long id = Long.parseLong(request.getParameter("id_forum"));
+        final Forum forum = ForumDAO.getForum(id);
+        final User user = (User) request.getSession().getAttribute("user");
+        request.setAttribute("forum", forum);
+        if (ForumDAO.sair(user.getId(), Long.parseLong(request.getParameter("id_forum")))) {
+            request.setAttribute("status", "ingressar");
+        } else {
+            request.setAttribute("status", "sair");
+        }
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/components/_button.jsp");
         dispatcher.forward(request, response);
     }
 }

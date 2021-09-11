@@ -124,4 +124,88 @@ public class ForumDAO extends GenericDAO {
 
         return forum;
     }
+
+    public static boolean usuarioIngressa(Long id_usuario, Long id_forum) {
+
+        String query = "SELECT * from usuario_ingressa_forum WHERE id_usuario = ? AND id_forum = ?";
+
+        try {
+            Connection connection = ForumDAO.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            statement.setLong(1, id_usuario);
+            statement.setLong(2, id_forum);
+
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                resultSet.close();
+                statement.close();
+                connection.close();
+                return true;
+            } else {
+                resultSet.close();
+                statement.close();
+                connection.close();
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean ingressar(Long id_usuario, Long id_forum) {
+
+        String query = "INSERT INTO usuario_ingressa_forum (id_usuario, id_forum) VALUES (?, ?)";
+
+        if (usuarioIngressa(id_usuario, id_forum))
+            return true;
+        try {
+            Connection connection = ForumDAO.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            statement.setLong(1, id_usuario);
+            statement.setLong(2, id_forum);
+
+            final int affectedRows = statement.executeUpdate();
+
+            // Nenhuma linha afetada, erro ao fazer a inserção.
+            if (affectedRows == 0) {
+                return false;
+            } else {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean sair(Long id_usuario, Long id_forum) {
+
+        String query = "DELETE FROM usuario_ingressa_forum WHERE id_usuario = ? AND id_forum = ?";
+
+        if (!usuarioIngressa(id_usuario, id_forum))
+            return true;
+        try {
+            Connection connection = ForumDAO.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            statement.setLong(1, id_usuario);
+            statement.setLong(2, id_forum);
+
+            final int affectedRows = statement.executeUpdate();
+
+            // Nenhuma linha afetada, erro ao fazer a inserção.
+            if (affectedRows == 0) {
+                return false;
+            } else {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
