@@ -3,6 +3,9 @@ package br.ufscar.dsw1.aegis;
 import br.ufscar.dsw1.dao.UserDAO;
 import br.ufscar.dsw1.domain.User;
 
+import br.ufscar.dsw1.dao.ForumDAO;
+import br.ufscar.dsw1.domain.Forum;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
@@ -35,6 +38,8 @@ public class RegisterServlet extends HttpServlet {
 
         if (UserDAO.insert(user, plaintextPassword)) {
             request.getSession().setAttribute("user", user);
+            List<Forum> userForuns = ForumDAO.getUserForuns(user.getId());
+            request.getSession().setAttribute("userForuns", userForuns);
             response.sendRedirect(request.getContextPath() + "/dashboard.jsp");
         } else {
             response.getWriter().println("Deu errado :(");

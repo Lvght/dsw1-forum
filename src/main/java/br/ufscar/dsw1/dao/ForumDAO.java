@@ -90,6 +90,41 @@ public class ForumDAO extends GenericDAO {
         return listaForuns;
     }
 
+    public static List<Forum> getUserForuns(Long id_usuario) {
+
+        List<Forum> listaForuns = new ArrayList<>();
+
+        String query = "SELECT f.* from Forum f JOIN usuario_ingressa_forum u ON f.id_forum = u.id_forum WHERE id_usuario = ?";
+
+        try {
+            Connection connection = ForumDAO.getConnection();
+
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setLong(1, id_usuario);
+
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Long id = resultSet.getLong("id_forum");
+                Long id_dono = resultSet.getLong("id_dono");
+                int escopo_postagem = resultSet.getInt("escopo_postagem");
+                int escopo_acesso = resultSet.getInt("escopo_acesso");
+                String titulo = resultSet.getString("titulo");
+                String descricao = resultSet.getString("descricao");
+                String icone = resultSet.getString("icone");
+                Forum forum = new Forum(id_dono, escopo_postagem, escopo_acesso, titulo, descricao, icone);
+                forum.setId(id);
+                listaForuns.add(forum);
+            }
+
+            resultSet.close();
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listaForuns;
+    }
+
     public static Forum getForum(Long id) {
 
         Forum forum = null;
