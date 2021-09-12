@@ -21,7 +21,7 @@
             }
 
             .forumForm{
-                width: 80%;
+                width: 100%;
             }
 
             body{

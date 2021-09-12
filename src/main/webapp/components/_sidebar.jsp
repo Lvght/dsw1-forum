@@ -9,7 +9,7 @@
                <script src="${pageContext.request.contextPath}/js/sidebar.js"></script> 
  </head>
 
-<body id="body-pd" class="body-pd">
+<body id="body-pd" class="body-pd body-pd-left">
     <header class="header body-pd" id="header">
         <div class="header_toggle "> <i class='bx bx-menu bx-x' id="header-toggle"></i> </div>
         <div class="header_img"> <img src="https://i.imgur.com/hczKIze.jpg" alt=""> </div>
@@ -18,22 +18,22 @@
         <nav class="nav">
             <div> <a href="${pageContext.request.contextPath}/home.jsp" class="nav_logo"> <img src="${pageContext.request.contextPath}/resources/logoReduzido.png" alt=""> <span class="nav_logo-name">Debatr</span> </a>
               <div class="nav_list"> 
-                <a href="${pageContext.request.contextPath}/home.jsp" class="nav_link active"> 
+                <a href="${pageContext.request.contextPath}/home.jsp" class="nav_link ${pageContext.request.servletPath == "/home.jsp" ? "active" : ""}"> 
                   <i class='bx bx-grid-alt nav_icon'></i> 
                   <span class="nav_name">Início</span> 
                 </a> 
-                <a href="${pageContext.request.contextPath}/forumForm.jsp" class="nav_link"> 
+                <a href="${pageContext.request.contextPath}/forumForm.jsp" class="nav_link ${pageContext.request.servletPath == "/forumForm.jsp" ? "active" : ""}"> 
                   <i class='bx bx-user nav_icon'></i> 
                   <span class="nav_name">Criar Forum</span> 
                 </a> 
-                <a href="${pageContext.request.contextPath}/forum" class="nav_link">
+                <a href="${pageContext.request.contextPath}/forum" class="nav_link ${pageContext.request.servletPath == "/listaForuns.jsp" ||  pageContext.request.servletPath == "/forum.jsp"? "active" : ""}">
                   <i class='bx bx-message-square-detail nav_icon'></i> 
                   <span class="nav_name">Listar Foruns</span>
                 </a> 
-                <a href="${pageContext.request.contextPath}/post" class="nav_link"> 
+                <a href="${pageContext.request.contextPath}/post" class="nav_link ${pageContext.request.servletPath == "/criarPost.jsp" ? "active" : ""}"> 
                   <i class='bx bx-bookmark nav_icon'></i> 
                   <span class="nav_name">Criar Post</span>
-                </a>  
+                </a> 
             </div> <a href="${pageContext.request.contextPath}/index.html" class="nav_link"> <i class='bx bx-log-out nav_icon'></i> <span class="nav_name">SignOut</span> </a>
         </nav>
     </div>
