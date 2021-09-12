@@ -121,6 +121,9 @@ public class ForumController extends HttpServlet {
         request.setAttribute("forum", forum);
         if (ForumDAO.ingressar(user.getId(), Long.parseLong(request.getParameter("id_forum")))) {
             request.setAttribute("status", "sair");
+            List<Forum> userForuns = (List<Forum>) request.getSession().getAttribute("userForuns");
+            userForuns.add(forum);
+            request.setAttribute("userForuns", userForuns);
         } else {
             request.setAttribute("status", "ingressar");
         }
@@ -136,6 +139,9 @@ public class ForumController extends HttpServlet {
         request.setAttribute("forum", forum);
         if (ForumDAO.sair(user.getId(), Long.parseLong(request.getParameter("id_forum")))) {
             request.setAttribute("status", "ingressar");
+            List<Forum> userForuns = (List<Forum>) request.getSession().getAttribute("userForuns");
+            userForuns.removeIf(obj -> obj.getId() == id);
+            request.setAttribute("userForuns", userForuns);
         } else {
             request.setAttribute("status", "sair");
         }

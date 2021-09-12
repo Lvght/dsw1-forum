@@ -4,7 +4,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Title</title>
+        <title>${requestScope.forum.titulo}</title>
         <script src="../js/ajax.js" type="text/javascript"></script>
         <style>
             body{
@@ -17,8 +17,8 @@
             }
 
             .forum{
-                width: 80%;
-                padding: 30px;
+                width: 100%;
+                padding: 30px 0;
             }
 
             .forum .details{
