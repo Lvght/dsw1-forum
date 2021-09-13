@@ -40,7 +40,7 @@ public class RegisterServlet extends HttpServlet {
             request.getSession().setAttribute("user", user);
             List<Forum> userForuns = ForumDAO.getUserForuns(user.getId());
             request.getSession().setAttribute("userForuns", userForuns);
-            response.sendRedirect(request.getContextPath() + "/dashboard.jsp");
+            response.sendRedirect(request.getContextPath() + "/post/dashboard");
         } else {
             response.getWriter().println("Deu errado :(");
         }

@@ -2,8 +2,11 @@ package br.ufscar.dsw1.controller;
 
 import br.ufscar.dsw1.dao.PostDAO;
 import br.ufscar.dsw1.domain.Post;
+
 import br.ufscar.dsw1.dao.ForumDAO;
 import br.ufscar.dsw1.domain.Forum;
+
+import br.ufscar.dsw1.domain.User;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -25,8 +28,11 @@ public class PostController extends HttpServlet {
 
         try {
             switch (action) {
-                case "criar":
+                case "/criar":
                     insertForm(request, response);
+                    break;
+                case "/dashboard":
+                    dashboard(request, response);
                     break;
                 default:
                     insertForm(request, response);
@@ -61,9 +67,17 @@ public class PostController extends HttpServlet {
 
     private void insertForm(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Forum> listaForuns = ForumDAO.getAll();
+        List<Forum> listaForuns = ForumDAO.getUserForuns(((User) request.getSession().getAttribute("user")).getId());
         request.setAttribute("listaForuns", listaForuns);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/criarPost.jsp");
+        dispatcher.forward(request, response);
+    }
+
+    private void dashboard(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        List<Post> homePosts = PostDAO.getAll();
+        request.setAttribute("homePosts", homePosts);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/dashboard.jsp");
         dispatcher.forward(request, response);
     }
 }

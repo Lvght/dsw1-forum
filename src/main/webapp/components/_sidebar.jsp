@@ -16,9 +16,9 @@
     </header>
     <div class="l-navbar show" id="nav-bar">
         <nav class="nav">
-            <div> <a href="${pageContext.request.contextPath}/home.jsp" class="nav_logo"> <img src="${pageContext.request.contextPath}/resources/logoReduzido.png" alt=""> <span class="nav_logo-name">Debatr</span> </a>
+            <div> <a href="${pageContext.request.contextPath}/post/dashboard" class="nav_logo"> <img src="${pageContext.request.contextPath}/resources/logoReduzido.png" alt=""> <span class="nav_logo-name">Debatr</span> </a>
               <div class="nav_list"> 
-                <a href="${pageContext.request.contextPath}/home.jsp" class="nav_link ${pageContext.request.servletPath == "/home.jsp" ? "active" : ""}"> 
+                <a href="${pageContext.request.contextPath}/post/dashboard" class="nav_link ${pageContext.request.servletPath == "/dashboard.jsp" ? "active" : ""}"> 
                   <i class='bx bx-grid-alt nav_icon'></i> 
                   <span class="nav_name">Início</span> 
                 </a> 

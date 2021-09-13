@@ -9,7 +9,7 @@
 <body id="body-pd" class="body-pd-left">
     <div class="r-navbar show-right" id="nav-bar">
         <nav class="nav">
-            <div class="scrollNav"> <a href="${pageContext.request.contextPath}/home.jsp" class="nav_logo"> <span class="nav_logo-name">Meus fóruns</span> </a>
+            <div class="scrollNav"> <a href="#" class="nav_logo"> <span class="nav_logo-name">Meus fóruns</span> </a>
               <div class="nav_list"> 
                 <c:forEach var="forum" items="${sessionScope.userForuns}">
                   <a href="${pageContext.request.contextPath}/forum/especifico?id=${forum.id}" class="nav_link ${pageContext.request.servletPath == "/home.jsp" ? "active" : ""}"> 
