@@ -5,7 +5,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Title</title>
-
+        <script src="./js/ajax.js" type="text/javascript"></script>
         <style>
             body{
                 display: flex;
@@ -102,7 +102,7 @@
             <form action="./post" method="POST">
                 <input name="id_autor" value="${sessionScope.user.id}" hidden required/>
 
-                <select class="forumSelect" name="id_forum" required>
+                <select class="forumSelect" name="id_forum" required onchange="genericXmlHttpRequest('${pageContext.request.contextPath}/forum/getTopicosForum', 'GET', 'id_forum=' + this.value, 'selectTopic');">
                     <option value="" selected disabled hidden>
                         Escolha um forum
                     </option>
@@ -122,7 +122,7 @@
 
                 <textarea name="conteudo" placeholder="Conteudo (suporta markdown)" required></textarea>
 
-                <select class="selectTopic" name="id_topico">
+                <select id="selectTopic" class="selectTopic" name="id_topico">
                     <option value="" selected>
                         Geral
                     </option>

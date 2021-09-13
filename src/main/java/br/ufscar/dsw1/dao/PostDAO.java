@@ -6,9 +6,13 @@ import br.ufscar.dsw1.domain.User;
 
 import br.ufscar.dsw1.domain.Forum;
 
+import br.ufscar.dsw1.domain.Topic;
+
 import br.ufscar.dsw1.dao.UserDAO;
 
 import br.ufscar.dsw1.dao.ForumDAO;
+
+import br.ufscar.dsw1.dao.TopicDAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -88,7 +92,14 @@ public class PostDAO extends GenericDAO {
 
                 Post post = new Post(id_autor, id_forum, id_topico, titulo, conteudo);
                 User user = UserDAO.getById(id_autor);
+                Forum forum = ForumDAO.getForum(id_forum);
+
+                Topic topic = null;
+                if (id_topico != null)
+                    topic = TopicDAO.getTopic(id_topico);
                 post.setAutor(user);
+                post.setForum(forum);
+                post.setTopico(topic);
                 post.setId(id);
                 listPosts.add(post);
             }
@@ -126,8 +137,12 @@ public class PostDAO extends GenericDAO {
                 Post post = new Post(id_autor, id_forum, id_topico, titulo, conteudo);
                 User user = UserDAO.getById(id_autor);
                 Forum forum = ForumDAO.getForum(id_forum);
+                Topic topic = null;
+                if (id_topico != null)
+                    topic = TopicDAO.getTopic(id_topico);
                 post.setAutor(user);
                 post.setForum(forum);
+                post.setTopico(topic);
                 post.setId(id);
                 listPosts.add(post);
             }
@@ -164,8 +179,12 @@ public class PostDAO extends GenericDAO {
                 post = new Post(id_autor, id_forum, id_topico, titulo, conteudo);
                 User user = UserDAO.getById(id_autor);
                 Forum forum = ForumDAO.getForum(id_forum);
+                Topic topic = null;
+                if (id_topico != null)
+                    topic = TopicDAO.getTopic(id_topico);
                 post.setAutor(user);
                 post.setForum(forum);
+                post.setTopico(topic);
                 post.setId(id);
             }
 

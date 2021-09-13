@@ -6,6 +6,9 @@ import br.ufscar.dsw1.domain.Forum;
 import br.ufscar.dsw1.dao.PostDAO;
 import br.ufscar.dsw1.domain.Post;
 
+import br.ufscar.dsw1.dao.TopicDAO;
+import br.ufscar.dsw1.domain.Topic;
+
 import br.ufscar.dsw1.domain.User;
 
 import javax.servlet.*;
@@ -40,6 +43,12 @@ public class ForumController extends HttpServlet {
                 case "/sairForum":
                     sairForum(request, response);
                     break;
+                case "/topicoForm":
+                    topicoForm(request, response);
+                    break;
+                case "/getTopicosForum":
+                    getTopicosForum(request, response);
+                    break;
                 default:
                     listar(request, response);
                     break;
@@ -61,6 +70,9 @@ public class ForumController extends HttpServlet {
             switch (action) {
                 case "":
                     criar(request, response);
+                    break;
+                case "/topico":
+                    criarTopico(request, response);
                     break;
             }
         } catch (RuntimeException | IOException | ServletException e) {
@@ -99,16 +111,20 @@ public class ForumController extends HttpServlet {
         final Long id = Long.parseLong(request.getParameter("id"));
         final Forum forum = ForumDAO.getForum(id);
         List<Post> posts = PostDAO.getForumPosts(id);
+        List<Topic> topicos = TopicDAO.getForumTopicos(id);
 
         request.setAttribute("forum", forum);
         final User user = (User) request.getSession().getAttribute("user");
 
-        if (ForumDAO.usuarioIngressa(user.getId(), id))
-            request.setAttribute("status", "sair");
-        else
-            request.setAttribute("status", "ingressar");
+        if (user != null) {
+            if (ForumDAO.usuarioIngressa(user.getId(), id))
+                request.setAttribute("status", "sair");
+            else
+                request.setAttribute("status", "ingressar");
+        }
 
         request.setAttribute("posts", posts);
+        request.setAttribute("topicos", topicos);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/forum.jsp");
         dispatcher.forward(request, response);
     }
@@ -146,6 +162,34 @@ public class ForumController extends HttpServlet {
             request.setAttribute("status", "sair");
         }
         RequestDispatcher dispatcher = request.getRequestDispatcher("/components/_button.jsp");
+        dispatcher.forward(request, response);
+    }
+
+    private void topicoForm(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        final Long forum_id = Long.parseLong(request.getParameter("forum_id"));
+        request.setAttribute("forum_id", forum_id);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/topicForm.jsp");
+        dispatcher.forward(request, response);
+    }
+
+    private void criarTopico(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        final Long forum_id = Long.parseLong(request.getParameter("id_forum"));
+        final String nome = request.getParameter("nome");
+        Topic topic = new Topic(forum_id, nome);
+        if (TopicDAO.insert(topic))
+            response.sendRedirect(request.getContextPath() + "/forum/especifico?id=" + forum_id);
+        else
+            response.getWriter().println("Deu errado :(");
+    }
+
+    private void getTopicosForum(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        final Long id = Long.parseLong(request.getParameter("id_forum"));
+        List<Topic> topicos = TopicDAO.getForumTopicos(id);
+        request.setAttribute("topicos", topicos);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/components/_topicOptions.jsp");
         dispatcher.forward(request, response);
     }
 }

@@ -1,12 +1,16 @@
 <!DOCTYPE html>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html lang="br">
     <head>
         <meta charset="utf-8">
   </head>
 
     <body>
-        <div class="dashboard" style="display:flex;">
-            <%@include file="home.jsp" %>
+        <%@include file="layout.jsp" %>
+        <div class="dashboard">
+            <c:forEach var="post" items="${requestScope.homePosts}">
+                <%@include file="components/_post.jsp" %>
+            </c:forEach>  
         </div>
     </body>
 </html>

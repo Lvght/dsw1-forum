@@ -2,6 +2,7 @@ package br.ufscar.dsw1.domain;
 
 import br.ufscar.dsw1.domain.User;
 import br.ufscar.dsw1.domain.Forum;
+import br.ufscar.dsw1.domain.Topic;
 
 public class Post {
     private Long id;
@@ -12,6 +13,7 @@ public class Post {
     private String conteudo;
     private User autor;
     private Forum forum;
+    private Topic topico;
 
     public Post(Long id_autor, Long id_forum, Long id_topico, String titulo, String conteudo) {
         this.id_autor = id_autor;
@@ -83,6 +85,14 @@ public class Post {
 
     public void setForum(Forum forum) {
         this.forum = forum;
+    }
+
+    public Topic getTopico() {
+        return topico;
+    }
+
+    public void setTopico(Topic topico) {
+        this.topico = topico;
     }
 
 }

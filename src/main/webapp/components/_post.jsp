@@ -50,6 +50,11 @@
                 margin-bottom: auto;
             }
 
+            .post .postHeader .forumName h2{
+                font-weight: bolder;
+                color: #142931;
+            }
+
             .post .titulo{
                 padding: 5px 0;
             }
@@ -74,13 +79,13 @@
             .post .topico{
                 text-decoration: underline;
                 padding: 30px 0;
-                cursor: pointer;
             }
 
             .post .topico h4{
                 color: black;
                 font-size: 16px;
                 font-weight: bold;
+                cursor: pointer;
             }
 
             .post .discussao{
@@ -106,6 +111,14 @@
             .post .discussao span{
                 font-size: 16px;
             }
+
+            .post a {
+                color: black;
+            }
+
+            .post a:hover {
+                color: black;
+            }
             @media only screen and (max-width: 700px){
                 .informations, .userInformation, .postForumInformation {
                     flex-wrap: wrap;
@@ -119,14 +132,16 @@
         <div class="post">
             <div class="postHeader">
                 <div class="informations">
-                    <div class="postForumInformation">
-                        <div class="forumIcon">
-                            <img src="https://seeklogo.com/images/U/ufscar-logotipo-logo-E01F858A9C-seeklogo.com.png"/>
+                    <a href="${pageContext.request.contextPath}/forum/especifico?id=${post.getForum().getId()}">
+                        <div class="postForumInformation">
+                            <div class="forumIcon">
+                                <img src="https://seeklogo.com/images/U/ufscar-logotipo-logo-E01F858A9C-seeklogo.com.png"/>
+                            </div>
+                            <div class="forumName">
+                                <h2>f: ${post.getForum().getTitulo()}</h2>
+                            </div>
                         </div>
-                        <div class="forumName">
-                            <h2>f: ${post.getForum().getTitulo()}</h2>
-                        </div>
-                    </div>
+                    </a>
                     <div class="userInformation">
                         <div class="userPicture">
                             <img src="https://i1.wp.com/terracoeconomico.com.br/wp-content/uploads/2019/01/default-user-image.png?ssl=1"/>
@@ -149,7 +164,7 @@
 
             <div class="footer">
                 <div class="topico">
-                    <h4>#: Geral</h4>
+                    <h4>#: ${post.getTopico() != null ? post.getTopico().getNome() : "Geral"}</h4>
                 </div>
                 <div class="discussao">
                     <div class="userPicture">
