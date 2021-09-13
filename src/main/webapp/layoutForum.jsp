@@ -10,7 +10,7 @@
             <div class="left">
                 <%@include file="components/_sidebar.jsp" %>
             </div>
-            <%@include file="components/_sidebarRight.jsp" %>
+            <%@include file="components/_sidebarRightForum.jsp" %>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>

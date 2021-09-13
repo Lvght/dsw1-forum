@@ -111,7 +111,7 @@
         </style>
     </head>
     <body>
-        <%@include file="../layout.jsp" %>
+        <%@include file="../layoutForum.jsp" %>
         <div class="forum">
             <div class="details">
                 <div class="forumIcon">

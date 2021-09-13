@@ -16,7 +16,11 @@
     </header>
     <div class="l-navbar show" id="nav-bar">
         <nav class="nav">
-            <div> <a href="${pageContext.request.contextPath}/post/dashboard" class="nav_logo"> <img src="${pageContext.request.contextPath}/resources/logoReduzido.png" alt=""> <span class="nav_logo-name">Debatr</span> </a>
+            <div> 
+              <a href="${pageContext.request.contextPath}/post/dashboard" class="nav_logo"> 
+                <img src="${pageContext.request.contextPath}/resources/logoReduzido.png" alt=""> 
+                <span class="nav_logo-name">Debatr</span> 
+              </a>
               <div class="nav_list"> 
                 <a href="${pageContext.request.contextPath}/post/dashboard" class="nav_link ${pageContext.request.servletPath == "/dashboard.jsp" ? "active" : ""}"> 
                   <i class='bx bx-grid-alt nav_icon'></i> 
@@ -34,7 +38,12 @@
                   <i class='bx bx-bookmark nav_icon'></i> 
                   <span class="nav_name">Criar Post</span>
                 </a> 
-            </div> <a href="${pageContext.request.contextPath}/index.html" class="nav_link"> <i class='bx bx-log-out nav_icon'></i> <span class="nav_name">SignOut</span> </a>
+            </div> 
+            <a href="${pageContext.request.contextPath}/index.html" class="nav_link"> 
+              <i class='bx bx-log-out nav_icon'></i> 
+              <span class="nav_name">SignOut</span> 
+            </a>
+          </div>
         </nav>
     </div>
     <!--Container Main start-->
