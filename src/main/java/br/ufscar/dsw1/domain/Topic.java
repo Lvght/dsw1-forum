@@ -16,6 +16,10 @@ public class Topic {
         this.nome = nome;
     }
 
+    public Topic(String nome) {
+        this.nome = nome;
+    }
+
     public long getId() {
         return id;
     }

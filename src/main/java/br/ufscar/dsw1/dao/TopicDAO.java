@@ -67,4 +67,31 @@ public class TopicDAO extends GenericDAO {
         }
         return listaTopicos;
     }
+
+    public static Topic getTopic(Long id) {
+
+        Topic topic = null;
+        String query = "SELECT * FROM topico WHERE id_topico= ?";
+
+        try {
+            Connection connection = TopicDAO.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            statement.setLong(1, id);
+
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                String nome = resultSet.getString("nome");
+                topic = new Topic(nome);
+                topic.setId(id);
+            }
+
+            resultSet.close();
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return topic;
+    }
 }

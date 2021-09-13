@@ -164,7 +164,7 @@
 
             <div class="footer">
                 <div class="topico">
-                    <h4>#: Geral</h4>
+                    <h4>#: ${post.getTopico() != null ? post.getTopico().getNome() : "Geral"}</h4>
                 </div>
                 <div class="discussao">
                     <div class="userPicture">

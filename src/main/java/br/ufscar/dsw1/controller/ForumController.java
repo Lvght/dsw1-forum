@@ -46,6 +46,9 @@ public class ForumController extends HttpServlet {
                 case "/topicoForm":
                     topicoForm(request, response);
                     break;
+                case "/getTopicosForum":
+                    getTopicosForum(request, response);
+                    break;
                 default:
                     listar(request, response);
                     break;
@@ -179,5 +182,14 @@ public class ForumController extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/forum/especifico?id=" + forum_id);
         else
             response.getWriter().println("Deu errado :(");
+    }
+
+    private void getTopicosForum(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        final Long id = Long.parseLong(request.getParameter("id_forum"));
+        List<Topic> topicos = TopicDAO.getForumTopicos(id);
+        request.setAttribute("topicos", topicos);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/components/_topicOptions.jsp");
+        dispatcher.forward(request, response);
     }
 }
