@@ -79,13 +79,13 @@
             .post .topico{
                 text-decoration: underline;
                 padding: 30px 0;
-                cursor: pointer;
             }
 
             .post .topico h4{
                 color: black;
                 font-size: 16px;
                 font-weight: bold;
+                cursor: pointer;
             }
 
             .post .discussao{

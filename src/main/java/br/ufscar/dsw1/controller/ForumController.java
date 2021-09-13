@@ -103,10 +103,12 @@ public class ForumController extends HttpServlet {
         request.setAttribute("forum", forum);
         final User user = (User) request.getSession().getAttribute("user");
 
-        if (ForumDAO.usuarioIngressa(user.getId(), id))
-            request.setAttribute("status", "sair");
-        else
-            request.setAttribute("status", "ingressar");
+        if (user != null) {
+            if (ForumDAO.usuarioIngressa(user.getId(), id))
+                request.setAttribute("status", "sair");
+            else
+                request.setAttribute("status", "ingressar");
+        }
 
         request.setAttribute("posts", posts);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/forum.jsp");

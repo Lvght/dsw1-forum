@@ -121,7 +121,9 @@
                     <h1>${requestScope.forum.titulo}</h1>
                     <h2>${requestScope.forum.membros} membro${requestScope.forum.membros == 1 ? "" : "s"} • ${requestScope.forum.escopo_acesso == 1 ? "livre" : "restrito"}</h2>
                 </div>
-                <%@include file="../components/_button.jsp" %>
+                <c:if test="${not empty requestScope.status}" >
+                    <%@include file="../components/_button.jsp" %>
+                </c:if>
             </div>
             <div class="description">
                 <h2>${requestScope.forum.descricao}</h2>
