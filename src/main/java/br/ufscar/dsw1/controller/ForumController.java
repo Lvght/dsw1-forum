@@ -110,7 +110,14 @@ public class ForumController extends HttpServlet {
             throws ServletException, IOException {
         final Long id = Long.parseLong(request.getParameter("id"));
         final Forum forum = ForumDAO.getForum(id);
-        List<Post> posts = PostDAO.getForumPosts(id);
+
+        request.setAttribute("topico",
+                Long.valueOf(request.getParameter("topico") != null ? request.getParameter("topico") : "0"));
+        request.setAttribute("filtro",
+                Long.valueOf(request.getParameter("filtro") != null ? request.getParameter("filtro") : "0"));
+
+        List<Post> posts = PostDAO.getForumPosts(id, (Long) request.getAttribute("topico"),
+                (Long) request.getAttribute("filtro"));
         List<Topic> topicos = TopicDAO.getForumTopicos(id);
 
         request.setAttribute("forum", forum);

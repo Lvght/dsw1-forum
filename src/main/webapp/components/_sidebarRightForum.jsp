@@ -9,7 +9,7 @@
               font-weight: bold;
             }
 
-            .r-navbar .topics a{
+            .r-navbar .topicsLabel a{
               font-weight: 500;
               font-size: 12px;
             }
@@ -36,6 +36,10 @@
               margin-top: 5px;
             }
 
+            .r-navbar .forumTopics a:hover{
+              text-decoration: none;
+            }
+
             .r-navbar .topicCard{
               width: 100%;
               margin-bottom: 10px;
@@ -59,6 +63,7 @@
               display: flex;
               flex-direction: column;
             }
+
         </style>
  </head>
 
@@ -81,17 +86,21 @@
                   </select>
                 </div>
                 <div class="topics">
-                  <label for="forumTopics">
+                  <label class="topicsLabel" for="forumTopics">
                     Tópicos deste fórum <a href="${pageContext.request.contextPath}/forum/topicoForm?forum_id=${requestScope.forum.id}">Adicionar</a>
                   </label>
                   <div id="forumTopics" class="forumTopics">
-                    <div class="topicCard active">
-                      <span>Geral</span>
-                    </div>
-                    <c:forEach var="topico" items="${requestScope.topicos}">
-                      <div class="topicCard">
-                        <span>${topico.getNome()}</span>
+                    <a href="${pageContext.request.contextPath}/forum/especifico?id=${requestScope.forum.id}">
+                      <div class="topicCard ${requestScope.topico == 0 ? "active" : ""}">
+                        <span>Geral</span>
                       </div>
+                    </a>
+                    <c:forEach var="topico" items="${requestScope.topicos}">
+                      <a href="${pageContext.request.contextPath}/forum/especifico?id=${requestScope.forum.id}&topico=${topico.id}&filtro=${requestScope.filtro}">
+                        <div class="topicCard ${requestScope.topico == topico.id ? "active" : ""}">
+                          <span>${topico.getNome()}</span>
+                        </div>
+                      </a>
                     </c:forEach>  
                   </div>
                 </div>

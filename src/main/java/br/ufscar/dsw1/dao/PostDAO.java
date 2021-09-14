@@ -113,11 +113,14 @@ public class PostDAO extends GenericDAO {
         return listPosts;
     }
 
-    public static List<Post> getForumPosts(Long id_forum) {
+    public static List<Post> getForumPosts(Long id_forum, Long id_topico_filtro, Long filtro) {
 
         List<Post> listPosts = new ArrayList<>();
 
         String query = "SELECT * from Postagem WHERE id_forum = ? ORDER BY data_criacao DESC";
+
+        if (id_topico_filtro != 0)
+            query = "SELECT * from Postagem WHERE id_forum = ? AND id_topico = ? ORDER BY data_criacao DESC";
 
         try {
             Connection connection = ForumDAO.getConnection();
@@ -125,6 +128,9 @@ public class PostDAO extends GenericDAO {
             PreparedStatement statement = connection.prepareStatement(query);
 
             statement.setLong(1, id_forum);
+
+            if (id_topico_filtro != 0)
+                statement.setLong(2, id_topico_filtro);
 
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
