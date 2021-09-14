@@ -1,9 +1,20 @@
 <!DOCTYPE html>
 <html lang="br">
     <head>
-        <meta charset="utf-8">      
+        <meta charset="utf-8">
         <style>
-            .post .forumIcon, .post .userPicture{
+            .post {
+                padding: 8px;
+                border-radius: 8px;
+                margin-top: 8px;
+                margin-bottom: 8px;
+            }
+
+            .post:hover {
+                background-color: #f3f3f3;
+            }
+
+            .post .forumIcon, .post .userPicture {
                 min-width: 40px;
                 max-width: 40px;
                 height: 40px;
@@ -13,84 +24,87 @@
                 background-color: #f5f5f5;
             }
 
-            .post .informations, .post .userInformation, .post .postForumInformation{
+            .post .informations, .post .userInformation, .post .postForumInformation {
                 display: flex;
             }
 
-            .post .userInformation, .post .postForumInformation{
+            .post .userInformation, .post .postForumInformation {
                 margin-right: 25px;
                 margin-left: 0;
             }
 
-            .post .userInformation{
+            .post .userInformation {
                 color: #6b6b6b;
             }
 
-            .post .postForumInformation > *,  .post .userInformation > *{
+            .post .postForumInformation > *, .post .userInformation > * {
                 display: grid;
+            }
+
+            .postForumInformation > *, .post .userInformation > * {
                 margin-top: auto;
                 margin-bottom: auto;
             }
 
-            .post .forumIcon img, .post .userPicture img{
+            .post .forumIcon img, .post .userPicture img {
                 position: relative;
                 width: 100%;
                 margin: auto;
             }
 
-            .post .postHeader{
+            .post .postHeader {
                 border: 0;
                 padding: 20px 0;
             }
 
-            .post .postHeader h2{
+            .post .postHeader h2 {
                 font-size: 16px;
                 margin-left: 10px;
                 margin-top: auto;
                 margin-bottom: auto;
             }
 
-            .post .postHeader .forumName h2{
+            .post .postHeader .forumName h2 {
                 font-weight: bolder;
                 color: #142931;
             }
 
-            .post .titulo{
+            .post .titulo {
                 padding: 5px 0;
             }
 
-            .post .titulo h2{
+            .post .titulo h2 {
                 font-size: 20px;
                 font-weight: bold;
             }
 
-            .post .conteudo h3{
+            .post .conteudo h3 {
                 font-size: 16px;
                 font-weight: 400;
             }
 
-            .post .footer{
+            .post .footer {
                 background: transparent;
                 border-top: 0;
                 padding: 0;
                 display: grid;
             }
 
-            .post .topico{
+            .post .topico {
                 text-decoration: underline;
                 padding: 30px 0;
             }
 
-            .post .topico h4{
+            .post .topico h4 {
                 color: black;
                 font-size: 16px;
                 font-weight: bold;
                 cursor: pointer;
             }
 
-            .post .discussao{
+            .post .discussao {
                 width: fit-content;
-                height: 40px;
+                height: fit-content;
                 padding: 3px 10px 3px 3px;
                 border-radius: 30px;
                 border: 0;
@@ -101,14 +115,14 @@
                 cursor: pointer;
             }
 
-            .post .discussao .userPicture{
+            .post .discussao .userPicture {
                 height: 30px;
                 min-width: 30px;
                 max-width: 30px;
                 margin-right: 10px;
             }
 
-            .post .discussao span{
+            .post .discussao span {
                 font-size: 16px;
             }
 
@@ -119,14 +133,15 @@
             .post a:hover {
                 color: black;
             }
-            @media only screen and (max-width: 700px){
+
+            @media only screen and (max-width: 700px) {
                 .informations, .userInformation, .postForumInformation {
                     flex-wrap: wrap;
                 }
             }
 
         </style>
-  </head>
+    </head>
 
     <body>
         <div class="post">
