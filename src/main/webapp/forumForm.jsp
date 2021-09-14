@@ -3,28 +3,28 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Title</title>
+        <title>Criar novo fórum</title>
 
         <style>
-            form{
+            form {
                 display: flex;
                 flex-direction: column;
             }
 
-            input, select{
+            input, select {
                 margin-bottom: 10px;
                 height: 25px;
             }
 
-            input[type="submit"]{
+            input[type="submit"] {
                 width: fit-content;
             }
 
-            .forumForm{
+            .forumForm {
                 width: 100%;
             }
 
-            body{
+            body {
                 display: flex;
             }
         </style>
