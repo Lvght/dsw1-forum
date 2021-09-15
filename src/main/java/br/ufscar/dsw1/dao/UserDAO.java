@@ -63,7 +63,7 @@ public class UserDAO extends GenericDAO {
         // Tenta salvar no banco de dados.
         try {
             Connection connection = UserDAO.getConnection();
-            PreparedStatement statement = connection.prepareStatement(query, new String[] { "id_usuario" });
+            PreparedStatement statement = connection.prepareStatement(query, new String[]{"id_usuario"});
 
             statement.setString(1, user.getName());
             statement.setString(2, user.getUsername());
@@ -115,18 +115,20 @@ public class UserDAO extends GenericDAO {
             statement.setString(1, username);
 
             ResultSet resultSet = statement.executeQuery();
-            resultSet.next();
-            final String base64EncodedPassword = resultSet.getString("senha");
-            final String base64EncodedSalt = resultSet.getString("salt");
 
-            statement.close();
-            connection.close();
+            if (resultSet.next()) {
+                final String base64EncodedPassword = resultSet.getString("senha");
+                final String base64EncodedSalt = resultSet.getString("salt");
 
-            byte[] decodedSalt = Base64.getDecoder().decode(base64EncodedSalt);
-            byte[] verificationHash = UserDAO.getHashedPassword(plaintextPassword, decodedSalt);
+                statement.close();
+                connection.close();
 
-            if (Base64.getEncoder().encodeToString(verificationHash).equals(base64EncodedPassword)) {
-                return true;
+                byte[] decodedSalt = Base64.getDecoder().decode(base64EncodedSalt);
+                byte[] verificationHash = UserDAO.getHashedPassword(plaintextPassword, decodedSalt);
+
+                if (Base64.getEncoder().encodeToString(verificationHash).equals(base64EncodedPassword)) {
+                    return true;
+                }
             }
 
         } catch (SQLException e) {
