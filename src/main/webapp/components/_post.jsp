@@ -144,14 +144,14 @@
         </style>
 
         <script>
-            function seePostDetail() {
-                window.location.replace('')
+            function seePostDetail(postId) {
+                window.location.replace('${pageContext.request.contextPath}/post/detail?postId=' + postId)
             }
         </script>
     </head>
 
     <body>
-        <div class="post" onclick="">
+        <div class="post" onclick="seePostDetail(${post.getId()})">
             <div class="postHeader">
                 <div class="informations">
                     <a href="${pageContext.request.contextPath}/forum/especifico?id=${post.getForum().getId()}">
@@ -160,7 +160,7 @@
                                 <img src="https://seeklogo.com/images/U/ufscar-logotipo-logo-E01F858A9C-seeklogo.com.png"/>
                             </div>
                             <div class="forumName">
-                                <h2>f: ${post.getForum().getTitulo()}</h2>
+                                <h2>f: ${post.getForum().getTitulo()} / ${post.id}</h2>
                             </div>
                         </div>
                     </a>
@@ -180,7 +180,7 @@
                     <h2>${post.titulo}</h2>
                 </div>
                 <div class="conteudo">
-                    <h3>${post.conteudo}</h2>
+                    <h2>${post.conteudo}</h2>
                 </div>
             </div>
 
