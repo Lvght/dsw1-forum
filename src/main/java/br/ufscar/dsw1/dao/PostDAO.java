@@ -138,7 +138,7 @@ public class PostDAO extends GenericDAO {
                 User user = UserDAO.getById(id_autor);
                 Forum forum = ForumDAO.getForum(id_forum);
                 Topic topic = null;
-                if (id_topico != null)
+                if (id_topico != 0)
                     topic = TopicDAO.getTopic(id_topico);
                 post.setAutor(user);
                 post.setForum(forum);
