@@ -110,14 +110,15 @@ public class ForumController extends HttpServlet {
             throws ServletException, IOException {
         final Long id = Long.parseLong(request.getParameter("id"));
         final Forum forum = ForumDAO.getForum(id);
-
+        final Long postsCount = PostDAO.countForumPosts(id);
         request.setAttribute("topico",
                 Long.valueOf(request.getParameter("topico") != null ? request.getParameter("topico") : "0"));
         request.setAttribute("filtro",
                 Long.valueOf(request.getParameter("filtro") != null ? request.getParameter("filtro") : "0"));
 
+        Long pagina = Long.parseLong(request.getParameter("page") != null ? request.getParameter("page") : "1");
         List<Post> posts = PostDAO.getForumPosts(id, (Long) request.getAttribute("topico"),
-                (Long) request.getAttribute("filtro"));
+                (Long) request.getAttribute("filtro"), pagina);
         List<Topic> topicos = TopicDAO.getForumTopicos(id);
 
         request.setAttribute("forum", forum);
@@ -132,6 +133,7 @@ public class ForumController extends HttpServlet {
 
         request.setAttribute("posts", posts);
         request.setAttribute("topicos", topicos);
+        request.setAttribute("postsCount", postsCount);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/forum.jsp");
         dispatcher.forward(request, response);
     }
