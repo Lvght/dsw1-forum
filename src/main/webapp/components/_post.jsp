@@ -160,7 +160,7 @@
                                 <img src="https://seeklogo.com/images/U/ufscar-logotipo-logo-E01F858A9C-seeklogo.com.png"/>
                             </div>
                             <div class="forumName">
-                                <h2>f: ${post.getForum().getTitulo()} / ${post.id}</h2>
+                                <h2>f: ${post.getForum().getTitulo()}</h2>
                             </div>
                         </div>
                     </a>
