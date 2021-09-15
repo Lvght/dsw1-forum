@@ -42,6 +42,8 @@ public class PostController extends HttpServlet {
                     } catch (NumberFormatException e) {
                         // Requisição inválida. Envie para a tela inicial.
                         request.getRequestDispatcher("/errorScreen.jsp").forward(request, response);
+                    } finally {
+                        break;
                     }
                 default:
                     insertForm(request, response);
@@ -90,9 +92,9 @@ public class PostController extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-
     /**
-     * Encaminha o usuário para ver os detalhes de um post. Invocado após clicar em um post card.
+     * Encaminha o usuário para ver os detalhes de um post. Invocado após clicar em
+     * um post card.
      */
     private void postDetail(HttpServletRequest request, HttpServletResponse response, long postId)
             throws ServletException, IOException {
@@ -103,7 +105,8 @@ public class PostController extends HttpServlet {
             request.setAttribute("errored", false);
             request.setAttribute("post", p);
             request.getRequestDispatcher("/postDetail.jsp").forward(request, response);
-        } else request.setAttribute("errored", true);
+        } else
+            request.setAttribute("errored", true);
 
         request.getRequestDispatcher("/errorScreen.jsp").forward(request, response);
     }
