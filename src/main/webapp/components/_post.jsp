@@ -164,7 +164,9 @@
 
             <div class="footer">
                 <div class="topico">
-                    <h4>#: ${post.getTopico() != null ? post.getTopico().getNome() : "Geral"}</h4>
+                    <a href="${pageContext.request.contextPath}/forum/especifico?id=${post.id_forum}&topico=${post.topico != null ? post.topico.id : 0}">
+                        <h4>#: ${post.getTopico() != null ? post.getTopico().getNome() : "Geral"}</h4>
+                    </a>
                 </div>
                 <div class="discussao">
                     <div class="userPicture">
