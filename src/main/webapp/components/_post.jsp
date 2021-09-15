@@ -8,6 +8,7 @@
                 border-radius: 8px;
                 margin-top: 8px;
                 margin-bottom: 8px;
+                cursor: pointer;
             }
 
             .post:hover {
@@ -141,10 +142,16 @@
             }
 
         </style>
+
+        <script>
+            function seePostDetail() {
+                window.location.replace('')
+            }
+        </script>
     </head>
 
     <body>
-        <div class="post">
+        <div class="post" onclick="">
             <div class="postHeader">
                 <div class="informations">
                     <a href="${pageContext.request.contextPath}/forum/especifico?id=${post.getForum().getId()}">
