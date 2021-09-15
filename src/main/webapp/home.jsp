@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html lang="br">
     <head>
+        <title>Debatr</title>
         <meta charset="utf-8">
         <style>
             body{

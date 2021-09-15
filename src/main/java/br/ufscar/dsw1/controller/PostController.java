@@ -13,6 +13,7 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 @WebServlet(name = "PostServlet", value = "/post/*")
 public class PostController extends HttpServlet {
@@ -34,6 +35,14 @@ public class PostController extends HttpServlet {
                 case "/dashboard":
                     dashboard(request, response);
                     break;
+                case "/detail":
+                    try {
+                        long postId = Long.parseLong(request.getParameter("postId"));
+                        postDetail(request, response, postId);
+                    } catch (NumberFormatException e) {
+                        // Requisição inválida. Envie para a tela inicial.
+                        request.getRequestDispatcher("/errorScreen.jsp").forward(request, response);
+                    }
                 default:
                     insertForm(request, response);
                     break;
@@ -48,7 +57,7 @@ public class PostController extends HttpServlet {
             throws ServletException, IOException {
         final Long id_autor = Long.parseLong(request.getParameter("id_autor"));
         final Long id_forum = Long.parseLong(request.getParameter("id_forum"));
-        final Long id_topico = request.getParameter("id_topico") != ""
+        final Long id_topico = !Objects.equals(request.getParameter("id_topico"), "")
                 ? Long.parseLong(request.getParameter("id_topico"))
                 : null;
         final String titulo = request.getParameter("titulo");
@@ -79,5 +88,23 @@ public class PostController extends HttpServlet {
         request.setAttribute("homePosts", homePosts);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/dashboard.jsp");
         dispatcher.forward(request, response);
+    }
+
+
+    /**
+     * Encaminha o usuário para ver os detalhes de um post. Invocado após clicar em um post card.
+     */
+    private void postDetail(HttpServletRequest request, HttpServletResponse response, long postId)
+            throws ServletException, IOException {
+
+        Post p = PostDAO.getPost(postId);
+
+        if (p != null) {
+            request.setAttribute("errored", false);
+            request.setAttribute("post", p);
+            request.getRequestDispatcher("/postDetail.jsp").forward(request, response);
+        } else request.setAttribute("errored", true);
+
+        request.getRequestDispatcher("/errorScreen.jsp").forward(request, response);
     }
 }
