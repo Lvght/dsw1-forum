@@ -29,7 +29,7 @@ public class PostDAO extends GenericDAO {
         // Tenta salvar no banco de dados.
         try {
             Connection connection = PostDAO.getConnection();
-            PreparedStatement statement = connection.prepareStatement(query, new String[] { "id_postagem" });
+            PreparedStatement statement = connection.prepareStatement(query, new String[]{"id_postagem"});
 
             statement.setLong(1, post.getId_autor());
             statement.setLong(2, post.getId_forum());
@@ -138,7 +138,7 @@ public class PostDAO extends GenericDAO {
                 User user = UserDAO.getById(id_autor);
                 Forum forum = ForumDAO.getForum(id_forum);
                 Topic topic = null;
-                if (id_topico != null)
+                if (id_topico != 0)
                     topic = TopicDAO.getTopic(id_topico);
                 post.setAutor(user);
                 post.setForum(forum);
@@ -160,7 +160,7 @@ public class PostDAO extends GenericDAO {
 
         Post post = null;
 
-        String query = "SELECT * from Post WHERE id_post = ?";
+        String query = "SELECT * from postagem WHERE id_postagem = ?";
 
         try {
             Connection connection = PostDAO.getConnection();
@@ -180,7 +180,7 @@ public class PostDAO extends GenericDAO {
                 User user = UserDAO.getById(id_autor);
                 Forum forum = ForumDAO.getForum(id_forum);
                 Topic topic = null;
-                if (id_topico != null)
+                if (id_topico != 0)
                     topic = TopicDAO.getTopic(id_topico);
                 post.setAutor(user);
                 post.setForum(forum);
