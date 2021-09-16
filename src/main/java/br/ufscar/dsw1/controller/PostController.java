@@ -32,9 +32,6 @@ public class PostController extends HttpServlet {
                 case "/criar":
                     insertForm(request, response);
                     break;
-                case "/dashboard":
-                    dashboard(request, response);
-                    break;
                 case "/detail":
                     try {
                         long postId = Long.parseLong(request.getParameter("postId"));
@@ -46,7 +43,7 @@ public class PostController extends HttpServlet {
                         break;
                     }
                 default:
-                    insertForm(request, response);
+                    dashboard(request, response);
                     break;
             }
         } catch (RuntimeException | IOException | ServletException e) {
