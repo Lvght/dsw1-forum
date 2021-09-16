@@ -28,11 +28,11 @@
                          style="width: 48px; height: 48px; object-fit: cover"/>
                 </div>
                 <div class="col-auto p-0">
-                    <span class="font-weight-bold d-block">${sessionScope.user.name}</span>
-                    <span class="d-block">@${sessionScope.user.username}</span>
+                    <span class="font-weight-bold d-block">${requestScope.profileOwner.name}</span>
+                    <span class="d-block">@${requestScope.profileOwner.username}</span>
                 </div>
                 <div class="col text-end p-0">
-                    ${requestScope.profileOwner.id == sessionScope.user.id ? "<input type='button'
+                    ${sessionScope.user.id == requestScope.profileOwner.id ? "<input type='button'
                                                                                      value='Editar perfil'>" : ""}
                 </div>
             </div>
@@ -58,7 +58,12 @@
                 </div>
 
                 <div class="col-auto align-items-center justify-content-center">
-                    ${sessionScope.user.academicRecord == 0 ? "<input type='button' value='Verificar perfil' onclick='moveToVerifyPage()'>" : "<img class='text-center' src='https://lh3.googleusercontent.com/proxy/vhYftDaMkVl6bQwuR83U39kJYx5tG1Ha92Xi2Kc1MVrcdx_OyOPBiA0QLmMkGrL92bQYKnqeq-B2QKG-UZ6zBvOBHPq2-nGRrDqhAe5CZ6mEqw0KOJWsTfIrSDGEwqWgZelEKGylKAo98RKMQPu3' height='64px'"}
+                    ${
+                        requestScope.profileOwner.academicRecord != 0
+                            ? "<img class='text-center' src='https://lh3.googleusercontent.com/proxy/vhYftDaMkVl6bQwuR83U39kJYx5tG1Ha92Xi2Kc1MVrcdx_OyOPBiA0QLmMkGrL92bQYKnqeq-B2QKG-UZ6zBvOBHPq2-nGRrDqhAe5CZ6mEqw0KOJWsTfIrSDGEwqWgZelEKGylKAo98RKMQPu3' height='64px'>"
+                            : requestScope.profileOwner.id == sessionScope.user.id
+                                ? "<input type='button' value='Verificar perfil' onclick='moveToVerifyPage()'>"
+                                : ""}
                 </div>
             </div>
         </div>
