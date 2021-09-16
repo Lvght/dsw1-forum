@@ -30,4 +30,30 @@ public class CommentController extends HttpServlet {
 
         request.getRequestDispatcher("/components/_comment.jsp").forward(request, response);
     }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        ArrayList<String> errors = new ArrayList<>();
+
+        try {
+            final long userId = Long.parseLong(request.getParameter("userId"));
+            final long postId = Long.parseLong(request.getParameter("postId"));
+            final String content = request.getParameter("content");
+
+            Comment comment = CommentDAO.insert(postId, userId, content, false);
+
+            // Inserimos em uma lista para usar o componente genérico
+            ArrayList<Comment> result = new ArrayList<>();
+            result.add(comment);
+
+            request.setAttribute("comments", result);
+            request.getRequestDispatcher("/components/_comment.jsp").forward(request, response);
+
+        } catch (NumberFormatException | ServletException e) {
+            response.getWriter().write("Erro ao fazer o parsing dos identificadores.");
+        }
+
+
+    }
+
 }

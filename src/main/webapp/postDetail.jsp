@@ -23,6 +23,20 @@
 
             }
 
+            function submitComment(postId) {
+                const url = '${pageContext.request.contextPath}/comments/'
+
+                const payload = {
+                    "userId": ${sessionScope.user.id},
+                    "content": document.getElementById("input-area").value,
+                    "postId": ${requestScope.post.id}
+                };
+
+                jQuery.post(url, payload, function (data) {
+                    console.log(data)
+                })
+            }
+
             loadComments();
         </script>
     </head>
@@ -31,8 +45,23 @@
             <%@ include file="components/_sidebar.jsp" %>
         </div>
         <%@ include file="components/_sidebarRight.jsp" %>
+
+        <c:set var="post" value="${requestScope.post}"/>
         <%@ include file="components/_post.jsp" %>
+
+        <div class="form-group mb-5 mt-3">
+            <label for="input-area">Comente algo sobre isso</label>
+            <textarea class="form-control" id="input-area" rows="3"
+                      placeholder="Escreva seu comentário aqui (suporta markdown)"></textarea>
+
+            <input type="button"
+                   value="Enviar comentário"
+                   class="mt-2"
+                   onclick="submitComment(${requestScope.post.id})"/>
+        </div>
 
         <div id="comment-timeline"></div>
     </body>
 </html>
+
+
