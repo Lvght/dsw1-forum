@@ -1,4 +1,4 @@
-<%--
+<%@ page import="br.ufscar.dsw1.domain.User" %><%--
   Created by IntelliJ IDEA.
   User: lvght
   Date: 16/09/2021
@@ -17,30 +17,29 @@
         </script>
     </head>
     <body>
-        <%@ include file="components/_sidebar.jsp" %>
-        <%@ include file="components/_sidebarRight.jsp" %>
+        <%@include file="components/_sidebar.jsp" %>
+        <%@include file="components/_sidebarRight.jsp" %>
 
         <div class="container-fluid">
             <div class="row align-items-center mt-5 mb-2">
                 <div class="col-auto">
                     <img src="https://exame.com/wp-content/uploads/2021/02/bill.jpg"
                          class="rounded-circle p-0"
-                         style="width: 48px; height: 48px; object-fit: cover" />
+                         style="width: 48px; height: 48px; object-fit: cover"/>
                 </div>
                 <div class="col-auto p-0">
                     <span class="font-weight-bold d-block">${sessionScope.user.name}</span>
                     <span class="d-block">@${sessionScope.user.username}</span>
                 </div>
                 <div class="col text-end p-0">
-                    ${
-                        requestScope.profileOwner.id == sessionScope.user.id
-                            ? "<input type='button' value='Editar perfil'>"
-                            : ""
-                     }
+                    ${requestScope.profileOwner.id == sessionScope.user.id ? "<input type='button'
+                                                                                     value='Editar perfil'>" : ""}
                 </div>
             </div>
 
-            <p class="mt-4 mb-3 p-0">O abacate é o fruto comestível do abacateiro, uma árvore da família da Lauraceae nativa do México ou da América do Sul, hoje extensamente cultivada em regiões tropicais e subtropicais, inclusive nas Ilhas Canárias, na Ilha da Madeira e na Sicília.</p>
+            <p class="mt-4 mb-3 p-0">O abacate é o fruto comestível do abacateiro, uma árvore da família da Lauraceae
+                nativa do México ou da América do Sul, hoje extensamente cultivada em regiões tropicais e subtropicais,
+                inclusive nas Ilhas Canárias, na Ilha da Madeira e na Sicília.</p>
 
             <h1 class="mt-4">Estatísticas</h1>
             <div class="row align-items-center">
@@ -59,7 +58,7 @@
                 </div>
 
                 <div class="col-auto align-items-center justify-content-center">
-                    <input type="button" value="Verificar perfil" onclick="moveToVerifyPage()">
+                    ${sessionScope.user.academicRecord == 0 ? "<input type='button' value='Verificar perfil' onclick='moveToVerifyPage()'>" : "<img class='text-center' src='https://lh3.googleusercontent.com/proxy/vhYftDaMkVl6bQwuR83U39kJYx5tG1Ha92Xi2Kc1MVrcdx_OyOPBiA0QLmMkGrL92bQYKnqeq-B2QKG-UZ6zBvOBHPq2-nGRrDqhAe5CZ6mEqw0KOJWsTfIrSDGEwqWgZelEKGylKAo98RKMQPu3' height='64px'"}
                 </div>
             </div>
         </div>

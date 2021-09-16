@@ -45,6 +45,11 @@ public class VerifyController extends HttpServlet {
                     return;
                 }
 
+                // Atualiza o usuário na sessão.
+                User user = (User) request.getSession().getAttribute("user");
+                user.setAcademicRecord(academicRecord);
+                request.getSession().setAttribute("user", user);
+
                 response.sendRedirect(request.getContextPath() + "/perfil/");
             }
         } catch (ServletException | IOException e) {
