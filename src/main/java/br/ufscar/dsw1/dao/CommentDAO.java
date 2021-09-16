@@ -85,4 +85,47 @@ public class CommentDAO extends GenericDAO {
 
         return null;
     }
+
+    public static Comment insert(Long postId, long userId, String content, boolean includeOriginalPost) {
+        final String query = "INSERT INTO comentario (id_postagem, id_autor, conteudo) VALUES (?, ?, ?)";
+
+        try {
+            Connection connection = CommentDAO.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query, new String[]{"id_comentario"});
+
+            statement.setLong(1, postId);
+            statement.setLong(2, userId);
+            statement.setString(3, content);
+
+            final int affectedRows = statement.executeUpdate();
+
+            // Sem linhas afetadas. Algo deu errado.
+            if (affectedRows == 0) return null;
+
+            Comment result = null;
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+
+                if (generatedKeys.next()) {
+                    Post post = null;
+                    if (includeOriginalPost) post = PostDAO.getPost(postId);
+
+                    // Não precisamos do post original nos casos de uso atuais.
+                    result = new Comment(generatedKeys.getLong("id_comentario"), content,
+                            UserDAO.getById(userId), post);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            statement.close();
+            connection.close();
+
+            return result;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }
