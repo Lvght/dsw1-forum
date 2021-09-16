@@ -105,12 +105,16 @@ public class CommentDAO extends GenericDAO {
             Comment result = null;
             try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
 
-                Post post = null;
-                if (includeOriginalPost) post = PostDAO.getPost(postId);
+                if (generatedKeys.next()) {
+                    Post post = null;
+                    if (includeOriginalPost) post = PostDAO.getPost(postId);
 
-                // Não precisamos do post original nos casos de uso atuais.
-                result = new Comment(generatedKeys.getLong("id_comentario"), content,
-                        UserDAO.getById(userId), post);
+                    // Não precisamos do post original nos casos de uso atuais.
+                    result = new Comment(generatedKeys.getLong("id_comentario"), content,
+                            UserDAO.getById(userId), post);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
 
             statement.close();

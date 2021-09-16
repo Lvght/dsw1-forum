@@ -2,6 +2,7 @@ package br.ufscar.dsw1.controller;
 
 import br.ufscar.dsw1.dao.CommentDAO;
 import br.ufscar.dsw1.domain.Comment;
+import br.ufscar.dsw1.domain.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

@@ -25,15 +25,25 @@
 
             function submitComment(postId) {
                 const url = '${pageContext.request.contextPath}/comments/'
+                const textArea = $("#input-area")
+
+                // Salva o conteúdo, e limpa a caixa de texto.
+                const content = textArea.val()
+                textArea.val("")
+
+                if (content == null || content.length === 0) {
+                    alert("Você não pode fazer um post vazio.")
+                    return
+                }
 
                 const payload = {
                     "userId": ${sessionScope.user.id},
-                    "content": document.getElementById("input-area").value,
+                    "content": content,
                     "postId": ${requestScope.post.id}
                 };
 
                 jQuery.post(url, payload, function (data) {
-                    console.log(data)
+                    $("#comment-timeline").prepend(data)
                 })
             }
 
