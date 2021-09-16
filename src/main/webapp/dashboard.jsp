@@ -9,9 +9,11 @@
     <body>
         <%@include file="layout.jsp" %>
         <div class="dashboard">
-            <c:forEach var="post" items="${requestScope.homePosts}">
-                <%@include file="components/_post.jsp" %>
-            </c:forEach>
+            <div class="posts">
+                <c:forEach var="post" items="${requestScope.homePosts}">
+                    <%@include file="components/_post.jsp" %>
+                </c:forEach>
+            </div>
         </div>
     </body>
 </html>

@@ -5,11 +5,14 @@
         <style>
             .post {
                 padding: 16px;
-                cursor: pointer;
                 transition: background-color 0.3s padding 3s margin 3s;
             }
 
-            .post:hover {
+            .posts .post{
+                cursor: pointer;
+            }
+
+            .posts .post:hover {
                 background-color: #f3f3f3;
                 padding: 16px 48px 16px 48px;
                 margin: 0 -32px 0 -32px;
@@ -83,6 +86,15 @@
             .post .conteudo h2 {
                 font-size: 16px;
                 font-weight: 400;
+            }
+
+            .posts .post .conteudo h2{
+                font-weight: 400;
+                display: -webkit-box;
+                /* max-width: 200px; */
+                -webkit-line-clamp: 8;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
             }
 
             .post .footer {
@@ -161,7 +173,8 @@
 
         <script>
             function seePostDetail(postId) {
-                document.location.href = '${pageContext.request.contextPath}/post/detail?postId=' + postId
+                if(window.location.pathname+location.search != '${pageContext.request.contextPath}/post/detail?postId=' + postId)
+                    window.location.href = '${pageContext.request.contextPath}/post/detail?postId=' + postId
             }
         </script>
     </head>
