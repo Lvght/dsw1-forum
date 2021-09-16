@@ -79,7 +79,7 @@
                 font-weight: bold;
             }
 
-            .post .conteudo h3 {
+            .post .conteudo h2 {
                 font-size: 16px;
                 font-weight: 400;
             }
@@ -145,7 +145,7 @@
 
         <script>
             function seePostDetail(postId) {
-                window.location.replace('${pageContext.request.contextPath}/post/detail?postId=' + postId)
+                document.location.href = '${pageContext.request.contextPath}/post/detail?postId=' + postId
             }
         </script>
     </head>
