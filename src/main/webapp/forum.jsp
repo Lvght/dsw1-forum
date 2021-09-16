@@ -75,10 +75,6 @@
                 padding: 20px 0 0 0;
             }
 
-            .posts{
-                padding: 0 10px;
-            }
-
             @media only screen and (max-width: 700px){
                 .forum{
                     width: 100%;
