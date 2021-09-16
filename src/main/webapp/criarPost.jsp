@@ -5,7 +5,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Title</title>
-        <script src="./js/ajax.js" type="text/javascript"></script>
+        <script src="${pageContext.request.contextPath}/js/ajax.js" type="text/javascript"></script>
         <style>
             body{
                 display: flex;

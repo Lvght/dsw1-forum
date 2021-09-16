@@ -6,12 +6,14 @@
             .post {
                 padding: 16px;
                 cursor: pointer;
+                transition: background-color 0.3s padding 3s margin 3s;
             }
 
             .post:hover {
                 background-color: #f3f3f3;
                 padding: 16px 48px 16px 48px;
                 margin: 0 -32px 0 -32px;
+                transition: background-color 0.3s;
             }
 
             .post .forumIcon, .post .userPicture {
