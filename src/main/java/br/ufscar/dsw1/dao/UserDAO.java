@@ -210,6 +210,34 @@ public class UserDAO extends GenericDAO {
         return user;
     }
 
+    public static boolean verifyAlmaMater(long userId, int ra) {
+
+        final String query = "UPDATE usuario SET ra = ? WHERE id_usuario = ?;";
+
+        System.out.println("Aquii");
+
+        try {
+            Connection connection = GenericDAO.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            statement.setInt(1, ra);
+            statement.setLong(2, userId);
+
+            final int affectedRows = statement.executeUpdate();
+
+            System.out.println("Linhas afetadas: " + affectedRows);
+
+            statement.close();
+            connection.close();
+
+            return affectedRows == 1;
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+
+        return false;
+    }
+
     public static void main(String[] args) {
         final String password = "123456";
         final String hashedPassword = "osB4L18WYxPo5/jzQ+a6qg==";

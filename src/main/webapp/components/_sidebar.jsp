@@ -43,6 +43,11 @@
                             <span class="nav_name">Listar Foruns</span>
                         </a>
                     </div>
+                    <a href="${pageContext.request.contextPath}/perfil/${sessionScope.user.username}" class="nav_link">
+                        <img src="https://i1.wp.com/terracoeconomico.com.br/wp-content/uploads/2019/01/default-user-image.png"
+                             class="rounded-circle p-0" style="height: 16px; width: 16px;"/>
+                        <span class="nav_name">Meu perfil</span>
+                    </a>
                     <a href="${pageContext.request.contextPath}/index.html" class="nav_link">
                         <i class='bx bx-log-out nav_icon'></i>
                         <span class="nav_name">Sair da conta</span>
