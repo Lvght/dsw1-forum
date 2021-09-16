@@ -134,6 +134,7 @@
                     <%@include file="components/_post.jsp" %>
                 </c:forEach>  
             </div>
+            <%@include file="components/_paginator.jsp" %>
         </div>
     </body>
 </html>

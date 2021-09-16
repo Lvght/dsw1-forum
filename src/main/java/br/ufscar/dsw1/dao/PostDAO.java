@@ -29,7 +29,7 @@ public class PostDAO extends GenericDAO {
         // Tenta salvar no banco de dados.
         try {
             Connection connection = PostDAO.getConnection();
-            PreparedStatement statement = connection.prepareStatement(query, new String[]{"id_postagem"});
+            PreparedStatement statement = connection.prepareStatement(query, new String[] { "id_postagem" });
 
             statement.setLong(1, post.getId_autor());
             statement.setLong(2, post.getId_forum());
@@ -210,21 +210,26 @@ public class PostDAO extends GenericDAO {
         return post;
     }
 
-    public static Long countForumPosts(Long id_forum) {
+    public static Long countForumPosts(Long id_forum, Long id_topico) {
 
         Long count = null;
+        String query = null;
 
-        String query = "SELECT COUNT(*) from postagem WHERE id_forum = ?";
-
+        if (id_topico == 0)
+            query = "SELECT COUNT(*) from postagem WHERE id_forum = ?";
+        else
+            query = "SELECT COUNT(*) from postagem WHERE id_forum = ? AND id_topico = ?";
         try {
             Connection connection = PostDAO.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
 
             statement.setLong(1, id_forum);
+            if (id_topico != 0)
+                statement.setLong(2, id_topico);
 
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                resultSet.getLong("count");
+                count = resultSet.getLong("count");
             }
 
             resultSet.close();
