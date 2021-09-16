@@ -4,15 +4,14 @@
         <meta charset="utf-8">
         <style>
             .post {
-                padding: 8px;
-                border-radius: 8px;
-                margin-top: 8px;
-                margin-bottom: 8px;
+                padding: 16px;
                 cursor: pointer;
             }
 
             .post:hover {
                 background-color: #f3f3f3;
+                padding: 16px 48px 16px 48px;
+                margin: 0 -32px 0 -32px;
             }
 
             .post .forumIcon, .post .userPicture {
@@ -79,7 +78,7 @@
                 font-weight: bold;
             }
 
-            .post .conteudo h3 {
+            .post .conteudo h2 {
                 font-size: 16px;
                 font-weight: 400;
             }
@@ -92,7 +91,6 @@
             }
 
             .post .topico {
-                text-decoration: underline;
                 padding: 30px 0;
             }
 
@@ -101,6 +99,10 @@
                 font-size: 16px;
                 font-weight: bold;
                 cursor: pointer;
+            }
+
+            .post .topico a:hover{
+                text-decoration: underline;
             }
 
             .post .discussao {
@@ -114,6 +116,13 @@
                 display: flex;
                 align-items: center;
                 cursor: pointer;
+                transition: 0.3s;
+            }
+
+            .discussao:hover {
+                background-color: #1b3d4b;
+                color: #d3d3d3;
+                transition: 0.3s;
             }
 
             .post .discussao .userPicture {
@@ -133,6 +142,11 @@
 
             .post a:hover {
                 color: black;
+                text-decoration: underline;
+            }
+
+            hr{
+                margin: 0;
             }
 
             @media only screen and (max-width: 700px) {
@@ -145,7 +159,7 @@
 
         <script>
             function seePostDetail(postId) {
-                window.location.replace('${pageContext.request.contextPath}/post/detail?postId=' + postId)
+                document.location.href = '${pageContext.request.contextPath}/post/detail?postId=' + postId
             }
         </script>
     </head>
@@ -164,14 +178,16 @@
                             </div>
                         </div>
                     </a>
-                    <div class="userInformation">
-                        <div class="userPicture">
-                            <img src="https://i1.wp.com/terracoeconomico.com.br/wp-content/uploads/2019/01/default-user-image.png?ssl=1"/>
+                    <a href="${pageContext.request.contextPath}/perfil/${post.getAutor().getUsername()}">
+                        <div class="userInformation">
+                            <div class="userPicture">
+                                <img src="https://i1.wp.com/terracoeconomico.com.br/wp-content/uploads/2019/01/default-user-image.png?ssl=1"/>
+                            </div>
+                            <div class="username">
+                                <h2>@${post.getAutor().getUsername()}</h2>
+                            </div>
                         </div>
-                        <div class="username">
-                            <h2>@${post.getAutor().getUsername()}</h2>
-                        </div>
-                    </div>
+                    </a>
                 </div>
             </div>
 
@@ -197,7 +213,7 @@
                     <span>Participar da discussao</span>
                 </div>
             </div>
-            <hr/>
         </div>
+        <hr/>
     </body>
 </html>

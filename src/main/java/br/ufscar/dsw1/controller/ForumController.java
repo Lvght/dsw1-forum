@@ -110,7 +110,8 @@ public class ForumController extends HttpServlet {
             throws ServletException, IOException {
         final Long id = Long.parseLong(request.getParameter("id"));
         final Forum forum = ForumDAO.getForum(id);
-        final Long postsCount = PostDAO.countForumPosts(id);
+        final Long itemCount = PostDAO.countForumPosts(id,
+                Long.valueOf(request.getParameter("topico") != null ? request.getParameter("topico") : "0"));
         request.setAttribute("topico",
                 Long.valueOf(request.getParameter("topico") != null ? request.getParameter("topico") : "0"));
         request.setAttribute("filtro",
@@ -131,9 +132,10 @@ public class ForumController extends HttpServlet {
                 request.setAttribute("status", "ingressar");
         }
 
+        request.setAttribute("page", pagina);
         request.setAttribute("posts", posts);
         request.setAttribute("topicos", topicos);
-        request.setAttribute("postsCount", postsCount);
+        request.setAttribute("itemCount", itemCount);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/forum.jsp");
         dispatcher.forward(request, response);
     }

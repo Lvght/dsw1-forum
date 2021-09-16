@@ -19,23 +19,26 @@
                 background-color: #033142fa;
                 border-color: #033142fa;
             }
+
+            .numbers{
+                display: flex;
+            }
+
+            @media only screen and (max-width: 700px){
+                .numbers{
+                    display: none;
+                }
+            } 
         </style>
+
     </head>
 
     <body>
-        <ul class="pagination">
-            <li class="page-item"><a class="page-link" href="#">Anterior</a></li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">4</a></li>
-            <li class="page-item active"><a class="page-link" href="#">5</a></li>
-            <li class="page-item"><a class="page-link" href="#">6</a></li>
-            <li class="page-item"><a class="page-link" href="#">7</a></li>
-            <li class="page-item"><a class="page-link" href="#">8</a></li>
-            <li class="page-item"><a class="page-link" href="#">9</a></li>
-            <li class="page-item"><a class="page-link" href="#">10</a></li>
-            <li class="page-item"><a class="page-link" href="#">Próximo</a></li>
-        </ul>
+        <c:if test="${(Math.abs(requestScope.itemCount - 1) / 10) > 1}" >
+            <ul class="pagination">
+                <li class="page-item ${requestScope.page < 2 ? "disabled" : ""}"><a class="page-link" href="<%= (request.getAttribute("javax.servlet.forward.request_uri") + "?" + (request.getQueryString() != null ? request.getQueryString() + "&" : "")).replace("&page=" + request.getAttribute("page"), "").replace("page=" + request.getAttribute("page"), "") + "page="%>${requestScope.page - 1}">Anterior</a></li>
+                <li class="page-item ${requestScope.page >= (Math.abs(requestScope.itemCount - 1) / 10) ? "disabled" : ""}"><a class="page-link" href="<%= (request.getAttribute("javax.servlet.forward.request_uri") + "?" + (request.getQueryString() != null ? request.getQueryString() + "&" : "")).replace("&page=" + request.getAttribute("page"), "").replace("page=" + request.getAttribute("page"), "") + "page="%>${requestScope.page + 1}">Próximo</a></li>
+            </ul>
+        </c:if>
     </body>
 </html>
