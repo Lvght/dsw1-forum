@@ -162,6 +162,10 @@
                 text-decoration: underline;
             }
 
+            .post .body h2, .post .body p{
+                word-break: break-word;
+            }
+
             hr{
                 margin: 0;
             }
