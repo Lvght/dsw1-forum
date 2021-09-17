@@ -37,7 +37,14 @@ public class CommentController extends HttpServlet {
         ArrayList<String> errors = new ArrayList<>();
 
         try {
-            final long userId = Long.parseLong(request.getParameter("userId"));
+            User sessionUser = (User) request.getSession().getAttribute("user");
+
+            if (sessionUser == null) {
+                // TODO Devemos melhorar a exibição de erros.
+                return;
+            }
+
+            final long userId = sessionUser.getId();
             final long postId = Long.parseLong(request.getParameter("postId"));
             final String content = request.getParameter("content");
 

@@ -209,7 +209,7 @@
                 <div class="titulo">
                     <h2>${post.titulo}</h2>
                 </div>
-                <div class="conteudo">
+                <div id="content${post.id}" class="conteudo">
                     <h2>${post.conteudo}</h2>
                 </div>
             </div>
@@ -231,5 +231,9 @@
             </div>
         </div>
         <hr/>
+
+        <script>
+            document.getElementById('content${post.id}').innerHTML = marked('${post.conteudo}');
+        </script>
     </body>
 </html>

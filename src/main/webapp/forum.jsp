@@ -6,7 +6,10 @@
         <meta charset="UTF-8">
         <title>${requestScope.forum.titulo}</title>
         <script src="${pageContext.request.contextPath}/js/ajax.js" type="text/javascript"></script>
-                <style>
+        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+
+        <style>
             body{
                 display: flex;
                 color: black;
