@@ -83,7 +83,22 @@ public class PostController extends HttpServlet {
 
     private void dashboard(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Post> homePosts = PostDAO.getAll();
+
+        User sessionUser = (User) request.getSession().getAttribute("user");
+        List<Post> homePosts = null;
+        Long itemCount = Long.valueOf(0);
+        Long pagina = Long.parseLong(request.getParameter("page") != null ? request.getParameter("page") : "1");
+
+        if (sessionUser != null) {
+            homePosts = PostDAO.getTimeline(sessionUser.getId(), pagina);
+            itemCount = PostDAO.countPostUserForuns(sessionUser.getId());
+        } else {
+            homePosts = PostDAO.getAll(pagina);
+            itemCount = PostDAO.countAllPosts();
+        }
+
+        request.setAttribute("page", pagina);
+        request.setAttribute("itemCount", itemCount);
         request.setAttribute("homePosts", homePosts);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/dashboard.jsp");
         dispatcher.forward(request, response);
