@@ -37,7 +37,6 @@
                 }
 
                 const payload = {
-                    "userId": ${sessionScope.user.id},
                     "content": content,
                     "postId": ${requestScope.post.id}
                 };
