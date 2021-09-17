@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="br">
     <head>
@@ -27,31 +28,44 @@
                             ${pageContext.request.servletPath == "/dashboard.jsp" ? "<i class='bx bxs-grid-alt'></i>" : "<i class='bx bx-grid-alt nav_icon'></i>" }
                             <span class="nav_name">Início</span>
                         </a>
-                        <a href="${pageContext.request.contextPath}/post/criar"
-                           class="nav_link ${pageContext.request.servletPath == "/criarPost.jsp" ? "active" : ""}">
-                            ${pageContext.request.servletPath == "/criarPost.jsp" ? "<i class='bx bxs-message-square-add'></i>" : "<i class='bx bx-message-square-add'></i>"}
-                            <span class="nav_name">Novo Post</span>
-                        </a>
-                        <a href="${pageContext.request.contextPath}/forumForm.jsp"
-                           class="nav_link ${pageContext.request.servletPath == "/forumForm.jsp" ? "active" : ""}">
-                            ${pageContext.request.servletPath == "/forumForm.jsp" ? "<i class='bx bxs-group' ></i>" : "<i class='bx bx-group'></i>"}
-                            <span class="nav_name">Criar Forum</span>
-                        </a>
+                        <c:if test="${sessionScope.user != null}" >
+                            <a href="${pageContext.request.contextPath}/post/criar" class="nav_link ${pageContext.request.servletPath == "/criarPost.jsp" ? "active" : ""}">
+                                ${pageContext.request.servletPath == "/criarPost.jsp" ? "<i class='bx bxs-message-square-add'></i>" : "<i class='bx bx-message-square-add'></i>"}
+                                <span class="nav_name">Novo Post</span>
+                            </a>
+                            <a href="${pageContext.request.contextPath}/forumForm.jsp"
+                            class="nav_link ${pageContext.request.servletPath == "/forumForm.jsp" ? "active" : ""}">
+                                ${pageContext.request.servletPath == "/forumForm.jsp" ? "<i class='bx bxs-group' ></i>" : "<i class='bx bx-group'></i>"}
+                                <span class="nav_name">Criar Forum</span>
+                            </a>
+                        </c:if>
                         <a href="${pageContext.request.contextPath}/forum"
                            class="nav_link ${pageContext.request.servletPath == "/listaForuns.jsp" ||  pageContext.request.servletPath == "/forum.jsp"? "active" : ""}">
                             ${pageContext.request.servletPath == "/listaForuns.jsp" ||  pageContext.request.servletPath == "/forum.jsp" ? "<i class='bx bxs-message-square-detail'></i>" : "<i class='bx bx-message-square-detail nav_icon'></i>"}
                             <span class="nav_name">Listar Foruns</span>
                         </a>
                     </div>
-                    <a href="${pageContext.request.contextPath}/perfil/${sessionScope.user.username}" class="nav_link">
-                        <img src="https://i1.wp.com/terracoeconomico.com.br/wp-content/uploads/2019/01/default-user-image.png"
-                             class="rounded-circle p-0" style="height: 16px; width: 16px;"/>
-                        <span class="nav_name">Meu perfil</span>
-                    </a>
-                    <a href="${pageContext.request.contextPath}/login/logout" class="nav_link">
-                        <i class='bx bx-log-out nav_icon'></i>
-                        <span class="nav_name">Sair da conta</span>
-                    </a>
+                    <c:if test="${sessionScope.user != null}" >
+                        <a href="${pageContext.request.contextPath}/perfil/${sessionScope.user.username}" class="nav_link">
+                            <img src="https://i1.wp.com/terracoeconomico.com.br/wp-content/uploads/2019/01/default-user-image.png"
+                                class="rounded-circle p-0" style="height: 16px; width: 16px;"/>
+                            <span class="nav_name">Meu perfil</span>
+                        </a>
+                    </c:if>
+                    <c:choose>
+                        <c:when test="${sessionScope.user != null}">
+                            <a href="${pageContext.request.contextPath}/login/logout" class="nav_link">
+                                <i class='bx bx-log-out nav_icon'></i>
+                                <span class="nav_name">Sair da conta</span>
+                            </a>
+                        </c:when>    
+                        <c:otherwise>
+                            <a href="${pageContext.request.contextPath}/login" class="nav_link">
+                                <i class='bx bx-log-in nav_icon'></i>
+                                <span class="nav_name">Logar</span>
+                            </a>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
             </nav>
         </div>
