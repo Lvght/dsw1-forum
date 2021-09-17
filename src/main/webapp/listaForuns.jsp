@@ -20,6 +20,10 @@
                 color: black;
             }
 
+            .listaForum {
+                width: 100%;
+            }
+
             .forum{
                 width: 100%;
                 padding-top: 30px;
