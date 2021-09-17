@@ -9,6 +9,7 @@ public class Forum {
     private String descricao;
     private String icone;
     private long membros;
+    private boolean eh_membro;
 
     public Forum(long id_dono, int escopo_postagem, int escopo_acesso, String titulo, String descricao, String icone) {
         this.id_dono = id_dono;
@@ -81,6 +82,14 @@ public class Forum {
 
     public void setMembros(long membros) {
         this.membros = membros;
+    }
+
+    public boolean isEh_membro() {
+        return eh_membro;
+    }
+
+    public void setEh_membro(boolean eh_membro) {
+        this.eh_membro = eh_membro;
     }
 
 }

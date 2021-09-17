@@ -40,15 +40,18 @@
   </head>
 
     <body>
+        <c:if test="${empty forum}" >
+            <c:set var="forum" value="${requestScope.forum}"/>
+        </c:if>
         <c:choose>
-            <c:when test="${requestScope.status == 'ingressar'}">
-                <div class="action" id="ingressar">
-                    <input class="ingressar" type="submit" value="Ingressar" onclick="genericXmlHttpRequest('${pageContext.request.contextPath}/forum/ingressarForum', 'GET', 'id_forum=${requestScope.forum.id}', 'ingressar');">
+            <c:when test="${requestScope.status == 'ingressar' || status == 'ingressar'}">
+                <div class="action" id="ingressar${forum.id}">
+                    <input class="ingressar" type="submit" value="Ingressar" onclick="genericXmlHttpRequest('${pageContext.request.contextPath}/forum/ingressarForum', 'GET', 'id_forum=${forum.id}', 'ingressar${forum.id}');">
                 </div>    
             </c:when>    
             <c:otherwise>
-                <div class="action" id="sair">
-                    <input class="sair" type="submit" value="Sair" onclick="genericXmlHttpRequest('${pageContext.request.contextPath}/forum/sairForum', 'GET', 'id_forum=${requestScope.forum.id}', 'sair');">
+                <div class="action" id="sair${forum.id}">
+                    <input class="sair" type="submit" value="Sair" onclick="genericXmlHttpRequest('${pageContext.request.contextPath}/forum/sairForum', 'GET', 'id_forum=${forum.id}', 'sair${forum.id}');">
                 </div>   
             </c:otherwise>
         </c:choose>

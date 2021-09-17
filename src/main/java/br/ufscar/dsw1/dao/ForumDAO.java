@@ -56,7 +56,7 @@ public class ForumDAO extends GenericDAO {
 
     }
 
-    public static List<Forum> getAll() {
+    public static List<Forum> getAll(Long user_id) {
 
         List<Forum> listaForuns = new ArrayList<>();
 
@@ -76,8 +76,13 @@ public class ForumDAO extends GenericDAO {
                 String titulo = resultSet.getString("titulo");
                 String descricao = resultSet.getString("descricao");
                 String icone = resultSet.getString("icone");
+                Long membros = ForumDAO.contarMembros(id);
                 Forum forum = new Forum(id_dono, escopo_postagem, escopo_acesso, titulo, descricao, icone);
+
+                Boolean eh_membro = ForumDAO.usuarioIngressa(user_id, id);
                 forum.setId(id);
+                forum.setEh_membro(eh_membro);
+                forum.setMembros(membros);
                 listaForuns.add(forum);
             }
 

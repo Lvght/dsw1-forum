@@ -100,7 +100,8 @@ public class ForumController extends HttpServlet {
     }
 
     private void listar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Forum> listaForuns = ForumDAO.getAll();
+        User sessionUser = (User) request.getSession().getAttribute("user");
+        List<Forum> listaForuns = ForumDAO.getAll(sessionUser != null ? sessionUser.getId() : Long.valueOf(0));
         request.setAttribute("listaForuns", listaForuns);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/listaForuns.jsp");
         dispatcher.forward(request, response);

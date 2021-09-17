@@ -91,7 +91,6 @@
             .posts .post .conteudo h2{
                 font-weight: 400;
                 display: -webkit-box;
-                /* max-width: 200px; */
                 -webkit-line-clamp: 8;
                 -webkit-box-orient: vertical;
                 overflow: hidden;
@@ -221,12 +220,14 @@
                         <h4>#: ${post.getTopico() != null ? post.getTopico().getNome() : "Geral"}</h4>
                     </a>
                 </div>
-                <div class="discussao">
-                    <div class="userPicture">
-                        <img src="https://i1.wp.com/terracoeconomico.com.br/wp-content/uploads/2019/01/default-user-image.png?ssl=1"/>
+                <a href='${pageContext.request.contextPath}/post/detail?postId=${post.id}#postCreation'>
+                    <div class="discussao">
+                        <div class="userPicture">
+                            <img src="https://i1.wp.com/terracoeconomico.com.br/wp-content/uploads/2019/01/default-user-image.png?ssl=1"/>
+                        </div>
+                        <span>Participar da discussao</span>
                     </div>
-                    <span>Participar da discussao</span>
-                </div>
+                </a>
             </div>
         </div>
         <hr/>
