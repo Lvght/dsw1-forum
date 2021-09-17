@@ -60,7 +60,7 @@
                 <div class="col-auto align-items-center justify-content-center">
                     ${
                         requestScope.profileOwner.academicRecord != 0
-                            ? "<img class='text-center' src='https://lh3.googleusercontent.com/proxy/vhYftDaMkVl6bQwuR83U39kJYx5tG1Ha92Xi2Kc1MVrcdx_OyOPBiA0QLmMkGrL92bQYKnqeq-B2QKG-UZ6zBvOBHPq2-nGRrDqhAe5CZ6mEqw0KOJWsTfIrSDGEwqWgZelEKGylKAo98RKMQPu3' height='64px'>"
+                            ? "<img class='text-center' src='https://lh3.googleusercontent.com/proxy/T1BikfCo9-1HIv4EEKfL6XXVHbWKh0RGYJoyNw0KdTbgj_YLtuqFgmDBbzFy7hdVxbZIlaFmGHrYpJD9fVvAJg8TdH3tnUTBxZsmYTQHq2FZp106IFvXyJN9ddxWzrXmrxBTVnmRncpwmgWU_XDB' height='64px'>"
                             : requestScope.profileOwner.id == sessionScope.user.id
                                 ? "<input type='button' value='Verificar perfil' onclick='moveToVerifyPage()'>"
                                 : ""}
