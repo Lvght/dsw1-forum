@@ -96,6 +96,10 @@
                 overflow: hidden;
             }
 
+            .post .conteudo img{
+                width: 100%;
+            }
+
             .post .footer {
                 background: transparent;
                 border-top: 0;
