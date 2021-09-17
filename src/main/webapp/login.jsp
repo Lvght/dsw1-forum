@@ -1,4 +1,4 @@
-<!--<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>-->
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="pt">
 
@@ -82,7 +82,7 @@
     <div class="jumbotron vertical-center">
         <div class="container">
             <div class="col p-4">
-                <img src="resources/logo.png" alt="Logotipo do Debatr" height="40px">
+                <img src="${pageContext.request.contextPath}/resources/logo.png" alt="Logotipo do Debatr" height="40px">
 
                 <br />
                 <div class="py-4">
@@ -91,14 +91,14 @@
 
                 <span>Entre em sua conta para acessar o sistema</span>
 
-                <form action="./login" method="post">
+                <form action="${pageContext.request.contextPath}/login" method="post">
                     <input type="text" placeholder="Nome de usuário" name="username" required>
                     <input type="password" placeholder="Senha" name="password" required>
 
                     <input class="buttom" type="submit" value="Entrar">
                 </form>
                 <hr />
-                <a href="register.html">
+                <a href="${pageContext.request.contextPath}/register">
                     <div class="buttom">
                         <span>
                             Criar conta

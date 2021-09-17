@@ -48,7 +48,7 @@
                              class="rounded-circle p-0" style="height: 16px; width: 16px;"/>
                         <span class="nav_name">Meu perfil</span>
                     </a>
-                    <a href="${pageContext.request.contextPath}/index.html" class="nav_link">
+                    <a href="${pageContext.request.contextPath}/login/logout" class="nav_link">
                         <i class='bx bx-log-out nav_icon'></i>
                         <span class="nav_name">Sair da conta</span>
                     </a>

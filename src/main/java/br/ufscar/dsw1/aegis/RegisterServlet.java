@@ -22,6 +22,13 @@ public class RegisterServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        User user = (User) request.getSession().getAttribute("user");
+        if (user != null) {
+            response.sendRedirect(request.getContextPath() + "/post/dashboard");
+        } else {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/register.html");
+            dispatcher.forward(request, response);
+        }
     }
 
     @Override

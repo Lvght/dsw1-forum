@@ -75,10 +75,17 @@ public class PostController extends HttpServlet {
 
     private void insertForm(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Forum> listaForuns = ForumDAO.getUserForuns(((User) request.getSession().getAttribute("user")).getId());
-        request.setAttribute("listaForuns", listaForuns);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/criarPost.jsp");
-        dispatcher.forward(request, response);
+        User sessionUser = (User) request.getSession().getAttribute("user");
+
+        if (sessionUser == null) {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/login");
+            dispatcher.forward(request, response);
+        } else {
+            List<Forum> listaForuns = ForumDAO.getUserForuns(sessionUser.getId());
+            request.setAttribute("listaForuns", listaForuns);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/criarPost.jsp");
+            dispatcher.forward(request, response);
+        }
     }
 
     private void dashboard(HttpServletRequest request, HttpServletResponse response)
