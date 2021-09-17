@@ -12,7 +12,7 @@
     </head>
     <body>
 
-        <%@ include file="components/_sidebar.jsp" %>
+        <%@include file="layout.jsp" %>
 
         <form accept-charset="${pageContext.request.contextPath}/verify/" method="post" autocomplete="off">
             <input name="ra" type="number" placeholder="RA">

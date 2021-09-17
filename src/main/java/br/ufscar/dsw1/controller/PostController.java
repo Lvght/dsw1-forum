@@ -67,7 +67,7 @@ public class PostController extends HttpServlet {
         response.setContentType("text/html");
 
         if (PostDAO.insert(post)) {
-            response.getWriter().println("Deu certo :)");
+            response.sendRedirect(request.getContextPath() + "/post/detail?postId=" + post.getId());
         } else {
             response.getWriter().println("Deu errado :(");
         }

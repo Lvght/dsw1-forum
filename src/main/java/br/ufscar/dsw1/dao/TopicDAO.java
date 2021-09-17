@@ -17,7 +17,7 @@ public class TopicDAO extends GenericDAO {
 
         try {
             Connection connection = ForumDAO.getConnection();
-            PreparedStatement statement = connection.prepareStatement(query);
+            PreparedStatement statement = connection.prepareStatement(query, new String[] { "id_topico" });
 
             statement.setLong(1, topic.getId_forum());
             statement.setString(2, topic.getNome());
@@ -29,10 +29,19 @@ public class TopicDAO extends GenericDAO {
                 statement.close();
                 connection.close();
                 return false;
-            } else {
+            }
+
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if (generatedKeys.next())
+                    // Atualiza o id do topico.
+                    topic.setId(Long.valueOf(generatedKeys.getInt(1)));
+
                 statement.close();
                 connection.close();
                 return true;
+
+            } catch (SQLException e) {
+                return false;
             }
         } catch (SQLException e) {
             e.printStackTrace();

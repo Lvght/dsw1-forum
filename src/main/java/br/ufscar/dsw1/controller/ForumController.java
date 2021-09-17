@@ -93,7 +93,7 @@ public class ForumController extends HttpServlet {
         response.setContentType("text/html");
 
         if (ForumDAO.insert(forum)) {
-            response.getWriter().println("Deu certo :)");
+            response.sendRedirect(request.getContextPath() + "/forum/especifico?id=" + forum.getId());
         } else {
             response.getWriter().println("Deu errado :(");
         }
@@ -191,7 +191,8 @@ public class ForumController extends HttpServlet {
         final String nome = request.getParameter("nome");
         Topic topic = new Topic(forum_id, nome);
         if (TopicDAO.insert(topic))
-            response.sendRedirect(request.getContextPath() + "/forum/especifico?id=" + forum_id);
+            response.sendRedirect(
+                    request.getContextPath() + "/forum/especifico?id=" + forum_id + "&topico=" + topic.getId());
         else
             response.getWriter().println("Deu errado :(");
     }

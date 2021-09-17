@@ -51,10 +51,7 @@
         </script>
     </head>
     <body>
-        <div class="left">
-            <%@ include file="components/_sidebar.jsp" %>
-        </div>
-        <%@ include file="components/_sidebarRight.jsp" %>
+        <%@include file="layout.jsp" %>
 
         <c:set var="post" value="${requestScope.post}"/>
         <%@ include file="components/_post.jsp" %>
