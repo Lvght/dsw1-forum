@@ -4,6 +4,7 @@
     <head>
         <title>Debatr - Página inicial</title>
         <meta charset="utf-8">
+        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     </head>
 
     <body>

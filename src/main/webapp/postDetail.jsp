@@ -11,6 +11,7 @@
         <title>Post de @${requestScope.post.autor.username} em ${requestScope.post.forum.titulo}</title>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
         <script>
             function loadComments() {
