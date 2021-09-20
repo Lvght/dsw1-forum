@@ -13,6 +13,9 @@ services:
       - DEBATR_DATABASE_USER=postgres
       - DEBATR_DATABASE_PASSWORD=password
       - DEBATR_DATABASE_URI=postgresql://database:5432/debatr
+      - AWS_ACCESS_KEY_ID=ID_DA_CHAVE_DE_ACESSO
+      - AWS_SECRET_ACCESS_KEY=CHAVE_PRIVADA
+      - AWS_BUCKET_NAME=BUCKET_NAME
     volumes:
       - "./target/Debatr-1.0-SNAPSHOT.war:/usr/local/tomcat/webapps/debatr.war"
     ports:
