@@ -87,7 +87,10 @@
                 </div>
                 <div class="topics">
                   <label class="topicsLabel" for="forumTopics">
-                    Tópicos deste fórum <a href="${pageContext.request.contextPath}/forum/topicoForm?forum_id=${requestScope.forum.id}">Adicionar</a>
+                    Tópicos deste fórum
+                    <c:if test="${requestScope.forum.id_dono == sessionScope.user.id}" >
+                      <a href="${pageContext.request.contextPath}/forum/topicoForm?forum_id=${requestScope.forum.id}">Adicionar</a>
+                    </c:if>
                   </label>
                   <div id="forumTopics" class="forumTopics">
                     <a href="${pageContext.request.contextPath}/forum/especifico?id=${requestScope.forum.id}">
