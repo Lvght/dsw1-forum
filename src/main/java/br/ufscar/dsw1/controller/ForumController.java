@@ -81,6 +81,7 @@ public class ForumController extends HttpServlet {
     }
 
     private void criar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         final long id_dono = Long.parseLong(request.getParameter("id_dono"));
         final int escopo_postagem = Integer.parseInt(request.getParameter("escopo_postagem"));
         final int escopo_acesso = Integer.parseInt(request.getParameter("escopo_acesso"));
@@ -187,6 +188,7 @@ public class ForumController extends HttpServlet {
 
     private void criarTopico(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         final Long forum_id = Long.parseLong(request.getParameter("id_forum"));
         final String nome = request.getParameter("nome");
         Topic topic = new Topic(forum_id, nome);

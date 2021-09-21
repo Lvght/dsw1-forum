@@ -57,6 +57,7 @@ public class PostController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         final Long id_autor = Long.parseLong(request.getParameter("id_autor"));
         final Long id_forum = Long.parseLong(request.getParameter("id_forum"));
         final Long id_topico = !Objects.equals(request.getParameter("id_topico"), "")

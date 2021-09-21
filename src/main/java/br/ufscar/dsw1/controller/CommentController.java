@@ -28,14 +28,13 @@ public class CommentController extends HttpServlet {
             request.setAttribute("errored", true);
         }
 
-
         request.getRequestDispatcher("/components/_comment.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         ArrayList<String> errors = new ArrayList<>();
-
+        request.setCharacterEncoding("UTF-8");
         try {
             User sessionUser = (User) request.getSession().getAttribute("user");
 
@@ -60,7 +59,6 @@ public class CommentController extends HttpServlet {
         } catch (NumberFormatException | ServletException e) {
             response.getWriter().write("Erro ao fazer o parsing dos identificadores.");
         }
-
 
     }
 
