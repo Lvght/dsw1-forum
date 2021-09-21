@@ -42,6 +42,9 @@ public class PostController extends HttpServlet {
                     } finally {
                         break;
                     }
+                case "/meusPosts":
+                    myPosts(request, response);
+                    break;
                 default:
                     dashboard(request, response);
                     break;
@@ -128,5 +131,23 @@ public class PostController extends HttpServlet {
             request.setAttribute("errored", true);
 
         request.getRequestDispatcher("/errorScreen.jsp").forward(request, response);
+    }
+
+    private void myPosts(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        User sessionUser = (User) request.getSession().getAttribute("user");
+        List<Post> myPosts = null;
+        Long itemCount = Long.valueOf(0);
+        Long pagina = Long.parseLong(request.getParameter("page") != null ? request.getParameter("page") : "1");
+
+        myPosts = PostDAO.getMyPosts(sessionUser.getId(), pagina);
+        itemCount = PostDAO.countMyPosts(sessionUser.getId());
+
+        request.setAttribute("page", pagina);
+        request.setAttribute("itemCount", itemCount);
+        request.setAttribute("myPosts", myPosts);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/meusPosts.jsp");
+        dispatcher.forward(request, response);
     }
 }

@@ -46,6 +46,10 @@
                         </a>
                     </div>
                     <c:if test="${sessionScope.user != null}" >
+                        <a href="${pageContext.request.contextPath}/post/meusPosts" class="nav_link ${pageContext.request.servletPath == "/meusPosts.jsp" ? "active" : ""}">
+                            ${pageContext.request.servletPath == "/meusPosts.jsp" ? "<i class='bx bxs-message-square-detail'></i>" : "<i class='bx bx-message-square-detail nav_icon'></i>"}
+                            <span class="nav_name">Meus Posts</span>
+                        </a>
                         <a href="${pageContext.request.contextPath}/perfil/${sessionScope.user.username}" class="nav_link">
                             <img src="https://i1.wp.com/terracoeconomico.com.br/wp-content/uploads/2019/01/default-user-image.png"
                                 class="rounded-circle p-0" style="height: 16px; width: 16px;"/>

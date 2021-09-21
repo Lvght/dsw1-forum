@@ -216,6 +216,53 @@ public class PostDAO extends GenericDAO {
         return listPosts;
     }
 
+    public static List<Post> getMyPosts(Long user_id, Long page) {
+
+        List<Post> listPosts = new ArrayList<>();
+        Long offset = (page - 1) * 10;
+
+        String query = "SELECT p.* FROM postagem p WHERE p.id_autor = ? ORDER BY id_postagem DESC offset ? limit 10;";
+
+        try {
+            Connection connection = ForumDAO.getConnection();
+
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            statement.setLong(1, user_id);
+            statement.setLong(2, offset);
+
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Long id = resultSet.getLong("id_postagem");
+                Long id_autor = resultSet.getLong("id_autor");
+                Long id_forum = resultSet.getLong("id_forum");
+                Long id_topico = resultSet.getLong("id_topico");
+                String titulo = resultSet.getString("titulo");
+                String conteudo = resultSet.getString("conteudo");
+
+                Post post = new Post(id_autor, id_forum, id_topico, titulo, conteudo);
+                User user = UserDAO.getById(id_autor);
+                Forum forum = ForumDAO.getForum(id_forum);
+
+                Topic topic = null;
+                if (id_topico != null)
+                    topic = TopicDAO.getTopic(id_topico);
+                post.setAutor(user);
+                post.setForum(forum);
+                post.setTopico(topic);
+                post.setId(id);
+                listPosts.add(post);
+            }
+
+            resultSet.close();
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listPosts;
+    }
+
     public static Post getPost(Long id) {
 
         Post post = null;
@@ -327,6 +374,33 @@ public class PostDAO extends GenericDAO {
         try {
             Connection connection = PostDAO.getConnection();
             PreparedStatement statement = connection.prepareStatement(query);
+
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                count = resultSet.getLong("count");
+            }
+
+            resultSet.close();
+            statement.close();
+            connection.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return count;
+    }
+
+    public static Long countMyPosts(Long id_user) {
+
+        Long count = null;
+        String query = "SELECT COUNT(p) FROM postagem p WHERE p.id_autor = ?;";
+
+        try {
+            Connection connection = PostDAO.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            statement.setLong(1, id_user);
 
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
