@@ -238,15 +238,49 @@ public class UserDAO extends GenericDAO {
         return false;
     }
 
-    public static void main(String[] args) {
-        final String password = "123456";
-        final String hashedPassword = "osB4L18WYxPo5/jzQ+a6qg==";
-        final String salt = "zlgX5MnDKutZzeqQe0vuHw==";
+    public static boolean verifyUsername(String username) {
+        final String query = "SELECT * FROM usuario WHERE username = ?";
 
-        final byte[] decodedPassword = Base64.getDecoder().decode(hashedPassword);
-        final byte[] decodedSalt = Base64.getDecoder().decode(salt);
+        try {
+            Connection connection = UserDAO.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, username);
 
-        byte[] newHash = UserDAO.getHashedPassword(password, decodedSalt);
-        System.out.println(Base64.getEncoder().encodeToString(newHash));
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    public static boolean verifyEmail(String email) {
+        final String query = "SELECT * FROM usuario WHERE email = ?";
+
+        try {
+            Connection connection = UserDAO.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, email);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 }

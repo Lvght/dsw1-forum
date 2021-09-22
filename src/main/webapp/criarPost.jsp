@@ -5,6 +5,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Title</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="${pageContext.request.contextPath}/js/ajax.js" type="text/javascript"></script>
         <style>
             body{
@@ -35,10 +36,6 @@
                 width: 50%;
             }
 
-            .criarPost .postTitle{
-                margin-bottom: 10px;
-            }
-
             .criarPost .selectTopic{
                 width: 25%;
             }
@@ -49,6 +46,10 @@
                 background-color: #142931;
                 color: white;
                 border-radius: 15px;
+            }
+
+            .criarPost .postTitle{
+                margin-bottom: 0px!important;
             }
 
             textarea{
@@ -86,6 +87,14 @@
                 margin-right: 10px;
                 cursor: pointer;
             }
+
+            .counter{
+                text-align: end;
+                margin-bottom:10px;
+                font-size: 12px;
+                padding-right: 10px;
+            }
+
             @media only screen and (max-width: 700px){
                 .criarPost {
                     width: 100%;
@@ -118,7 +127,9 @@
                 <br/>
                 <br/>
 
-                <input class="postTitle" name="titulo" placeholder="Titulo" required/>
+                <input class="postTitle" id="title" name="titulo" placeholder="Titulo" maxlength="255" required/>
+                
+                <span id="counter" class="counter">255</span>
 
                 <textarea name="conteudo" placeholder="Conteudo (suporta markdown)" required></textarea>
 
@@ -137,5 +148,26 @@
                 </div> 
             </form>
         </div>
+        <script>
+            function changeCounter() { 
+                $("#counter").html(255 - $("#title").val().length);
+            }
+
+            const debounce = (func, wait) => {
+                let timeout;
+
+                return function executedFunction(...args) {
+                    const later = () => {
+                        clearTimeout(timeout);
+                        func(...args);
+                    };
+
+                    clearTimeout(timeout);
+                    timeout = setTimeout(later, wait);
+                };
+            };
+
+            $("#title").keyup(debounce(changeCounter, 500));
+        </script>
     </body>
 </html>

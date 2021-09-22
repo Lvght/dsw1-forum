@@ -12,6 +12,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -65,6 +66,18 @@ public class PostController extends HttpServlet {
                 : null;
         final String titulo = request.getParameter("titulo");
         final String conteudo = request.getParameter("conteudo");
+
+        final HashMap<String, String> errorMessage = new HashMap<>();
+
+        boolean error = false;
+        if (titulo.length() > 255) {
+            errorMessage.put("titulo", "O título não deve ter mais do que 255 caracteres");
+            error = true;
+        }
+
+        if (error) {
+            request.setAttribute("message", errorMessage);
+        }
 
         Post post = new Post(id_autor, id_forum, id_topico, titulo, conteudo);
 

@@ -71,6 +71,8 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("username");
         String plaintextPassword = request.getParameter("password");
 
+        request.setAttribute("username", username);
+
         if (UserDAO.verifyPassword(username, plaintextPassword)) {
             User user = UserDAO.getByUsername(username);
             List<Forum> userForuns = ForumDAO.getUserForuns(user.getId());
@@ -78,7 +80,9 @@ public class LoginServlet extends HttpServlet {
             request.getSession().setAttribute("userForuns", userForuns);
             response.sendRedirect(request.getContextPath() + "/post/dashboard");
         } else {
-            response.getWriter().println("Você errou a senha");
+            request.setAttribute("message", "Usuário ou senha inválidos. Tente novamente.");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/login.jsp");
+            dispatcher.forward(request, response);
         }
     }
 

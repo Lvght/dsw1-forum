@@ -1,4 +1,4 @@
-<!--<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>-->
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="pt">
 
@@ -75,6 +75,15 @@
             text-decoration: none;
             color: white;
         }
+
+        .errorMessage{
+            font-size: 12px;
+            color: red;
+            margin-left: 15px;
+            min-height: 20px;
+            min-width: 100%;
+            display: grid;
+        }
     </style>
 </head>
 
@@ -89,10 +98,14 @@
 
                 <h3>Criar conta no Debatr</h3>
                 <form action="./register" method="POST">
-                    <input placeholder="Nome" name="name" required />
-                    <input placeholder="Nome de usuário" name="username" required />
-                    <input placeholder="Email" name="email" type="email" required />
+                    <input placeholder="Nome" value="${requestScope.name}"  name="name" required />
+                    <span class="errorMessage">${requestScope.message.name}</span>
+                    <input placeholder="Nome de usuário" value="${requestScope.username}" name="username" required />
+                    <span class="errorMessage">${requestScope.message.username}</span>
+                    <input placeholder="Email" value="${requestScope.email}" name="email" type="email" required />
+                    <span class="errorMessage">${requestScope.message.email}</span>
                     <input placeholder="Senha" name="password" type="password" required />
+                    <span class="errorMessage">${requestScope.message.password}</span>
 
                     <input class="buttom" type="submit" value="Criar">
                 </form>

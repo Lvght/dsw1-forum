@@ -11,6 +11,7 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -26,7 +27,7 @@ public class RegisterServlet extends HttpServlet {
         if (user != null) {
             response.sendRedirect(request.getContextPath() + "/post/dashboard");
         } else {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/register.html");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/register.jsp");
             dispatcher.forward(request, response);
         }
     }
@@ -39,6 +40,55 @@ public class RegisterServlet extends HttpServlet {
         final String email = request.getParameter("email");
         final String plaintextPassword = request.getParameter("password");
         final String username = request.getParameter("username");
+
+        request.setAttribute("name", name);
+        request.setAttribute("email", email);
+        request.setAttribute("username", username);
+
+        final HashMap<String, String> errorMessage = new HashMap<>();
+
+        boolean error = false;
+        if (UserDAO.verifyEmail(email)) {
+            errorMessage.put("email", "Email já cadastrado");
+            error = true;
+            request.setAttribute("email", "");
+        }
+
+        if (UserDAO.verifyUsername(username)) {
+            errorMessage.put("username", "Username já cadastrado");
+            error = true;
+            request.setAttribute("username", "");
+        }
+
+        if (name.length() > 50) {
+            errorMessage.put("name", "O nome deve conter no máximo 50 caracteres");
+            error = true;
+            request.setAttribute("name", "");
+        }
+
+        if (username.length() > 15) {
+            errorMessage.put("username", "O username deve conter no máximo 15 caracteres");
+            error = true;
+            request.setAttribute("username", "");
+        }
+
+        if (email.length() > 255) {
+            errorMessage.put("email", "O email deve conter no máximo 255 caracteres");
+            error = true;
+            request.setAttribute("email", "");
+        }
+
+        if (plaintextPassword.length() > 20 || plaintextPassword.length() < 8) {
+            errorMessage.put("password", "A senha deve conter no máximo 20 e no mínimo 8 caracteres");
+            error = true;
+        }
+
+        request.setAttribute("message", errorMessage);
+
+        if (error) {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/register.jsp");
+            dispatcher.forward(request, response);
+        }
 
         User user = new User(name, email, username);
 

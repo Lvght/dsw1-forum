@@ -75,6 +75,12 @@
             text-decoration: none;
             color: white;
         }
+
+        .errorMessage{
+            font-size: 12px;
+            color: red;
+            padding-left: 15px;
+        }
     </style>
 </head>
 
@@ -91,8 +97,13 @@
 
                 <span>Entre em sua conta para acessar o sistema</span>
 
+                <c:if test="${(not empty requestScope.message)}" >
+                    <br/>
+                    <span class="errorMessage"> ${requestScope.message} </span>
+                </c:if>
+
                 <form action="${pageContext.request.contextPath}/login" method="post">
-                    <input type="text" placeholder="Nome de usuário" name="username" required>
+                    <input type="text" placeholder="Nome de usuário" value="${requestScope.username}" name="username" required>
                     <input type="password" placeholder="Senha" name="password" required>
 
                     <input class="buttom" type="submit" value="Entrar">
