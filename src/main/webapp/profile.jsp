@@ -23,9 +23,18 @@
         <div class="container-fluid">
             <div class="row align-items-center mt-5 mb-2">
                 <div class="col-auto">
-                    <img src="https://exame.com/wp-content/uploads/2021/02/bill.jpg"
-                         class="rounded-circle p-0"
-                         style="width: 48px; height: 48px; object-fit: cover"/>
+                    <c:choose>
+                        <c:when test="${requestScope.profileOwner.profileImageUrl == null}">
+                            <img src="${pageContext.request.contextPath}/resources/default-profile.jpeg"
+                                 class="rounded-circle p-0"
+                                 style="width: 48px; height: 48px; object-fit: cover"/>
+                        </c:when>
+                        <c:otherwise>
+                            <img src="${requestScope.profileOwner.profileImageUrl}"
+                                 class="rounded-circle p-0"
+                                 style="width: 48px; height: 48px; object-fit: cover"/>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
                 <div class="col-auto p-0">
                     <span class="font-weight-bold d-block">${requestScope.profileOwner.name}</span>
@@ -37,9 +46,9 @@
                 </div>
             </div>
 
-            <p class="mt-4 mb-3 p-0">O abacate é o fruto comestível do abacateiro, uma árvore da família da Lauraceae
-                nativa do México ou da América do Sul, hoje extensamente cultivada em regiões tropicais e subtropicais,
-                inclusive nas Ilhas Canárias, na Ilha da Madeira e na Sicília.</p>
+            <c:if test="${requestScope.profileOwner.description != null}">
+                <p class="mt-4 mb-3 p-0">${requestScope.profileOwner.description}</p>
+            </c:if>
 
             <h1 class="mt-4">Estatísticas</h1>
             <div class="row align-items-center">
@@ -59,11 +68,13 @@
 
                 <div class="col-auto align-items-center justify-content-center">
                     ${
-                        requestScope.profileOwner.academicRecord != 0
-                            ? "<img class='text-center' src='https://lh3.googleusercontent.com/proxy/T1BikfCo9-1HIv4EEKfL6XXVHbWKh0RGYJoyNw0KdTbgj_YLtuqFgmDBbzFy7hdVxbZIlaFmGHrYpJD9fVvAJg8TdH3tnUTBxZsmYTQHq2FZp106IFvXyJN9ddxWzrXmrxBTVnmRncpwmgWU_XDB' height='64px'>"
-                            : requestScope.profileOwner.id == sessionScope.user.id
-                                ? "<input type='button' value='Verificar perfil' onclick='moveToVerifyPage()'>"
-                                : ""}
+                    requestScope.profileOwner.academicRecord != 0
+                    ? "<img class='text-center'
+                            src='https://lh3.googleusercontent.com/proxy/T1BikfCo9-1HIv4EEKfL6XXVHbWKh0RGYJoyNw0KdTbgj_YLtuqFgmDBbzFy7hdVxbZIlaFmGHrYpJD9fVvAJg8TdH3tnUTBxZsmYTQHq2FZp106IFvXyJN9ddxWzrXmrxBTVnmRncpwmgWU_XDB'
+                            height='64px'>"
+                    : requestScope.profileOwner.id == sessionScope.user.id
+                    ? "<input type='button' value='Verificar perfil' onclick='moveToVerifyPage()'>"
+                    : ""}
                 </div>
             </div>
         </div>
