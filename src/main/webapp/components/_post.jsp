@@ -8,7 +8,7 @@
                 transition: background-color 0.3s padding 3s margin 3s;
             }
 
-            .posts .post{
+            .posts .post {
                 cursor: pointer;
             }
 
@@ -27,6 +27,21 @@
                 overflow: hidden;
                 display: grid;
                 background-color: #f5f5f5;
+            }
+
+            .engage-background {
+                border-radius: 32px;
+                background-color: #00171F;
+                color: white;
+                transition: 0.1s ease-in;
+            }
+
+            .engage-background:hover {
+                background-color: hsl(195, 100%, 11%);
+            }
+
+            .engage-tile-content {
+                padding: 2px;
             }
 
             .post .informations, .post .userInformation, .post .postForumInformation {
@@ -88,7 +103,7 @@
                 font-weight: 400;
             }
 
-            .posts .post .conteudo h2{
+            .posts .post .conteudo h2 {
                 font-weight: 400;
                 display: -webkit-box;
                 -webkit-line-clamp: 8;
@@ -96,7 +111,7 @@
                 overflow: hidden;
             }
 
-            .post .conteudo img{
+            .post .conteudo img {
                 width: 100%;
             }
 
@@ -118,7 +133,7 @@
                 cursor: pointer;
             }
 
-            .post .topico a:hover{
+            .post .topico a:hover {
                 text-decoration: underline;
             }
 
@@ -162,11 +177,11 @@
                 text-decoration: underline;
             }
 
-            .post .body h2, .post .body p{
+            .post .body h2, .post .body p {
                 word-break: break-word;
             }
 
-            hr{
+            hr {
                 margin: 0;
             }
 
@@ -176,11 +191,22 @@
                 }
             }
 
+            .reaction-btn-container {
+                padding-top: 8px;
+                padding-bottom: 8px;
+                border-radius: 32px;
+                margin-left: 8px;
+            }
+
+            .reaction-btn-container:hover {
+                background-color: #ccc;
+            }
+
         </style>
 
         <script>
             function seePostDetail(postId) {
-                if(window.location.pathname+location.search != '${pageContext.request.contextPath}/post/detail?postId=' + postId)
+                if (window.location.pathname + location.search != '${pageContext.request.contextPath}/post/detail?postId=' + postId)
                     window.location.href = '${pageContext.request.contextPath}/post/detail?postId=' + postId
             }
         </script>
@@ -228,14 +254,28 @@
                         <h4>#: ${post.getTopico() != null ? post.getTopico().getNome() : "Geral"}</h4>
                     </a>
                 </div>
-                <a href='${pageContext.request.contextPath}/post/detail?postId=${post.id}#postCreation'>
-                    <div class="discussao">
-                        <div class="userPicture">
-                            <img src="https://i1.wp.com/terracoeconomico.com.br/wp-content/uploads/2019/01/default-user-image.png?ssl=1"/>
+
+                <div class="container p-0">
+                    <div class="row align-items-center p-0">
+                        <div class="col-auto">
+                            <div class="row align-items-center engage-background p-0">
+                                <div class="col-auto engage-tile-content">
+                                    <img class="rounded-circle" height="32px" width="32px" display src="https://i1.wp.com/terracoeconomico.com.br/wp-content/uploads/2019/01/default-user-image.png?ssl=1"/>
+                                    <span class="me-2">Participar da Discussão</span>
+                                </div>
+                            </div>
                         </div>
-                        <span>Participar da discussao</span>
+                        <div class="col-auto reaction-btn-container">
+                            <!-- Botão de like -->
+                            <img width="30px" height="27px" src="${pageContext.request.contextPath}/resources/u-like.png" />
+                        </div>
+                        <div class="col-auto reaction-btn-container">
+                            <!-- Botão de deslike -->
+                            <img width="30px" height="27px" src="${pageContext.request.contextPath}/resources/u-deslike.png" />
+                        </div>
+
                     </div>
-                </a>
+                </div>
             </div>
         </div>
         <hr/>
