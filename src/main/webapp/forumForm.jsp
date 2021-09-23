@@ -6,33 +6,85 @@
         <title>Criar novo fórum</title>
 
         <style>
-            form {
+        body{
+                display: flex;
+            }
+
+            .forumForm{
+                padding: 30px;
+            }
+
+            .forumForm h1{
+                color: #00171F;
+                font-size: 21px;
+                margin-bottom: 0;
+            }
+
+            .forumForm hr{
+                border-top: 1px solid black;
+                margin: 0 0 1rem 0;
+            }
+
+            form{
                 display: flex;
                 flex-direction: column;
             }
 
-            input, select {
-                margin-bottom: 10px;
-                height: 25px;
+            .forumForm .forumSelect{
+                width: 50%;
             }
 
-            input[type="submit"] {
+            .forumForm .selectTopic{
+                width: 25%;
+            }
+
+            input, select, textarea{
+                margin-bottom: 10px!important;
+                padding: 10px;
+                background-color: #142931;
+                color: white;
+                border-radius: 15px;
+            }
+
+            input, select{
+                height: 50px;
+            }
+
+            input[type="submit"], .discard{
                 width: fit-content;
+                height: 40px;
+                padding: 0 15px;
+                border-radius: 10px;
+                border: 0;
             }
 
-            .forumForm {
+            .forumForm{
                 width: 100%;
             }
-
-            body {
+            .criar .post{
                 display: flex;
             }
+
+            .actionButtons{
+                display: flex;
+                line-height: 35px;
+            }
+
+            .discard{
+                background-color: white;
+                border: 2px solid #142931!important;
+                color: #142931;
+                margin-right: 10px;
+                cursor: pointer;
+            }
+
         </style>
     </head>
     <body>
         <%@include file="layout.jsp" %>
         <div class="forumForm">
             <h1>Criar um forum</h1>
+            <hr />
             <form action="./forum" method="POST">
                 <input name="id_dono" value="${sessionScope.user.id}" hidden required/>
 
@@ -69,7 +121,15 @@
 
                 <label for="icone">icone</label>
                 <input id="icone" name="icone" required/>
-                <input type="submit" value="Enviar">
+                <br />
+                <hr />
+                <div class="actionButtons">
+                    <div class="discard" onclick="window.history.back();">
+                        <span>Descartar</span>
+                    </div>
+                        <input type="submit" value="Criar">
+                    </div> 
+                </div>
             </form>
         </div>
     </body>
