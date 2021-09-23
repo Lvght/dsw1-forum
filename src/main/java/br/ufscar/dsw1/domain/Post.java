@@ -95,4 +95,18 @@ public class Post {
         this.topico = topico;
     }
 
+    @Override
+    public String toString() {
+        return "Post{" +
+                "id=" + id +
+                ", id_autor=" + id_autor +
+                ", id_forum=" + id_forum +
+                ", id_topico=" + id_topico +
+                ", titulo='" + titulo + '\'' +
+                ", conteudo='" + conteudo + '\'' +
+                ", autor=" + autor +
+                ", forum=" + forum +
+                ", topico=" + topico +
+                '}';
+    }
 }

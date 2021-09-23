@@ -36,4 +36,14 @@ public class Comment {
     public void setAuthor(User author) {
         this.author = author;
     }
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "id=" + id +
+                ", author=" + author +
+                ", originalPost=" + originalPost +
+                ", content='" + content + '\'' +
+                '}';
+    }
 }

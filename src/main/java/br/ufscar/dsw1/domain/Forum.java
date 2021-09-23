@@ -92,4 +92,18 @@ public class Forum {
         this.eh_membro = eh_membro;
     }
 
+    @Override
+    public String toString() {
+        return "Forum{" +
+                "id=" + id +
+                ", id_dono=" + id_dono +
+                ", escopo_postagem=" + escopo_postagem +
+                ", escopo_acesso=" + escopo_acesso +
+                ", titulo='" + titulo + '\'' +
+                ", descricao='" + descricao + '\'' +
+                ", icone='" + icone + '\'' +
+                ", membros=" + membros +
+                ", eh_membro=" + eh_membro +
+                '}';
+    }
 }
