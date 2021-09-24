@@ -17,7 +17,7 @@ public class CommentDAO extends GenericDAO {
      *                            detalhe de post esta informação é completamente desnecessária.
      * @return Objeto [Comment] se bem-sucedido, [null] caso contrário.
      */
-    public static Comment getById(long id, boolean includeOriginalPost) {
+    public static Comment getById(long id, long sessionUserId, boolean includeOriginalPost) {
         final String query = "select * from comentario where id_comentario = ? limit 1";
 
         try {
@@ -35,7 +35,7 @@ public class CommentDAO extends GenericDAO {
 
                 if (includeOriginalPost) {
                     final Long postId = resultSet.getLong("id_postagem");
-                    originalPost = PostDAO.getPost(postId);
+                    originalPost = PostDAO.getPost(postId, sessionUserId);
                 }
 
                 return new Comment(
@@ -86,7 +86,7 @@ public class CommentDAO extends GenericDAO {
         return null;
     }
 
-    public static Comment insert(Long postId, long userId, String content, boolean includeOriginalPost) {
+    public static Comment insert(Long postId, long userId, String content, long sessionUserId, boolean includeOriginalPost) {
         final String query = "INSERT INTO comentario (id_postagem, id_autor, conteudo) VALUES (?, ?, ?)";
 
         try {
@@ -107,7 +107,7 @@ public class CommentDAO extends GenericDAO {
 
                 if (generatedKeys.next()) {
                     Post post = null;
-                    if (includeOriginalPost) post = PostDAO.getPost(postId);
+                    if (includeOriginalPost) post = PostDAO.getPost(postId, sessionUserId);
 
                     // Não precisamos do post original nos casos de uso atuais.
                     result = new Comment(generatedKeys.getLong("id_comentario"), content,

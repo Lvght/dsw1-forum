@@ -14,13 +14,15 @@ public class Post {
     private User autor;
     private Forum forum;
     private Topic topico;
+    private int sessionUserReaction;
 
-    public Post(Long id_autor, Long id_forum, Long id_topico, String titulo, String conteudo) {
+    public Post(Long id_autor, Long id_forum, Long id_topico, String titulo, String conteudo, int sessionUserReaction) {
         this.id_autor = id_autor;
         this.id_forum = id_forum;
         this.id_topico = id_topico;
         this.titulo = titulo;
         this.conteudo = conteudo;
+        this.sessionUserReaction = sessionUserReaction;
     }
 
     public Long getId() {
@@ -95,6 +97,14 @@ public class Post {
         this.topico = topico;
     }
 
+    public int getSessionUserReaction() {
+        return sessionUserReaction;
+    }
+
+    public void setSessionUserReaction(int sessionUserReaction) {
+        this.sessionUserReaction = sessionUserReaction;
+    }
+
     @Override
     public String toString() {
         return "Post{" +
@@ -107,6 +117,7 @@ public class Post {
                 ", autor=" + autor +
                 ", forum=" + forum +
                 ", topico=" + topico +
+                ", sessionUserReaction=" + sessionUserReaction +
                 '}';
     }
 }
