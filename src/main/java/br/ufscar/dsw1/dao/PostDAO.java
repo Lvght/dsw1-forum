@@ -75,7 +75,7 @@ public class PostDAO extends GenericDAO {
         List<Post> listPosts = new ArrayList<>();
         Long offset = (page - 1) * 10;
 
-        String query = "SELECT * from Postagem ORDER BY id_postagem DESC offset ? limit 10;";
+        String query = "SELECT * from Postagem p JOIN forum f ON p.id_forum = f.id_forum WHERE f.escopo_acesso = 1 ORDER BY id_postagem DESC offset ? limit 10;";
 
         try {
             Connection connection = ForumDAO.getConnection();
@@ -369,7 +369,7 @@ public class PostDAO extends GenericDAO {
     public static Long countAllPosts() {
 
         Long count = null;
-        String query = "SELECT COUNT(*) FROM postagem;";
+        String query = "SELECT COUNT(*) FROM from Postagem p JOIN forum f ON p.id_forum = f.id_forum WHERE f.escopo_acesso = 1;";
 
         try {
             Connection connection = PostDAO.getConnection();

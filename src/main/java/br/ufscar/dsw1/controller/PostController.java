@@ -138,6 +138,13 @@ public class PostController extends HttpServlet {
         Post p = PostDAO.getPost(postId);
 
         if (p != null) {
+
+            User user = (User) request.getSession().getAttribute("user");
+
+            if (p.getForum().getEscopo_acesso() == 2 && (user == null || user.getAcademicRecord() == 0)) {
+                response.sendRedirect(request.getContextPath() + "/post/dashboard");
+            }
+
             request.setAttribute("errored", false);
             request.setAttribute("post", p);
             request.getRequestDispatcher("/postDetail.jsp").forward(request, response);

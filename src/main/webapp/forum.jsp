@@ -24,6 +24,12 @@
                 padding: 30px 0;
             }
 
+            .forum h5{
+                margin-top: 40px;
+                text-align: center;
+                font-size: 1rem;
+            }
+
 
             @media only screen and (max-width: 700px){
                 .forum{
@@ -37,12 +43,19 @@
         <div class="forum">
             <c:set var="forum" value="${requestScope.forum}"/>
             <%@include file="../components/_forumInformations.jsp" %>
-            <div class="posts">
-                <c:forEach var="post" items="${requestScope.posts}">
-                    <%@include file="components/_post.jsp" %>
-                </c:forEach>  
-            </div>
-            <%@include file="components/_paginator.jsp" %>
+            <c:choose>
+                <c:when test="${forum.escopo_acesso == 1 || sessionScope.user.academicRecord != null}">
+                    <div class="posts">
+                        <c:forEach var="post" items="${requestScope.posts}">
+                            <%@include file="components/_post.jsp" %>
+                        </c:forEach>  
+                    </div>
+                    <%@include file="components/_paginator.jsp" %>
+                </c:when>    
+                <c:otherwise>
+                    <h5> Este fórum é restrito a usuários verificados</h5>
+                </c:otherwise>
+            </c:choose>
         </div>
     </body>
 </html>

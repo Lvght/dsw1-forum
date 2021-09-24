@@ -4,6 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <title>${forum.titulo}</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
         <script src="${pageContext.request.contextPath}/js/ajax.js" type="text/javascript"></script>
         <style>
             .forum .details{
@@ -68,6 +69,17 @@
                 padding: 20px 0 0 0;
             }
 
+            .forum .lockImage{
+
+                margin-left: auto;
+            }
+
+            .forum .lockImage i{
+                padding: 30px;
+                font-size: 30px;
+            }
+
+
             @media only screen and (max-width: 700px){
                 .forum{
                     width: 100%;
@@ -110,9 +122,18 @@
                 </a>
                 <h2>${forum.membros} membro${forum.membros == 1 ? "" : "s"} • ${forum.escopo_acesso == 1 ? "livre" : "restrito"}</h2>
             </div>
-            <c:if test="${(not empty requestScope.status || not empty status) && not empty sessionScope.user}" >
-                <%@include file="./_button.jsp" %>
-            </c:if>
+            <c:choose>
+                <c:when test="${(not empty requestScope.status || not empty status) && not empty sessionScope.user && (forum.escopo_acesso == 1 || sessionScope.user.academicRecord != 0) }" >
+                    <%@include file="./_button.jsp" %>
+                </c:when>    
+                <c:otherwise>
+                    <c:if test="${forum.escopo_acesso == 2}" >
+                        <div class="lockImage">
+                            <i class='bx bxs-lock-alt'></i>
+                        </div>
+                    </c:if>
+                </c:otherwise>
+            </c:choose>
         </div>
         <div class="description">
             <h2>${forum.descricao}</h2>
