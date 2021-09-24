@@ -6,7 +6,7 @@
         <title>Criar novo fórum</title>
 
         <style>
-        body{
+            body{
                 display: flex;
             }
 
