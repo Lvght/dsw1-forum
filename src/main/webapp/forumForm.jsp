@@ -128,7 +128,7 @@
 
                 <label for="titulo">Titulo</label>
                 <input id="titulo" name="titulo" required value="${requestScope.title}"
-                 pattern="([^ ][^])*[^ ]" title="Deve conter ao menos uma letra, não começar e nem terminar com espaço"/>
+                 pattern="[^ ]+([^]*[^ ])*" title="Deve conter ao menos uma letra, não começar e nem terminar com espaço"/>
                 <span class="errorMessage">${requestScope.message.title}</span>
 
                 <label for="descricao">Descricao</label>

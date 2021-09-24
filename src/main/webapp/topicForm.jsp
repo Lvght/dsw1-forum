@@ -27,6 +27,15 @@
             body {
                 display: flex;
             }
+
+            .errorMessage{
+                font-size: 12px;
+                color: red;
+                margin-left: 15px;
+                min-height: 20px;
+                min-width: 100%;
+                display: grid;
+            }
         </style>
     </head>
     <body>
@@ -37,7 +46,9 @@
                 <input name="id_forum" value="${requestScope.forum_id}" hidden required/>
 
                 <label for="nome">Nome</label>
-                <input id="nome" name="nome" required/>
+                <input id="nome" name="nome" required
+                pattern="[^ ]+([^]*[^ ])*" title="Deve conter ao menos uma letra, não começar e nem terminar com espaço"/>
+                <span class="errorMessage">${requestScope.message.name}</span>
 
                 <input type="submit" value="Criar">
             </form>
