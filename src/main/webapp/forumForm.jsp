@@ -58,6 +58,10 @@
                 border: 0;
             }
 
+            textarea{
+                min-height: 200px
+            }
+
             .forumForm{
                 width: 100%;
             }
@@ -78,6 +82,15 @@
                 cursor: pointer;
             }
 
+            .errorMessage{
+                font-size: 12px;
+                color: red;
+                margin-left: 15px;
+                min-height: 20px;
+                min-width: 100%;
+                display: grid;
+            }
+
         </style>
     </head>
     <body>
@@ -85,17 +98,17 @@
         <div class="forumForm">
             <h1>Criar um forum</h1>
             <hr />
-            <form action="./forum" method="POST">
+            <form action="${pageContext.request.contextPath}/forum" method="POST">
                 <input name="id_dono" value="${sessionScope.user.id}" hidden required/>
 
                 <label for="escopoAcesso">Quem pode visualizar</label>
                 <select id="escopoAcesso" name="escopo_acesso" required>
 
-                    <option value=1>
+                    <option value=1 ${requestScope.access_scope == 1 ? 'selected' : ''}>
                         Qualquer um
                     </option>
 
-                    <option value=2>
+                    <option value=2 ${requestScope.access_scope == 2 ? 'selected' : ''}>
                         Apenas usuários verificados
                     </option>
 
@@ -103,24 +116,26 @@
 
                 <label for="escopoPostagem">Quem pode postar</label>
                 <select id="escopoPostagem" name="escopo_postagem" required>
-                    <option value=1>
+                    <option value=1 ${requestScope.post_scope == 1 ? 'selected' : ''}>
                         Qualquer um
                     </option>
 
-                    <option value=2>
+                    <option value=2 ${requestScope.post_scope == 2 ? 'selected' : ''}>
                         Apenas usuários verificados
                     </option>
 
                 </select>
 
                 <label for="titulo">Titulo</label>
-                <input id="titulo" name="titulo" required/>
+                <input id="titulo" name="titulo" required value="${requestScope.title}"/>
+                <span class="errorMessage">${requestScope.message.title}</span>
 
                 <label for="descricao">Descricao</label>
-                <input id="descricao" name="descricao" required/>
+                <textarea id="descricao" name="descricao" required>${requestScope.description}</textarea>
+                <span class="errorMessage">${requestScope.message.description}</span>
 
                 <label for="icone">icone</label>
-                <input id="icone" name="icone" required/>
+                <input id="icone" name="icone" required value="${requestScope.icon}"/>
                 <br />
                 <hr />
                 <div class="actionButtons">

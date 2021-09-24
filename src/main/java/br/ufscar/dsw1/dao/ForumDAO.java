@@ -290,4 +290,27 @@ public class ForumDAO extends GenericDAO {
             return 0;
         }
     }
+
+    public static boolean verifyTitle(String title) {
+        final String query = "SELECT * FROM forum WHERE titulo = ?";
+
+        try {
+            Connection connection = ForumDAO.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, title);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
 }
