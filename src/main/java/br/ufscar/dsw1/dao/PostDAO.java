@@ -44,7 +44,6 @@ public class PostDAO extends GenericDAO {
                     "(SELECT count(*) FROM usuario_reage_postagem urp WHERE  urp.id_postagem = p.id_postagem AND  urp.tipo_reacao = 2) as deslikes " +
                     "from Postagem p left join usuario_reage_postagem urp on p.id_postagem = urp.id_postagem AND urp.id_usuario = ? "),
 
-
             new AbstractMap.SimpleImmutableEntry<>("get_forum_posts_2", " ORDER BY p.id_postagem DESC offset ? limit 10;"),
 
             new AbstractMap.SimpleImmutableEntry<>("get_my_posts", "SELECT p.*, urp.tipo_reacao, " +
@@ -207,8 +206,6 @@ public class PostDAO extends GenericDAO {
 
             if (id_topico_filtro != 0) {
                 statement.setLong(3, id_topico_filtro);
-
-                //noinspection JpaQueryApiInspection
                 statement.setLong(4, offset);
             } else {
                 statement.setLong(3, offset);
@@ -274,9 +271,6 @@ public class PostDAO extends GenericDAO {
 
         Post post = null;
         final String query = PostDAO.queries.get("get_post");
-
-//        String query = "SELECT p.*, urp.tipo_reacao from postagem p LEFT JOIN usuario_reage_postagem urp " +
-//                "ON p.id_postagem = urp.id_postagem AND urp.id_usuario = ? WHERE p.id_postagem = ?";
 
         try {
             Connection connection = PostDAO.getConnection();

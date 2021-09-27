@@ -10,8 +10,40 @@
                     window.location.href = '${pageContext.request.contextPath}/post/detail?postId=' + postId
             }
 
+            var state = {
+                current: ${post.sessionUserReaction}
+            }
+
             function submitReaction(postId, reaction) {
-                alert('Reação ao post ' + postId + ' do tipo ' + reaction + ' enviada!')
+                // Like
+                if (reaction === 1) {
+                    // Já havia um like. Remova.
+                    if (state.current === 1) {
+                        state.current = 0
+                        $("#like-img-btn-" + postId).attr("src", "${pageContext.request.contextPath}/resources/u-like.png")
+                        $("#deslike-img-btn-" + postId).attr("src", "${pageContext.request.contextPath}/resources/u-deslike.png")
+                    }
+
+                    // Estamos criando um like
+                    else {
+                        state.current = 1
+                        $("#like-img-btn-" + postId).attr("src", "${pageContext.request.contextPath}/resources/s-like.png")
+                        $("#deslike-img-btn-" + postId).attr("src", "${pageContext.request.contextPath}/resources/u-deslike.png")
+                    }
+                }
+                // Deslike
+                else {
+                    if (state.current === 2) {
+                        state.current = 0
+                        $("#like-img-btn-" + postId).attr("src", "${pageContext.request.contextPath}/resources/u-like.png")
+                        $("#deslike-img-btn-" + postId).attr("src", "${pageContext.request.contextPath}/resources/u-deslike.png")
+                    }
+                    else {
+                        state.current = 2
+                        $("#like-img-btn-" + postId).attr("src", "${pageContext.request.contextPath}/resources/u-like.png")
+                        $("#deslike-img-btn-" + postId).attr("src", "${pageContext.request.contextPath}/resources/s-deslike.png")
+                    }
+                }
 
                 const url = "${pageContext.request.contextPath}/react/"
                 const payload = {
@@ -85,19 +117,19 @@
 
                         <!-- Botão de like -->
                         <div class="col-auto reaction-btn-container" onclick="submitReaction(${post.id}, 1)">
-                            <img id="like-img-btn" width="30px" height="27px"
+                            <img id="like-img-btn-${post.id}" width="30px" height="27px"
                                  src="${pageContext.request.contextPath}/resources/${post.sessionUserReaction == 1 ? 's' : 'u'}-like.png"/>
                         </div>
 
                         <!-- Botão de deslike -->
                         <div class="col-auto reaction-btn-container" onclick="submitReaction(${post.id}, 2)">
-                            <img id="deslike-img-btn" width="30px" height="27px"
+                            <img id="deslike-img-btn-${post.id}" width="30px" height="27px"
                                  src="${pageContext.request.contextPath}/resources/${post.sessionUserReaction == 2 ? 's' : 'u'}-deslike.png"/>
                         </div>
 
                         <!-- Indicador de reputação -->
                         <div class="col-auto">
-                            <span>${post.sessionUserReaction}</span>
+                            <span>${post.toString()}</span>
                         </div>
 
                     </div>
