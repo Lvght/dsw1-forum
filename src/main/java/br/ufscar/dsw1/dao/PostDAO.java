@@ -118,7 +118,9 @@ public class PostDAO extends GenericDAO {
         List<Post> listPosts = new ArrayList<>();
         Long offset = (page - 1) * 10;
 
-        String query = "SELECT p.* FROM usuario_ingressa_forum f JOIN postagem p ON p.id_forum = f.id_forum " +
+        String query = "SELECT p.*, urp.tipo_reacao FROM usuario_ingressa_forum f " +
+                "JOIN postagem p ON p.id_forum = f.id_forum " +
+                "LEFT JOIN usuario_reage_postagem urp ON p.id_autor = ? AND urp.id_postagem = p.id_postagem " +
                 "WHERE f.id_usuario = ? ORDER BY id_postagem DESC offset ? limit 10;";
 
         try {
@@ -127,7 +129,8 @@ public class PostDAO extends GenericDAO {
             PreparedStatement statement = connection.prepareStatement(query);
 
             statement.setLong(1, user_id);
-            statement.setLong(2, offset);
+            statement.setLong(2, user_id);
+            statement.setLong(3, offset);
 
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -137,8 +140,9 @@ public class PostDAO extends GenericDAO {
                 Long id_topico = resultSet.getLong("id_topico");
                 String titulo = resultSet.getString("titulo");
                 String conteudo = resultSet.getString("conteudo");
+                final int sessionUserReaction = resultSet.getInt("tipo_reacao");
 
-                Post post = new Post(id_autor, id_forum, id_topico, titulo, conteudo, 0);
+                Post post = new Post(id_autor, id_forum, id_topico, titulo, conteudo, sessionUserReaction);
                 User user = UserDAO.getById(id_autor);
                 Forum forum = ForumDAO.getForum(id_forum);
 

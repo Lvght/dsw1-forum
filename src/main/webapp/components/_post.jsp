@@ -84,15 +84,20 @@
                         </div>
 
                         <!-- Botão de like -->
-                        <div class="col-auto reaction-btn-container" onclick="submitReaction(${post.id}, 0)">
-                            <img width="30px" height="27px"
-                                 src="${pageContext.request.contextPath}/resources/u-like.png"/>
+                        <div class="col-auto reaction-btn-container" onclick="submitReaction(${post.id}, 1)">
+                            <img id="like-img-btn" width="30px" height="27px"
+                                 src="${pageContext.request.contextPath}/resources/${post.sessionUserReaction == 1 ? 's' : 'u'}-like.png"/>
                         </div>
 
                         <!-- Botão de deslike -->
-                        <div class="col-auto reaction-btn-container" onclick="submitReaction(${post.id}, 1)">
-                            <img width="30px" height="27px"
-                                 src="${pageContext.request.contextPath}/resources/u-deslike.png"/>
+                        <div class="col-auto reaction-btn-container" onclick="submitReaction(${post.id}, 2)">
+                            <img id="deslike-img-btn" width="30px" height="27px"
+                                 src="${pageContext.request.contextPath}/resources/${post.sessionUserReaction == 2 ? 's' : 'u'}-deslike.png"/>
+                        </div>
+
+                        <!-- Indicador de reputação -->
+                        <div class="col-auto">
+                            <span>${post.sessionUserReaction}</span>
                         </div>
 
                     </div>
