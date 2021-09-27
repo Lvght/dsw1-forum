@@ -4,6 +4,9 @@ import br.ufscar.dsw1.domain.User;
 import br.ufscar.dsw1.domain.Forum;
 import br.ufscar.dsw1.domain.Topic;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class Post {
     private Long id;
     private Long id_autor;
@@ -15,14 +18,35 @@ public class Post {
     private Forum forum;
     private Topic topico;
     private int sessionUserReaction;
+    private int positiveReactionCounter;
+    private int negativeReactionCounter;
+    private int reputation;
 
-    public Post(Long id_autor, Long id_forum, Long id_topico, String titulo, String conteudo, int sessionUserReaction) {
+    public Post(Long id_autor, Long id_forum, Long id_topico, String titulo, String conteudo,
+                int sessionUserReaction, int positiveReactionCounter, int negativeReactionCounter) {
         this.id_autor = id_autor;
         this.id_forum = id_forum;
         this.id_topico = id_topico;
         this.titulo = titulo;
         this.conteudo = conteudo;
         this.sessionUserReaction = sessionUserReaction;
+        this.positiveReactionCounter = positiveReactionCounter;
+        this.negativeReactionCounter = negativeReactionCounter;
+        this.reputation = positiveReactionCounter - negativeReactionCounter;
+    }
+
+    public Post(ResultSet resultSet) throws SQLException {
+        this.id = resultSet.getLong("id_postagem");
+        this.id_autor = resultSet.getLong("id_autor");
+        this.id_forum = resultSet.getLong("id_forum");
+        this.id_topico = resultSet.getLong("id_topico");
+        this.titulo = resultSet.getString("titulo");
+        this.conteudo = resultSet.getString("conteudo");
+        this.sessionUserReaction = resultSet.getInt("tipo_reacao");
+        this.positiveReactionCounter = resultSet.getInt("likes");
+        this.negativeReactionCounter = resultSet.getInt("deslikes");
+
+        this.reputation = this.positiveReactionCounter - this.negativeReactionCounter;
     }
 
     public Long getId() {
@@ -105,6 +129,31 @@ public class Post {
         this.sessionUserReaction = sessionUserReaction;
     }
 
+    public int getPositiveReactionCounter() {
+        return positiveReactionCounter;
+    }
+
+    public void setPositiveReactionCounter(int positiveReactionCounter) {
+        this.positiveReactionCounter = positiveReactionCounter;
+    }
+
+    public int getNegativeReactionCounter() {
+        return negativeReactionCounter;
+    }
+
+    public void setNegativeReactionCounter(int negativeReactionCounter) {
+        this.negativeReactionCounter = negativeReactionCounter;
+    }
+
+    public int getReputation() {
+        return reputation;
+    }
+
+    public void setReputation(int reputation) {
+        this.reputation = reputation;
+    }
+
+
     @Override
     public String toString() {
         return "Post{" +
@@ -118,6 +167,9 @@ public class Post {
                 ", forum=" + forum +
                 ", topico=" + topico +
                 ", sessionUserReaction=" + sessionUserReaction +
+                ", positiveReactionCounter=" + positiveReactionCounter +
+                ", negativeReactionCounter=" + negativeReactionCounter +
+                ", reputation=" + reputation +
                 '}';
     }
 }

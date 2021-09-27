@@ -79,7 +79,7 @@ public class PostController extends HttpServlet {
             request.setAttribute("message", errorMessage);
         }
 
-        Post post = new Post(id_autor, id_forum, id_topico, titulo, conteudo, 0);
+        Post post = new Post(id_autor, id_forum, id_topico, titulo, conteudo, 0, 0, 0);
 
         response.setContentType("text/html");
 
