@@ -30,6 +30,7 @@ public class PostDAO extends GenericDAO {
                     "(SELECT count(*) FROM usuario_reage_postagem urp WHERE  urp.id_postagem = p.id_postagem AND  urp.tipo_reacao = 2) as deslikes " +
                     "FROM Postagem AS p " +
                     "LEFT JOIN usuario_reage_postagem as urp  on p.id_postagem = urp.id_postagem AND p.id_autor = ? " +
+                    "JOIN forum AS f ON p.id_forum = f.id_forum WHERE f.escopo_acesso = 1 " +
                     "ORDER BY p.id_postagem DESC offset ? limit 10 ;"),
 
             new AbstractMap.SimpleImmutableEntry<>("get_timeline", "SELECT p.*, urp.tipo_reacao, " +
