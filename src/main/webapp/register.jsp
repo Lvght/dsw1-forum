@@ -98,9 +98,11 @@
 
                 <h3>Criar conta no Debatr</h3>
                 <form action="./register" method="POST">
-                    <input placeholder="Nome" value="${requestScope.name}"  name="name" required />
+                    <input placeholder="Nome" value="${requestScope.name}"  name="name" required 
+                    pattern="[^ ]+([^]*[^ ])*" title="Deve conter ao menos uma letra, não começar e nem terminar com espaço"/>
                     <span class="errorMessage">${requestScope.message.name}</span>
-                    <input placeholder="Nome de usuário" value="${requestScope.username}" name="username" required />
+                    <input placeholder="Nome de usuário" value="${requestScope.username}" name="username" required 
+                    pattern="[^ ]*" title="Deve conter ao menos uma letra e não conter espaços"/>
                     <span class="errorMessage">${requestScope.message.username}</span>
                     <input placeholder="Email" value="${requestScope.email}" name="email" type="email" required />
                     <span class="errorMessage">${requestScope.message.email}</span>

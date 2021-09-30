@@ -127,7 +127,8 @@
                 <br/>
                 <br/>
 
-                <input class="postTitle" id="title" name="titulo" placeholder="Titulo" maxlength="255" required/>
+                <input class="postTitle" id="title" name="titulo" placeholder="Titulo" maxlength="255" required
+                pattern="[^ ]+([^]*[^ ])*" title="Deve conter ao menos uma letra, não começar e nem terminar com espaço"/>
                 
                 <span id="counter" class="counter">255</span>
 

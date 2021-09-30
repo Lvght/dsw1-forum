@@ -33,7 +33,7 @@
                                 ${pageContext.request.servletPath == "/criarPost.jsp" ? "<i class='bx bxs-message-square-add'></i>" : "<i class='bx bx-message-square-add'></i>"}
                                 <span class="nav_name">Novo Post</span>
                             </a>
-                            <a href="${pageContext.request.contextPath}/forumForm.jsp"
+                            <a href="${pageContext.request.contextPath}/forum/forumForm"
                             class="nav_link ${pageContext.request.servletPath == "/forumForm.jsp" ? "active" : ""}">
                                 ${pageContext.request.servletPath == "/forumForm.jsp" ? "<i class='bx bxs-group' ></i>" : "<i class='bx bx-group'></i>"}
                                 <span class="nav_name">Criar Forum</span>

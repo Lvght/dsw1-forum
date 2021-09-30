@@ -15,6 +15,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 @WebServlet(name = "ForumServlet", value = "/forum/*")
@@ -42,6 +43,9 @@ public class ForumController extends HttpServlet {
                     break;
                 case "/sairForum":
                     sairForum(request, response);
+                    break;
+                case "/forumForm":
+                    forumForm(request, response);
                     break;
                 case "/topicoForm":
                     topicoForm(request, response);
@@ -74,6 +78,12 @@ public class ForumController extends HttpServlet {
                 case "/topico":
                     criarTopico(request, response);
                     break;
+                case "/forumForm":
+                    forumForm(request, response);
+                    break;
+                case "/topicoForm":
+                    topicoForm(request, response);
+                    break;
             }
         } catch (RuntimeException | IOException | ServletException e) {
             throw new ServletException(e);
@@ -82,21 +92,59 @@ public class ForumController extends HttpServlet {
 
     private void criar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-        final long id_dono = Long.parseLong(request.getParameter("id_dono"));
-        final int escopo_postagem = Integer.parseInt(request.getParameter("escopo_postagem"));
-        final int escopo_acesso = Integer.parseInt(request.getParameter("escopo_acesso"));
-        final String titulo = request.getParameter("titulo");
-        final String descricao = request.getParameter("descricao");
-        final String icone = request.getParameter("icone");
+        try {
+            final long id_dono = Long.parseLong(request.getParameter("id_dono"));
+            final int escopo_postagem = Integer.parseInt(request.getParameter("escopo_postagem"));
+            final int escopo_acesso = Integer.parseInt(request.getParameter("escopo_acesso"));
+            final String titulo = request.getParameter("titulo");
+            final String descricao = request.getParameter("descricao");
+            final String icone = request.getParameter("icone");
 
-        Forum forum = new Forum(id_dono, escopo_postagem, escopo_acesso, titulo, descricao, icone);
+            request.setAttribute("post_scope", escopo_postagem);
+            request.setAttribute("access_scope", escopo_acesso);
+            request.setAttribute("title", titulo);
+            request.setAttribute("description", descricao);
+            request.setAttribute("icon", icone);
 
-        response.setContentType("text/html");
+            final HashMap<String, String> errorMessage = new HashMap<>();
 
-        if (ForumDAO.insert(forum)) {
-            response.sendRedirect(request.getContextPath() + "/forum/especifico?id=" + forum.getId());
-        } else {
-            response.getWriter().println("Deu errado :(");
+            boolean error = false;
+
+            if (titulo.length() > 50) {
+                errorMessage.put("title", "O título deve conter no máximo 50 caracteres");
+                error = true;
+                request.setAttribute("title", "");
+            }
+
+            if (descricao.length() > 15) {
+                errorMessage.put("description", "A descrição deve conter no máximo 255 caracteres");
+                error = true;
+                request.setAttribute("description", "");
+            }
+
+            if (ForumDAO.verifyTitle(titulo)) {
+                errorMessage.put("title", "Já existe um fórum com este título");
+                error = true;
+                request.setAttribute("title", "");
+            }
+
+            request.setAttribute("message", errorMessage);
+
+            if (error) {
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/forum/forumForm");
+                dispatcher.forward(request, response);
+            } else {
+
+                Forum forum = new Forum(id_dono, escopo_postagem, escopo_acesso, titulo, descricao, icone);
+
+                response.setContentType("text/html");
+
+                if (ForumDAO.insert(forum)) {
+                    response.sendRedirect(request.getContextPath() + "/forum/especifico?id=" + forum.getId());
+                }
+            }
+        } catch (RuntimeException | IOException | ServletException e) {
+            throw new ServletException(e);
         }
     }
 
@@ -182,6 +230,15 @@ public class ForumController extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
+    private void forumForm(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        if (request.getSession().getAttribute("user") == null) {
+            response.sendRedirect(request.getContextPath() + "/login");
+        }
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/forumForm.jsp");
+        dispatcher.forward(request, response);
+    }
+
     private void topicoForm(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         final Long forum_id = Long.parseLong(request.getParameter("forum_id"));
@@ -196,11 +253,33 @@ public class ForumController extends HttpServlet {
         final Long forum_id = Long.parseLong(request.getParameter("id_forum"));
         final String nome = request.getParameter("nome");
         Topic topic = new Topic(forum_id, nome);
-        if (TopicDAO.insert(topic))
-            response.sendRedirect(
-                    request.getContextPath() + "/forum/especifico?id=" + forum_id + "&topico=" + topic.getId());
-        else
-            response.getWriter().println("Deu errado :(");
+
+        final HashMap<String, String> errorMessage = new HashMap<>();
+
+        boolean error = false;
+
+        if (nome.length() > 50) {
+            errorMessage.put("name", "O topico deve conter no máximo 50 caracteres");
+            error = true;
+        }
+
+        if (TopicDAO.verifyTopic(nome) || nome == "Geral") {
+            errorMessage.put("name", "Já existe um tópico com este nome");
+            error = true;
+        }
+
+        request.setAttribute("message", errorMessage);
+
+        if (error) {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/forum/topicoForm?forum_id=" + forum_id);
+            dispatcher.forward(request, response);
+        } else {
+            if (TopicDAO.insert(topic))
+                response.sendRedirect(
+                        request.getContextPath() + "/forum/especifico?id=" + forum_id + "&topico=" + topic.getId());
+            else
+                response.getWriter().println("Deu errado :(");
+        }
     }
 
     private void getTopicosForum(HttpServletRequest request, HttpServletResponse response)

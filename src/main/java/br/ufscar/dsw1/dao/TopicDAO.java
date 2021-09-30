@@ -103,4 +103,27 @@ public class TopicDAO extends GenericDAO {
         }
         return topic;
     }
+
+    public static boolean verifyTopic(String name) {
+        final String query = "SELECT * FROM topico WHERE nome = ?";
+
+        try {
+            Connection connection = TopicDAO.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, name);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
 }

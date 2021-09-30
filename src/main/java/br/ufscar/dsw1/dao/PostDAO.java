@@ -382,7 +382,7 @@ public class PostDAO extends GenericDAO {
     public static Long countAllPosts() {
 
         Long count = null;
-        String query = "SELECT COUNT(*) FROM postagem;";
+        String query = "SELECT COUNT(*) FROM from Postagem p JOIN forum f ON p.id_forum = f.id_forum WHERE f.escopo_acesso = 1;";
 
         try {
             Connection connection = PostDAO.getConnection();
