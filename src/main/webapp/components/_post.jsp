@@ -14,11 +14,18 @@
                 current: ${post.sessionUserReaction}
             }
 
+            function addToReputation(postId, value) {
+                const reputationSpan = $("#reputation" + postId);
+                const val = reputationSpan.html();
+                reputationSpan.html(parseInt(val) + value);
+            }
+
             function submitReaction(postId, reaction) {
                 // Like
                 if (reaction === 1) {
                     // Já havia um like. Remova.
                     if (state.current === 1) {
+                        addToReputation(postId, -1);
                         state.current = 0
                         $("#like-img-btn-" + postId).attr("src", "${pageContext.request.contextPath}/resources/u-like.png")
                         $("#deslike-img-btn-" + postId).attr("src", "${pageContext.request.contextPath}/resources/u-deslike.png")
@@ -26,6 +33,8 @@
 
                     // Estamos criando um like
                     else {
+                        if (state.current === 2) addToReputation(postId, +2);
+                        else addToReputation(postId, +1);
                         state.current = 1
                         $("#like-img-btn-" + postId).attr("src", "${pageContext.request.contextPath}/resources/s-like.png")
                         $("#deslike-img-btn-" + postId).attr("src", "${pageContext.request.contextPath}/resources/u-deslike.png")
@@ -34,11 +43,14 @@
                 // Deslike
                 else {
                     if (state.current === 2) {
+                        addToReputation(postId, +1);
                         state.current = 0
                         $("#like-img-btn-" + postId).attr("src", "${pageContext.request.contextPath}/resources/u-like.png")
                         $("#deslike-img-btn-" + postId).attr("src", "${pageContext.request.contextPath}/resources/u-deslike.png")
-                    }
-                    else {
+                    } else {
+                        if (state.current === 1) addToReputation(postId, -2);
+                        else addToReputation(postId, -1);
+
                         state.current = 2
                         $("#like-img-btn-" + postId).attr("src", "${pageContext.request.contextPath}/resources/u-like.png")
                         $("#deslike-img-btn-" + postId).attr("src", "${pageContext.request.contextPath}/resources/s-deslike.png")
@@ -129,7 +141,7 @@
 
                         <!-- Indicador de reputação -->
                         <div class="col-auto">
-                            <span>${post.toString()}</span>
+                            <span id="reputation${post.id}">${post.reputation}</span>
                         </div>
 
                     </div>
