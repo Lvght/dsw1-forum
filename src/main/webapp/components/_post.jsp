@@ -113,39 +113,41 @@
                     </a>
                 </div>
 
-                <div class="container p-0">
-                    <div class="row align-items-center p-0">
+                <c:if test="${sessionScope.user != null}">
+                    <div class="container p-0">
+                        <div class="row align-items-center p-0">
 
-                        <!-- Botão de engajamento -->
-                        <div class="col-auto">
-                            <div class="row align-items-center engage-background p-0">
-                                <div class="col-auto engage-tile-content">
-                                    <img class="rounded-circle" height="32px" width="32px" display
-                                         src="https://i1.wp.com/terracoeconomico.com.br/wp-content/uploads/2019/01/default-user-image.png?ssl=1"/>
-                                    <span class="me-2">Participar da Discussão</span>
+                            <!-- Botão de engajamento -->
+                            <div class="col-auto">
+                                <div class="row align-items-center engage-background p-0">
+                                    <div class="col-auto engage-tile-content">
+                                        <img class="rounded-circle" height="32px" width="32px" display
+                                             src="https://i1.wp.com/terracoeconomico.com.br/wp-content/uploads/2019/01/default-user-image.png?ssl=1"/>
+                                        <span class="me-2">Participar da Discussão</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- Botão de like -->
-                        <div class="col-auto reaction-btn-container" onclick="submitReaction(${post.id}, 1)">
-                            <img id="like-img-btn-${post.id}" width="30px" height="27px"
-                                 src="${pageContext.request.contextPath}/resources/${post.sessionUserReaction == 1 ? 's' : 'u'}-like.png"/>
-                        </div>
+                            <!-- Botão de like -->
+                            <div class="col-auto reaction-btn-container" onclick="submitReaction(${post.id}, 1)">
+                                <img id="like-img-btn-${post.id}" width="30px" height="27px"
+                                     src="${pageContext.request.contextPath}/resources/${post.sessionUserReaction == 1 ? 's' : 'u'}-like.png"/>
+                            </div>
 
-                        <!-- Botão de deslike -->
-                        <div class="col-auto reaction-btn-container" onclick="submitReaction(${post.id}, 2)">
-                            <img id="deslike-img-btn-${post.id}" width="30px" height="27px"
-                                 src="${pageContext.request.contextPath}/resources/${post.sessionUserReaction == 2 ? 's' : 'u'}-deslike.png"/>
-                        </div>
+                            <!-- Botão de deslike -->
+                            <div class="col-auto reaction-btn-container" onclick="submitReaction(${post.id}, 2)">
+                                <img id="deslike-img-btn-${post.id}" width="30px" height="27px"
+                                     src="${pageContext.request.contextPath}/resources/${post.sessionUserReaction == 2 ? 's' : 'u'}-deslike.png"/>
+                            </div>
 
-                        <!-- Indicador de reputação -->
-                        <div class="col-auto">
-                            <span id="reputation${post.id}">${post.reputation}</span>
-                        </div>
+                            <!-- Indicador de reputação -->
+                            <div class="col-auto">
+                                <span id="reputation${post.id}">${post.reputation}</span>
+                            </div>
 
+                        </div>
                     </div>
-                </div>
+                </c:if>
             </div>
         </div>
         <hr/>
