@@ -168,8 +168,12 @@ public class ForumController extends HttpServlet {
                 Long.valueOf(request.getParameter("filtro") != null ? request.getParameter("filtro") : "0"));
 
         Long pagina = Long.parseLong(request.getParameter("page") != null ? request.getParameter("page") : "1");
+
+        User sessionUser = (User) request.getSession().getAttribute("user");
+        final long sessionUserId = sessionUser == null ? 0 : sessionUser.getId();
+
         List<Post> posts = PostDAO.getForumPosts(id, (Long) request.getAttribute("topico"),
-                (Long) request.getAttribute("filtro"), pagina);
+                (Long) request.getAttribute("filtro"), pagina, sessionUserId);
         List<Topic> topicos = TopicDAO.getForumTopicos(id);
 
         request.setAttribute("forum", forum);

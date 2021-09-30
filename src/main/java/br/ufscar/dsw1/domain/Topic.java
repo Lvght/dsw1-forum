@@ -44,4 +44,12 @@ public class Topic {
         this.nome = nome;
     }
 
+    @Override
+    public String toString() {
+        return "Topic{" +
+                "id=" + id +
+                ", id_forum=" + id_forum +
+                ", nome='" + nome + '\'' +
+                '}';
+    }
 }

@@ -101,4 +101,19 @@ public class User {
     public void setAcademicRecord(int academicRecord) {
         this.academicRecord = academicRecord;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", username='" + username + '\'' +
+                ", profileImageUrl='" + profileImageUrl + '\'' +
+                ", description='" + description + '\'' +
+                ", reputation=" + reputation +
+                ", isVerified=" + isVerified +
+                ", academicRecord=" + academicRecord +
+                '}';
+    }
 }

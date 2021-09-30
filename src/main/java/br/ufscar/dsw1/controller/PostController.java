@@ -79,7 +79,7 @@ public class PostController extends HttpServlet {
             request.setAttribute("message", errorMessage);
         }
 
-        Post post = new Post(id_autor, id_forum, id_topico, titulo, conteudo);
+        Post post = new Post(id_autor, id_forum, id_topico, titulo, conteudo, 0, 0, 0);
 
         response.setContentType("text/html");
 
@@ -117,7 +117,7 @@ public class PostController extends HttpServlet {
             homePosts = PostDAO.getTimeline(sessionUser.getId(), pagina);
             itemCount = PostDAO.countPostUserForuns(sessionUser.getId());
         } else {
-            homePosts = PostDAO.getAll(pagina);
+            homePosts = PostDAO.getAll(pagina, 0);
             itemCount = PostDAO.countAllPosts();
         }
 
@@ -135,7 +135,10 @@ public class PostController extends HttpServlet {
     private void postDetail(HttpServletRequest request, HttpServletResponse response, long postId)
             throws ServletException, IOException {
 
-        Post p = PostDAO.getPost(postId);
+        User sessionUser = (User) request.getSession().getAttribute("user");
+        final long userId = sessionUser == null ? 0 : sessionUser.getId();
+
+        Post p = PostDAO.getPost(postId, userId);
 
         if (p != null) {
 

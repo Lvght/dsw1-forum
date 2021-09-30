@@ -37,6 +37,7 @@ public class CommentController extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         try {
             User sessionUser = (User) request.getSession().getAttribute("user");
+            final long sessionUserId = sessionUser == null ? 0 : sessionUser.getId();
 
             if (sessionUser == null) {
                 // TODO Devemos melhorar a exibição de erros.
@@ -47,7 +48,7 @@ public class CommentController extends HttpServlet {
             final long postId = Long.parseLong(request.getParameter("postId"));
             final String content = request.getParameter("content");
 
-            Comment comment = CommentDAO.insert(postId, userId, content, false);
+            Comment comment = CommentDAO.insert(postId, userId, content, sessionUserId, false);
 
             // Inserimos em uma lista para usar o componente genérico
             ArrayList<Comment> result = new ArrayList<>();
