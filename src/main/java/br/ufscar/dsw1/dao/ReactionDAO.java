@@ -9,7 +9,7 @@ import java.sql.SQLException;
 
 public class ReactionDAO extends GenericDAO {
     public static boolean reactToPost(long authorId, long postId, int type) {
-        final String query = "INSERT INTO debatr.public.usuario_reage_postagem (id_usuario, id_postagem, tipo_reacao) VALUES (?, ?, ?)";
+        final String query = "INSERT INTO usuario_reage_postagem (id_usuario, id_postagem, tipo_reacao) VALUES (?, ?, ?)";
 
         try {
             Connection connection = ReactionDAO.getConnection();

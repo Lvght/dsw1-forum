@@ -19,8 +19,6 @@ public class ReactionController extends HttpServlet {
             final long userId = ((User) request.getSession().getAttribute("user")).getId();
             final int type = Integer.parseInt(request.getParameter("type"));
 
-
-
             if (ReactionDAO.reactToPost(userId, postId, type)) {
                 response.getWriter().write("deu certo");
                 return;
