@@ -18,8 +18,8 @@ public class ResetPasswordController extends HttpServlet {
         if ((jwt = JWTManager.getDecodedJWT(token)) != null)
             request.getRequestDispatcher("password-reset.jsp").forward(request, response);
         else {
-            System.out.println("Redirecionando para a página: " + request.getContextPath());
-            response.sendRedirect(request.getContextPath());
+            System.out.println("Redirecionando para a página: " + RequestPasswordResetController.getBaseUrl(request));
+            response.sendRedirect(RequestPasswordResetController.getBaseUrl(request));
         }
     }
 
@@ -30,6 +30,6 @@ public class ResetPasswordController extends HttpServlet {
 
         JWTManager.changePasswordForTokenOwner(token, password);
 
-        response.sendRedirect(request.getContextPath());
+        response.sendRedirect(RequestPasswordResetController.getBaseUrl(request));
     }
 }

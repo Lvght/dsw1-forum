@@ -11,7 +11,7 @@ import java.io.IOException;
 
 @WebServlet(name = "RequestPasswordResetController", value = "/request-password-reset")
 public class RequestPasswordResetController extends HttpServlet {
-    private static String getBaseUrl(HttpServletRequest request) {
+    public static String getBaseUrl(HttpServletRequest request) {
         String scheme = request.getScheme() + "://";
         String serverName = request.getServerName();
         String serverPort = (request.getServerPort() == 80) ? "" : ":" + request.getServerPort();
