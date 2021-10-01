@@ -1,5 +1,8 @@
 package br.ufscar.dsw1.domain;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class User {
     private long id;
     private String name;
@@ -28,6 +31,16 @@ public class User {
         this.reputation = reputation;
         this.isVerified = isVerified;
         this.academicRecord = academicRecord;
+    }
+
+    public User(ResultSet resultSet) throws SQLException {
+        this.id = resultSet.getLong("id_usuario");
+        this.name = resultSet.getString("nome");
+        this.email = resultSet.getString("email");
+        this.profileImageUrl = resultSet.getString("imagem_perfil");
+        this.description = resultSet.getString("descricao");
+        this.reputation = resultSet.getDouble("reputacao");
+        this.academicRecord = resultSet.getInt("ra");
     }
 
     public long getId() {
