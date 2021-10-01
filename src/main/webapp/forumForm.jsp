@@ -98,7 +98,7 @@
         <div class="forumForm">
             <h1>Criar um forum</h1>
             <hr />
-            <form action="${pageContext.request.contextPath}/forum" method="POST">
+            <form action="${pageContext.request.contextPath}/forum" method="POST" enctype="multipart/form-data">
                 <input name="id_dono" value="${sessionScope.user.id}" hidden required/>
 
                 <label for="escopoAcesso">Quem pode visualizar</label>
@@ -136,7 +136,7 @@
                 <span class="errorMessage">${requestScope.message.description}</span>
 
                 <label for="icone">icone</label>
-                <input id="icone" name="icone" required value="${requestScope.icon}"/>
+                <input id="icone" name="icone" type="file" required/>
                 <br />
                 <hr />
                 <div class="actionButtons">

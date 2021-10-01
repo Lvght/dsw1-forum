@@ -97,7 +97,7 @@
                 <br />
 
                 <h3>Criar conta no Debatr</h3>
-                <form action="./register" method="POST">
+                <form action="./register" method="POST" enctype="multipart/form-data">
                     <input placeholder="Nome" value="${requestScope.name}"  name="name" required 
                     pattern="[^ ]+([^]*[^ ])*" title="Deve conter ao menos uma letra, não começar e nem terminar com espaço"/>
                     <span class="errorMessage">${requestScope.message.name}</span>
@@ -106,6 +106,8 @@
                     <span class="errorMessage">${requestScope.message.username}</span>
                     <input placeholder="Email" value="${requestScope.email}" name="email" type="email" required />
                     <span class="errorMessage">${requestScope.message.email}</span>
+                    <input name="fotoPerfil" type="file" />
+                    <span class="errorMessage"></span> 
                     <input placeholder="Senha" name="password" type="password" required />
                     <span class="errorMessage">${requestScope.message.password}</span>
 

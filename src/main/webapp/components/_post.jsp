@@ -78,7 +78,7 @@
                     <a href="${pageContext.request.contextPath}/forum/especifico?id=${post.getForum().getId()}">
                         <div class="postForumInformation">
                             <div class="forumIcon">
-                                <img src="https://seeklogo.com/images/U/ufscar-logotipo-logo-E01F858A9C-seeklogo.com.png"/>
+                                <img src="${not empty post.getForum().getIcone() ? post.getForum().getIcone() : "https://seeklogo.com/images/U/ufscar-logotipo-logo-E01F858A9C-seeklogo.com.png"}"/>
                             </div>
                             <div class="forumName">
                                 <h2>f: ${post.getForum().getTitulo()}</h2>

@@ -82,7 +82,7 @@ public class UserDAO extends GenericDAO {
      * @return Um boolean indicando se a operação foi bem-sucedida ou não.
      */
     public static boolean insert(User user, String pureTextPassword) {
-        final String query = "insert into usuario(nome, username, email, senha, salt) values (?, ?, ?, ?, ?);";
+        final String query = "insert into usuario(nome, username, email, senha, salt, imagem_perfil) values (?, ?, ?, ?, ?, ?);";
 
         // Faz o hashing da senha.
         byte[] salt = UserDAO.getSalt();
@@ -94,13 +94,14 @@ public class UserDAO extends GenericDAO {
         // Tenta salvar no banco de dados.
         try {
             Connection connection = UserDAO.getConnection();
-            PreparedStatement statement = connection.prepareStatement(query, new String[]{"id_usuario"});
+            PreparedStatement statement = connection.prepareStatement(query, new String[] { "id_usuario" });
 
             statement.setString(1, user.getName());
             statement.setString(2, user.getUsername());
             statement.setString(3, user.getEmail());
             statement.setString(4, base64EncodedPasswordHash);
             statement.setString(5, base64EncodedSalt);
+            statement.setString(6, user.getProfileImageUrl());
 
             final int affectedRows = statement.executeUpdate();
 

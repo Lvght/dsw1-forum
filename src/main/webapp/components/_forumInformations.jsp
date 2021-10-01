@@ -114,7 +114,7 @@
     <body>
         <div class="details">
             <div class="forumIcon">
-                <img src="https://seeklogo.com/images/U/ufscar-logotipo-logo-E01F858A9C-seeklogo.com.png"/>
+                <img src="${not empty forum.icone ? forum.icone : "https://seeklogo.com/images/U/ufscar-logotipo-logo-E01F858A9C-seeklogo.com.png"}"/>
             </div>
             <div class="forumInformation">
                 <a href="${pageContext.request.contextPath}/forum/especifico?id=${forum.id}">

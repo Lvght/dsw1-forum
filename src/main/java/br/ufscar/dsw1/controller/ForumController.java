@@ -13,11 +13,23 @@ import br.ufscar.dsw1.domain.User;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
+
+import com.amazonaws.SdkClientException;
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+
 import javax.servlet.annotation.*;
+
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.List;
 
+@MultipartConfig
 @WebServlet(name = "ForumServlet", value = "/forum/*")
 public class ForumController extends HttpServlet {
 
@@ -98,13 +110,11 @@ public class ForumController extends HttpServlet {
             final int escopo_acesso = Integer.parseInt(request.getParameter("escopo_acesso"));
             final String titulo = request.getParameter("titulo");
             final String descricao = request.getParameter("descricao");
-            final String icone = request.getParameter("icone");
 
             request.setAttribute("post_scope", escopo_postagem);
             request.setAttribute("access_scope", escopo_acesso);
             request.setAttribute("title", titulo);
             request.setAttribute("description", descricao);
-            request.setAttribute("icon", icone);
 
             final HashMap<String, String> errorMessage = new HashMap<>();
 
@@ -134,6 +144,30 @@ public class ForumController extends HttpServlet {
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/forum/forumForm");
                 dispatcher.forward(request, response);
             } else {
+
+                final AmazonS3 s3 = AmazonS3ClientBuilder.standard().withRegion(Regions.SA_EAST_1).build();
+                final String bucketName = "debatr-media";
+
+                Part filePart = request.getPart("icone");
+                String filename = "forum-" + titulo;
+                String icone = null;
+                try {
+                    InputStream inputStream = filePart.getInputStream();
+                    File uploadedFile = new File("/" + File.separator + filename);
+                    OutputStream outputStream = new FileOutputStream(uploadedFile);
+
+                    int read;
+                    byte[] bytes = new byte[1024];
+
+                    while ((read = inputStream.read(bytes)) != -1) {
+                        outputStream.write(bytes, 0, read);
+                    }
+
+                    s3.putObject(bucketName, filename, uploadedFile);
+                    icone = "https://" + bucketName + ".s3.sa-east-1.amazonaws.com/" + filename;
+                } catch (IOException | SdkClientException e) {
+                    e.printStackTrace();
+                }
 
                 Forum forum = new Forum(id_dono, escopo_postagem, escopo_acesso, titulo, descricao, icone);
 
