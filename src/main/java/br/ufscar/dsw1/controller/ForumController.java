@@ -152,7 +152,7 @@ public class ForumController extends HttpServlet {
                 String filename = "forum-" + titulo;
                 String icone = null;
                 InputStream inputStream = filePart.getInputStream();
-                File uploadedFile = new File("/" + File.separator + filename);
+                File uploadedFile = new File("/tmp" + File.separator + filename);
                 OutputStream outputStream = new FileOutputStream(uploadedFile);
 
                 int read;
