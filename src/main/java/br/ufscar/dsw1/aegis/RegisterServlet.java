@@ -109,25 +109,20 @@ public class RegisterServlet extends HttpServlet {
 
                 Part filePart = request.getPart("fotoPerfil");
                 String filename = "user-" + username;
-                try {
-                    InputStream inputStream = filePart.getInputStream();
-                    File uploadedFile = new File("/" + File.separator + filename);
-                    OutputStream outputStream = new FileOutputStream(uploadedFile);
+                InputStream inputStream = filePart.getInputStream();
+                File uploadedFile = new File("/tmp" + File.separator + filename);
+                OutputStream outputStream = new FileOutputStream(uploadedFile);
 
-                    int read;
-                    byte[] bytes = new byte[1024];
+                int read;
+                byte[] bytes = new byte[1024];
 
-                    while ((read = inputStream.read(bytes)) != -1) {
-                        outputStream.write(bytes, 0, read);
-                    }
-
-                    outputStream.close();
-
-                    s3.putObject(bucketName, filename, uploadedFile);
-                    fotoPerfil = "https://" + bucketName + ".s3.sa-east-1.amazonaws.com/" + filename;
-                } catch (IOException | SdkClientException e) {
-                    e.printStackTrace();
+                while ((read = inputStream.read(bytes)) != -1) {
+                    outputStream.write(bytes, 0, read);
                 }
+
+                s3.putObject(bucketName, filename, uploadedFile);
+                fotoPerfil = "https://" + bucketName + ".s3.sa-east-1.amazonaws.com/" + filename;
+                outputStream.close();
             }
 
             User user = new User(name, email, username);
