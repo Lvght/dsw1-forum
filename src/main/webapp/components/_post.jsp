@@ -11,13 +11,14 @@
             }
 
             var state = {
-                current: ${post.sessionUserReaction}
+                current: ${post.sessionUserReaction},
+                reputation: parseInt(${post.reputation})
             }
 
             function addToReputation(postId, value) {
                 const reputationSpan = $("#reputation" + postId);
-                const val = reputationSpan.html();
-                reputationSpan.html(parseInt(val) + value);
+                state.reputation += value;
+                reputationSpan.html(state.reputation);
             }
 
             function submitReaction(postId, reaction) {
@@ -129,13 +130,13 @@
                             </div>
 
                             <!-- Botão de like -->
-                            <div class="col-auto reaction-btn-container" onclick="submitReaction(${post.id}, 1)">
+                            <div id="like-btn-${post.id}" class="col-auto reaction-btn-container">
                                 <img id="like-img-btn-${post.id}" width="30px" height="27px"
                                      src="${pageContext.request.contextPath}/resources/${post.sessionUserReaction == 1 ? 's' : 'u'}-like.png"/>
                             </div>
 
                             <!-- Botão de deslike -->
-                            <div class="col-auto reaction-btn-container" onclick="submitReaction(${post.id}, 2)">
+                            <div id="deslike-btn-${post.id}" class="col-auto reaction-btn-container">
                                 <img id="deslike-img-btn-${post.id}" width="30px" height="27px"
                                      src="${pageContext.request.contextPath}/resources/${post.sessionUserReaction == 2 ? 's' : 'u'}-deslike.png"/>
                             </div>
@@ -154,6 +155,14 @@
 
         <script>
             document.getElementById('content${post.id}').innerHTML = marked('${post.conteudo}');
+            document.getElementById('like-btn-${post.id}').addEventListener('click', function (e) {
+                submitReaction(${post.id}, 1);
+                e.stopPropagation();
+            });
+            document.getElementById('deslike-btn-${post.id}').addEventListener('click', function (e) {
+                submitReaction(${post.id}, 2);
+                e.stopPropagation();
+            });
         </script>
     </body>
 </html>
