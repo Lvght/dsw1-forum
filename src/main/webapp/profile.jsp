@@ -67,14 +67,16 @@
                 </div>
 
                 <div class="col-auto align-items-center justify-content-center">
-                    ${
-                    requestScope.profileOwner.academicRecord != 0
-                    ? "<img class='text-center'
-                            src='https://lh3.googleusercontent.com/proxy/T1BikfCo9-1HIv4EEKfL6XXVHbWKh0RGYJoyNw0KdTbgj_YLtuqFgmDBbzFy7hdVxbZIlaFmGHrYpJD9fVvAJg8TdH3tnUTBxZsmYTQHq2FZp106IFvXyJN9ddxWzrXmrxBTVnmRncpwmgWU_XDB'
-                            height='64px'>"
-                    : requestScope.profileOwner.id == sessionScope.user.id
-                    ? "<input type='button' value='Verificar perfil' onclick='moveToVerifyPage()'>"
-                    : ""}
+                    <c:choose>
+                        <c:when test="${requestScope.profileOwner.academicRecord != 0}">
+                            <img class="text-center"
+                                 src="${pageContext.request.contextPath}/resources/verificado_ufscar.png"
+                                 height='64px'>
+                        </c:when>
+                        <c:otherwise>
+                            <input type="button" value="Verificar perfil" onclick="moveToVerifyPage()">
+                        </c:otherwise>
+                    </c:choose>
                 </div>
             </div>
         </div>
