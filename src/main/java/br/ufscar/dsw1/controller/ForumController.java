@@ -162,14 +162,13 @@ public class ForumController extends HttpServlet {
                     outputStream.write(bytes, 0, read);
                 }
 
-                outputStream.close();
-
                 s3.putObject(bucketName, filename, uploadedFile);
                 icone = "https://" + bucketName + ".s3.sa-east-1.amazonaws.com/" + filename;
 
                 Forum forum = new Forum(id_dono, escopo_postagem, escopo_acesso, titulo, descricao, icone);
 
                 response.setContentType("text/html");
+                outputStream.close();
 
                 if (ForumDAO.insert(forum)) {
                     response.sendRedirect(request.getContextPath() + "/forum/especifico?id=" + forum.getId());
