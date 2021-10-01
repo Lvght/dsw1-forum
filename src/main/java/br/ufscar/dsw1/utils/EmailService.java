@@ -1,9 +1,6 @@
 package br.ufscar.dsw1.utils;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.io.Reader;
 import java.util.Properties;
 
 import javax.mail.Authenticator;
@@ -49,7 +46,7 @@ public class EmailService {
             message.setSubject(subject);
 
             MimeBodyPart mimeBodyPart = new MimeBodyPart();
-            mimeBodyPart.setContent(body, "text/plain");
+            mimeBodyPart.setContent(body, "text/html");
 
             Multipart multipart = new MimeMultipart();
             multipart.addBodyPart(mimeBodyPart);

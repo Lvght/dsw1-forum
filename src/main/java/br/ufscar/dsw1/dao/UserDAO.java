@@ -6,6 +6,7 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
@@ -38,6 +39,36 @@ public class UserDAO extends GenericDAO {
         return null;
     }
 
+    private static String getBase64Salt() {
+        return Base64.getEncoder().encodeToString(UserDAO.getSalt());
+    }
+
+    private static String getBase64Password(String plaintextPassword, String salt) {
+        byte[] byteSalt = Base64.getDecoder().decode(salt.getBytes(StandardCharsets.UTF_8));
+        return Base64.getEncoder().encodeToString(UserDAO.getHashedPassword(plaintextPassword, byteSalt));
+    }
+
+    public static void changeUserPassword(int userId, String plaintextPassword) {
+        String salt = UserDAO.getBase64Salt();
+        String hashedPassword = UserDAO.getBase64Password(plaintextPassword, salt);
+
+        final String query = "UPDATE usuario u SET senha = ?, salt = ? WHERE u.id_usuario = ?;";
+
+        try {
+            Connection connection = UserDAO.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            statement.setString(1, hashedPassword);
+            statement.setString(2, salt);
+            statement.setInt(3, userId);
+
+            final int affectedRows = statement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     private static boolean verifyPassword(@NotNull @NotBlank String plaintextPassword, @NotNull int userId) {
         return false;
     }
@@ -63,7 +94,7 @@ public class UserDAO extends GenericDAO {
         // Tenta salvar no banco de dados.
         try {
             Connection connection = UserDAO.getConnection();
-            PreparedStatement statement = connection.prepareStatement(query, new String[] { "id_usuario" });
+            PreparedStatement statement = connection.prepareStatement(query, new String[]{"id_usuario"});
 
             statement.setString(1, user.getName());
             statement.setString(2, user.getUsername());
@@ -168,6 +199,27 @@ public class UserDAO extends GenericDAO {
                         academicRecord != 0, academicRecord);
             }
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return user;
+    }
+
+    public static User getByEmail(String email) {
+        User user = null;
+        final String query = "SELECT nome, id_usuario, email, imagem_perfil, descricao, reputacao, ra FROM usuario WHERE email=?;";
+
+        try {
+            Connection connection = UserDAO.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            statement.setString(1, email);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                user = new User(resultSet);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

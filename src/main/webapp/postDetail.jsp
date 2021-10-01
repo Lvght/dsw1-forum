@@ -19,7 +19,7 @@
 
                 // Faz um GET, e passa os dados para a função anônima.
                 jQuery.get(url, function (data) {
-                    document.getElementById("comment-timeline").innerHTML = data;
+                    $("#comment-timeline").html(data);
                 });
 
             }
@@ -46,11 +46,9 @@
                     $("#comment-timeline").prepend(data)
                 })
             }
-
-            loadComments();
         </script>
     </head>
-    <body>
+    <body onload="loadComments()">
         <%@include file="layout.jsp" %>
 
         <c:set var="post" value="${requestScope.post}"/>
