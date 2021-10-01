@@ -88,7 +88,14 @@
                     <a href="${pageContext.request.contextPath}/perfil/${post.getAutor().getUsername()}">
                         <div class="userInformation">
                             <div class="userPicture">
-                                <img src="https://i1.wp.com/terracoeconomico.com.br/wp-content/uploads/2019/01/default-user-image.png?ssl=1"/>
+                                <c:choose>
+                                    <c:when test="${post.autor.profileImageUrl == null}">
+                                        <img src="${pageContext.request.contextPath}/resources/default-profile.jpeg" />
+                                    </c:when>
+                                    <c:otherwise>
+                                        <img src="${post.autor.profileImageUrl}" />
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
                             <div class="username">
                                 <h2>@${post.getAutor().getUsername()}</h2>
@@ -129,20 +136,25 @@
                                 </div>
                             </div>
 
-                            <!-- Botão de like -->
-                            <div id="like-btn-${post.id}" class="col-auto reaction-btn-container">
-                                <img id="like-img-btn-${post.id}" width="30px" height="27px"
-                                     src="${pageContext.request.contextPath}/resources/${post.sessionUserReaction == 1 ? 's' : 'u'}-like.png"/>
-                            </div>
+                            <c:if test="${requestScope.drb}">
+                                <!-- Botão de like -->
+                                <div onclick="submitReaction(${post.id}, 1)" class="col-auto reaction-btn-container">
+                                    <img id="like-img-btn-${post.id}" width="30px" height="27px"
+                                         src="${pageContext.request.contextPath}/resources/${post.sessionUserReaction == 1 ? 's' : 'u'}-like.png"/>
+                                </div>
 
-                            <!-- Botão de deslike -->
-                            <div id="deslike-btn-${post.id}" class="col-auto reaction-btn-container">
-                                <img id="deslike-img-btn-${post.id}" width="30px" height="27px"
-                                     src="${pageContext.request.contextPath}/resources/${post.sessionUserReaction == 2 ? 's' : 'u'}-deslike.png"/>
-                            </div>
+                                <!-- Botão de deslike -->
+                                <div onclick="submitReaction(${post.id}, 2)" class="col-auto reaction-btn-container">
+                                    <img id="deslike-img-btn-${post.id}" width="30px" height="27px"
+                                         src="${pageContext.request.contextPath}/resources/${post.sessionUserReaction == 2 ? 's' : 'u'}-deslike.png"/>
+                                </div>
+                            </c:if>
 
                             <!-- Indicador de reputação -->
                             <div class="col-auto">
+                                <c:if test="${not requestScope.drb}">
+                                    <span>R: </span>
+                                </c:if>
                                 <span id="reputation${post.id}">${post.reputation}</span>
                             </div>
 
@@ -155,14 +167,6 @@
 
         <script>
             document.getElementById('content${post.id}').innerHTML = marked('${post.conteudo}');
-            document.getElementById('like-btn-${post.id}').addEventListener('click', function (e) {
-                submitReaction(${post.id}, 1);
-                e.stopPropagation();
-            });
-            document.getElementById('deslike-btn-${post.id}').addEventListener('click', function (e) {
-                submitReaction(${post.id}, 2);
-                e.stopPropagation();
-            });
         </script>
     </body>
 </html>
