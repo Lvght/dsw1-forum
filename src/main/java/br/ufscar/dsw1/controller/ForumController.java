@@ -163,6 +163,8 @@ public class ForumController extends HttpServlet {
                         outputStream.write(bytes, 0, read);
                     }
 
+                    outputStream.close();
+
                     s3.putObject(bucketName, filename, uploadedFile);
                     icone = "https://" + bucketName + ".s3.sa-east-1.amazonaws.com/" + filename;
                 } catch (IOException | SdkClientException e) {

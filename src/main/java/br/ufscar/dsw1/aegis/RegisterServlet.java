@@ -121,6 +121,8 @@ public class RegisterServlet extends HttpServlet {
                         outputStream.write(bytes, 0, read);
                     }
 
+                    outputStream.close();
+
                     s3.putObject(bucketName, filename, uploadedFile);
                     fotoPerfil = "https://" + bucketName + ".s3.sa-east-1.amazonaws.com/" + filename;
                 } catch (IOException | SdkClientException e) {
