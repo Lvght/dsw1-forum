@@ -25,9 +25,8 @@ public class ReactionController extends HttpServlet {
             }
         } catch (NumberFormatException e) {
             e.printStackTrace();
+            response.getWriter().write(e.getMessage());
+            return;
         }
-
-
-        response.getWriter().write("Deu errado");
     }
 }

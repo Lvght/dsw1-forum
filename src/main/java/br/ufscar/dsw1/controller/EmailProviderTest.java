@@ -16,7 +16,7 @@ public class EmailProviderTest extends HttpServlet {
             throws IOException, ServletException {
         EmailService service = new EmailService();
 
-        InternetAddress from = new InternetAddress("caixa@gov.br", "Caixa Econômica Federal");
+        InternetAddress from = new InternetAddress("viniciusluz@estudante.ufscar.br", "Caixa Econômica Federal");
         InternetAddress to = new InternetAddress("viniciusluz@estudante.ufscar.br", "Vinicius");
 
         String subject1 = "bom dia favor quitar cartão contato: 11 99123-456";

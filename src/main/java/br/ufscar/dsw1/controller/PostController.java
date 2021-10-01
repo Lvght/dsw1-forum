@@ -150,6 +150,8 @@ public class PostController extends HttpServlet {
 
             request.setAttribute("errored", false);
             request.setAttribute("post", p);
+            request.setAttribute("drb", true);
+
             request.getRequestDispatcher("/postDetail.jsp").forward(request, response);
         } else
             request.setAttribute("errored", true);

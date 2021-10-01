@@ -70,10 +70,14 @@
             color: white;
         }
 
-        a,
+        a {
+            color: #00171F;
+            transition: 1s ease-in;
+        }
+
         a:hover {
             text-decoration: none;
-            color: white;
+            color: black;
         }
 
         .errorMessage{
@@ -116,6 +120,10 @@
                         </span>
                     </div>
                 </a>
+
+                <div class="container text-center pt-4">
+                    <a href="${pageContext.request.contextPath}/request-password-reset">Esqueci minha senha</a>
+                </div>
             </div>
         </div>
     </div>
