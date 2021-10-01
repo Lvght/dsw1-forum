@@ -151,25 +151,21 @@ public class ForumController extends HttpServlet {
                 Part filePart = request.getPart("icone");
                 String filename = "forum-" + titulo;
                 String icone = null;
-                try {
-                    InputStream inputStream = filePart.getInputStream();
-                    File uploadedFile = new File("/" + File.separator + filename);
-                    OutputStream outputStream = new FileOutputStream(uploadedFile);
+                InputStream inputStream = filePart.getInputStream();
+                File uploadedFile = new File("/" + File.separator + filename);
+                OutputStream outputStream = new FileOutputStream(uploadedFile);
 
-                    int read;
-                    byte[] bytes = new byte[1024];
+                int read;
+                byte[] bytes = new byte[1024];
 
-                    while ((read = inputStream.read(bytes)) != -1) {
-                        outputStream.write(bytes, 0, read);
-                    }
-
-                    outputStream.close();
-
-                    s3.putObject(bucketName, filename, uploadedFile);
-                    icone = "https://" + bucketName + ".s3.sa-east-1.amazonaws.com/" + filename;
-                } catch (IOException | SdkClientException e) {
-                    e.printStackTrace();
+                while ((read = inputStream.read(bytes)) != -1) {
+                    outputStream.write(bytes, 0, read);
                 }
+
+                outputStream.close();
+
+                s3.putObject(bucketName, filename, uploadedFile);
+                icone = "https://" + bucketName + ".s3.sa-east-1.amazonaws.com/" + filename;
 
                 Forum forum = new Forum(id_dono, escopo_postagem, escopo_acesso, titulo, descricao, icone);
 
