@@ -10,14 +10,49 @@
     <head>
         <title>Debatr - Alterar senha</title>
         <meta charset="UTF-8">
+
+        <!--  Importa os arquivos do Bootstrap  -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+                integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+                crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+                integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+                crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+                integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+                crossorigin="anonymous"></script>
     </head>
     <body>
-        <form action="${pageContext.request.contextPath}/request-password-reset" method="post">
-            <label>
-                Email
-                <input type="email" name="email" placeholder="Digite aqui...">
-            </label>
-            <input type="submit" value="Enviar">
-        </form>
+        <div class="container-fluid px-2 px-lg-5 px-xl-5 pt-4">
+            <div class="row">
+                <div class="col-auto mb-5">
+                    <img src="${pageContext.request.contextPath}/resources/logo.png" height="64px" alt="Logotipo do Debatr">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-auto">
+                    <h1>Recupere a sua conta do Debatr</h1>
+                </div>
+            </div>
+
+            <form action="${pageContext.request.contextPath}/request-password-reset" method="post">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Endereço de email</label>
+                    <input type="email"
+                           name="email"
+                           class="form-control"
+                           id="exampleInputEmail1"
+                           aria-describedby="emailHelp"
+                           required
+                           placeholder="Digite seu email">
+                    <small id="emailHelp" class="form-text text-muted">Use o mesmo endereço que usou para se registrar.</small>
+                </div>
+                <button type="submit" class="btn btn-primary">Enviar</button>
+            </form>
+        </div>
+
     </body>
 </html>
