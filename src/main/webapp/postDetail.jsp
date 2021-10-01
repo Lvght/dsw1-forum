@@ -54,16 +54,18 @@
         <c:set var="post" value="${requestScope.post}"/>
         <%@ include file="components/_post.jsp" %>
 
-        <div class="form-group mb-5 mt-3" id="postCreation">
-            <label for="input-area">Comente algo sobre isso</label>
-            <textarea class="form-control" id="input-area" rows="3"
-                      placeholder="Escreva seu comentário aqui (suporta markdown)"></textarea>
+        <c:if test="${sessionScope.user != null}">
+            <div class="form-group mb-5 mt-3" id="postCreation">
+                <label for="input-area">Comente algo sobre isso</label>
+                <textarea class="form-control" id="input-area" rows="3"
+                          placeholder="Escreva seu comentário aqui (suporta markdown)"></textarea>
 
-            <input type="button"
-                   value="Enviar comentário"
-                   class="mt-2"
-                   onclick="submitComment(${requestScope.post.id})"/>
-        </div>
+                <input type="button"
+                       value="Enviar comentário"
+                       class="mt-2"
+                       onclick="submitComment(${requestScope.post.id})"/>
+            </div>
+        </c:if>
 
         <div id="comment-timeline"></div>
     </body>
